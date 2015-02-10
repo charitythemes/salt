@@ -1,0 +1,14 @@
+.salt-radio-img-img {
+	border:3px solid #fff;
+	margin:0 5px 10px 0;
+	cursor:pointer;
+	float:left; }
+
+.cmb-type-images .salt-radio-img-radio {
+	display: none; }
+	
+.salt-radio-img-selected {
+	border:3px solid #ccc }
+	
+.salt-radio-img-img:hover {
+	opacity:.8; }
