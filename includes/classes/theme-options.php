@@ -113,7 +113,7 @@ class Theme_Options {
 			);
 		} 
 
-		return self::$theme_options;
+		return apply_filters('salt_theme_options', self::$theme_options);
 	}
  
 	/**
