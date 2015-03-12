@@ -100,7 +100,6 @@ class Theme_Options {
 		self::$theme_options['fields'][] = array(
 			'name' => __('Social Page Linkydinks', 'salt'),
 			'desc' => sprintf(__('Add links to your social pages. You know Facebook, Instagram and all that. You can also <a href="%s">customise the icons here</a>', 'salt'), get_admin_url( $blog_id, 'customize.php' ) ),
-			'id'   => $prefix . 'show_projectsasd',
 			'type' => 'title'
 		);
 		
