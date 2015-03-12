@@ -361,7 +361,8 @@ a:active {
 	
 .menu > li a:hover,
 .menu > li.current-menu-item > a,
-.menu > li.current-page-ancestor > a {
+.menu > li.current-page-ancestor > a,
+.menu > li.current_page_parent > a {
 	background-color: rgba(255,255,255, 0.2); }
 
 .menu li ul.children,
@@ -740,6 +741,9 @@ a:active {
 .textwidget a:focus {
 	border-bottom: 0; }
 
+.textwidget a.button {
+	border-bottom: none; }
+	
 /*****
 /*  ~footer widgets
 *****/
