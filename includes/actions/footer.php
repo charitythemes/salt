@@ -18,11 +18,10 @@ function salt_footer_credits() {
 		<span class="copy">&copy;</span> <?php echo date('Y'); ?> <?php echo get_theme_mod('salt_footer_text'); ?>
 	</p>
 
-	<?php
-    if (get_option('salt_footer_credit')) { ?>
+	<?php 
+    if (get_option('salt_footer_credit')!='1') { ?>
 	<p class="pull-right credits">
-		<?php echo sprintf(__('Powered by %1s WordPress %2s', 'salt'), '<a href="http://www.wordpress.org" target="_blank">','</a>'); ?> <span class="seperator">|</span> 
-		<?php echo sprintf(__('Designed by %1s charity: themes %2s', 'salt'), '<a class="ct_logo" href="http://www.charitythemes.org" target="_blank">','</a>'); ?>
+		<?php echo sprintf(__('Designed by %1s charity: themes %2s', 'salt'), '<a class="ct_logo" href="http://www.charitythemes.org" title="WordPress Themes for Nonprofits" target="_blank">','</a>'); ?>
 	</p>
 	<?php } ?>
 <?php 
