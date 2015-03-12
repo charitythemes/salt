@@ -453,7 +453,7 @@ a:active {
 	color:#666 !important; }
 
 .pagination { 
-	margin: 0;
+	margin: 0 0 2.500em 0;
 	text-align: center; }
 	
 .pagination a:link,
