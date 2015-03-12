@@ -171,7 +171,7 @@ function salt_customize_register( $wp_customize ) {
 	));
 	
 	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_footer_credit', array(
-        'label'    => __( 'Show your love to charity: themes and WordPress, and display their names proudly in your website footer', 'salt' ),
+        'label'    => __( 'Hide website credits.', 'salt' ),
         'section'  => 'footer',
         'settings' => 'salt_footer_credit',
         'type'     => 'checkbox',

@@ -16,6 +16,8 @@ if ( ! function_exists( 'salt_author_meta' ) ) :
  * @since Salt 1.0
  */
 function salt_author_meta() {
+
+ 	global $post;
 	?>
 	<div class="author-meta vcard">
 	

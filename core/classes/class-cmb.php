@@ -36,6 +36,9 @@ class Salt_CMB_Actions {
 
 		add_action( 'cmb_render_post_multiselect', array(&$this, 'salt_cmb_render_post_multiselect'), 10, 2 );
 		add_action( 'cmb_render_term_select', array(&$this, 'salt_cmb_render_term_select'), 10, 2 );		
+
+		add_action( 'cmb_before_table', array(&$this, 'salt_cmb_before_table'), 10, 3);	
+		add_action( 'cmb_after_table', array(&$this, 'salt_cmb_after_table'), 10, 3);
 	}
 
 	/**
@@ -259,6 +262,90 @@ class Salt_CMB_Actions {
 		echo '</select>';
 		echo '<p class="cmb_metabox_description">', $field['desc'], '</p>';
 	}
+
+
+	/**
+	 * The function and action for 'salt_cmb_before_table'
+	 *
+	 * @param array $field
+	 * @param string $meta
+	 *
+	 * @return void
+	 *
+	 * @access public
+	 */	
+	function salt_cmb_before_table($meta_box, $object_id, $object_type) {
+		
+		if ($object_id=='theme_options' && $object_type=='options-page') {
+			
+			$i=-1;
+			$menu_items = array(); 
+			
+			if ($meta_box)  {
+				
+				echo '<div class="wp-filter">';
+				echo '<ul class="filter-links theme-options-menu">';
+				
+				foreach ($meta_box as $options) {
+					
+					if (is_array($options) && !empty($options)) {
+						
+						foreach ($options as $option) {
+	
+							if (!empty($option["type"]) && $option["type"]=='title') {
+								$i++;
+								$class=($i==0)?'current':'';
+								$menu_items[$i] = '<li><a data-ids="%1s" class="'.$class.'">'.$option["name"].'</a></li>';
+								
+								$data_ids[$i] = $option["id"] . ' ';
+								
+							} elseif (!empty($option["type"])) {
+								
+								$data_ids[$i] .= $option["id"] . ' ';
+									
+							}
+
+							if (!empty($menu_items[$i-1]) && !empty($data_ids[$i-1]) && $option["type"]=='title') {
+								$output .= sprintf($menu_items[$i-1], $data_ids[$i-1]);							
+							}
+						}
+					}
+				}
+				$output .= sprintf($menu_items[$i], $data_ids[$i]);	
+				echo $output;
+				echo '</ul>';
+				echo '</div>';
+			}
+		}
+	}
+	
+	function salt_cmb_after_table( $meta_box, $object_id, $object_type ){
+
+		if ($object_id=='theme_options' && $object_type=='options-page') {
+		?>
+		<script>
+			jQuery(document).ready(function ($) {
+				
+				$('.theme-options-menu li a').click(function(e) {
+					e.preventDefault();
+					menu_click(this); 
+				});
+			
+				var menu_click = function( node ){ 
+					$('.form-table.cmb_metabox tbody tr').hide();
+					$(node).parent().parent().find('li a').removeClass('current');
+					$.each($(node).data('ids').split(" ").slice(0,-1), function(index, item) {
+						$('.cmb_id_'+item).fadeIn(); 
+					});
+					$(node).addClass('current');
+				}
+				
+				menu_click('.theme-options-menu li:first-child a');
+			});			
+		</script>
+		<?php
+		}
+	}	
 }
 endif;
 
