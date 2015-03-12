@@ -1,0 +1,13 @@
+== Salt Changelog ==
+
+2015.03.12 - v1.0.1
+- Improvement to UI on theme options page to allow tabs at the top to separate sections
+- Put the header title back as <title><?php wp_title(); ?></title>
+- Removed a stray line on the theme_options section
+- Added a filter on the theme_options return value
+- Changed footer so website credit shows by default, unless turned off in the customizer
+- The function "salt_author_meta" needed global $post; added to it
+- Increase the pagination bottom margin to 2.500em
+- Closed the head tag properly @_@
+- Change the header icons and menu marge to a percentage
+- General CSS tweaks, bug fixes and improvements
