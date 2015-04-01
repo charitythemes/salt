@@ -1,5 +1,13 @@
 == Salt Changelog ==
 
+2015.04.01 - v1.0.2
+- Fixed PHP errors
+- Fixed text domain and translation problems
+- Replace theme screenshot with a valid one
+- Remove Theme Options page and social links in favour of plugin
+- Un-minified JS files
+- Include an option to choose blog layout
+
 2015.03.12 - v1.0.1
 - Improvement to UI on theme options page to allow tabs at the top to separate sections
 - Put the header title back as <title><?php wp_title(); ?></title>

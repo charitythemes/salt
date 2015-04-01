@@ -17,19 +17,7 @@
 function salt_layout_body_class( $classes ) {
 	global $post, $layout;
 	
-	if (is_front_page() && is_home()) { 
-		
-		$layout = 'two-col-left';
-	
-	} elseif (is_page()) {
-		
-		$layout = (get_post_meta($post->ID, '_post_layout', true)) ? get_post_meta($post->ID, '_post_layout', true) : 'two-col-left';
-
-	} elseif (is_single()) {
-		
-		$layout = 'two-col-left';
-		
-	}
+	$layout = (get_theme_mod('salt_blog_layout')) ? get_theme_mod('salt_blog_layout') : 'two-col-left';
 	
 	$classes[] = apply_filters('salt_layout', $layout);
 
@@ -84,7 +72,7 @@ function salt_wrapper_class_output( $classes ) {
 	$classes[] = (get_theme_mod('salt_layout_type')) ? get_theme_mod('salt_layout_type') : 'wide';
 	
 	if( $classes ) {
-		$output .= 'class="' . implode(' ', $classes) . '"';
+		$output = 'class="' . implode(' ', $classes) . '"';
 		echo $output;
 	}
 }
@@ -103,7 +91,7 @@ function salt_header_class_output( $classes ) {
 	}
 	
 	if( $classes ) {
-		$output .= 'class="' . implode(' ', $classes) . '"';
+		$output = 'class="' . implode(' ', $classes) . '"';
 		echo $output;
 	}
 }
@@ -122,7 +110,7 @@ function salt_container_class_output( $classes ) {
 	}
 	
 	if( $classes ) {
-		$output .= 'class="' . implode(' ', $classes) . '"';
+		$output = 'class="' . implode(' ', $classes) . '"';
 		echo $output;
 	}
 }
@@ -141,7 +129,7 @@ function salt_main_class_output( $classes ) {
 	}
 	
 	if( $classes ) {
-		$output .= 'class="' . implode(' ', $classes) . '"';
+		$output = 'class="' . implode(' ', $classes) . '"';
 		echo $output;
 	}
 }
@@ -168,7 +156,7 @@ function salt_section_class_output( $classes ) {
 	}
 	
 	if( $classes ) {
-		$output .= 'class="' . implode(' ', $classes) . '"';
+		$output = 'class="' . implode(' ', $classes) . '"';
 		echo $output;
 	}
 }
@@ -187,7 +175,7 @@ function salt_article_class_output( $classes ) {
 	}
 
 	if( $classes ) {
-		$output .= 'class="' . implode(' ', $classes) . '"';
+		$output = 'class="' . implode(' ', $classes) . '"';
 		echo $output;
 	}
 }
@@ -210,7 +198,7 @@ function salt_primary_sidebar_class_output( $classes ) {
 	}
 	
 	if( $classes ) {
-		$output .= 'class="' . implode(' ', $classes) . '"';
+		$output = 'class="' . implode(' ', $classes) . '"';
 		echo $output;
 	}
 }
@@ -229,7 +217,7 @@ function salt_secondary_sidebar_class_output( $classes ) {
 	}
 	
 	if( $classes ) {
-		$output .= 'class="' . implode(' ', $classes) . '"';
+		$output = 'class="' . implode(' ', $classes) . '"';
 		echo $output;
 	}
 }
@@ -249,7 +237,7 @@ if (!function_exists('salt_footer_class_output')) {
 		}
 		
 		if( $classes ) {
-			$output .= 'class="' . implode(' ', $classes) . '"';
+			$output = 'class="' . implode(' ', $classes) . '"';
 			echo $output;
 		}
 	}
@@ -270,7 +258,7 @@ if (!function_exists('salt_footer_widgets_class_output')) {
 		}
 		
 		if( $classes ) {
-			$output .= 'class="' . implode(' ', $classes) . '"';
+			$output = 'class="' . implode(' ', $classes) . '"';
 			echo $output;
 		}
 	}

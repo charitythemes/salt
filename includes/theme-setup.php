@@ -68,8 +68,8 @@ if ( ! isset( $content_width ) ) {
  */
 function salt_register_styles() {
 
-	wp_enqueue_style( 'bootstrap' 		, get_template_directory_uri() . '/core/inc/bs/bootstrap.min.css', false, '3.2.0');
-	wp_enqueue_style( 'fontawesome'		, get_template_directory_uri() . '/core/inc/fontawesome/css/font-awesome.min.css', false, '4.2.0');
+	wp_enqueue_style( 'bootstrap' 		, get_template_directory_uri() . '/css/bootstrap.min.css', false, '3.2.0');
+	wp_enqueue_style( 'fontawesome'		, get_template_directory_uri() . '/css/font-awesome.min.css', false, '4.2.0');
 	wp_enqueue_style( 'social' 			, get_template_directory_uri() . '/css/social.css', 'false', '1.0');
 	wp_enqueue_style( 'main'	 		, get_template_directory_uri() . '/css/main.css', 'false', '1.0');
 }
@@ -85,7 +85,7 @@ function salt_register_scripts() {
 	
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'respond', get_template_directory_uri() . '/js/respond.min.js', array('jquery'), '1.4.2', true );
-	wp_enqueue_script( 'global', get_template_directory_uri() . '/js/global.min.js', array('jquery'), '1.0.0', true );
+	wp_enqueue_script( 'global', get_template_directory_uri() . '/js/global.js', array('jquery'), '1.0.0', true );
 
 	if ( is_singular() ) 
 		wp_enqueue_script( 'comment-reply' );		
@@ -96,7 +96,8 @@ add_action( 'wp_enqueue_scripts', 'salt_register_scripts' );
 /**
  * These are the main classes used throughout theme on key elements.
  */
-salt_register_classes( array(
+global $_salt_registered_classes;
+$_salt_registered_classes = array(
 	//Add extra classes to the main ID's - leave blank for none
 	'wrapper' 						=> '',
 	'header' 						=> '',
@@ -106,46 +107,14 @@ salt_register_classes( array(
 	'footer-widgets'       			=> '',
 	'article' 						=> '',
 	//Add the classes for the main column, depending on the layout options
-	'main-one-col' 					=> 'col-md-12',
-	'main-two-col-left' 			=> 'col-md-8',
-	'main-two-col-right'    		=> 'col-md-8 col-md-push-4',
-	'main-three-col-middle' 		=> 'col-md-6 col-md-push-3',
+	'main-one-col' 					=> 'col-sm-12',
+	'main-two-col-left' 			=> 'col-sm-8',
+	'main-two-col-right'    		=> 'col-sm-8 col-sm-push-4',
+	'main-three-col-middle' 		=> 'col-sm-6 col-sm-push-3',
 	//Add the classes for the primary sidebar, depending on the layout options
-	'primary-two-col-left'  		=> 'widget-area col-md-4',
-	'primary-two-col-right'     	=> 'widget-area col-md-4 col-md-pull-8',
-	'primary-three-col-middle'  	=> 'widget-area col-md-3 col-md-pull-6',
+	'primary-two-col-left'  		=> 'widget-area col-sm-4',
+	'primary-two-col-right'     	=> 'widget-area col-sm-4 col-sm-pull-8',
+	'primary-three-col-middle'  	=> 'widget-area col-sm-3 col-sm-pull-6',
 	//Add the classes for the secondary sidebar, depending on the layout options
-	'secondary-three-col-middle'	=> 'widget-area col-md-3'
-) );
-
-/**
- * These are the various options for the social media icons.
- */
-salt_register_social_connect( array(
-	'twitter'		=> __('Follow us on Twitter', 'salt'),
-	'facebook'		=> __('Connect on Facebook', 'salt'),
-	'google-plus'	=> __('Watch on Google+', 'salt'),
-	'linkedin'		=> __('Connect on Linkedin', 'salt'),
-	'pinterest'		=> __('Follow us on Pinterest', 'salt'),
-	'flickr'		=> __('Follow us on Flickr', 'salt'),
-	'rss'			=> __('RSS Feed', 'salt'),
-	'vimeo'			=> __('Follow us on Vimeo', 'salt'),
-	'bebo'			=> __('Follow us on BEBO', 'salt'),
-	'github'		=> __('Fork us on Github', 'salt'),
-	'picasa'		=> __('See photos on Picasa', 'salt'),
-	'skype'			=> __('Skype us', 'salt'),
-	'youtube'		=> __('Watch us on YouTube', 'salt'),
-	'dribbble'		=> __('Connect on Dribbble', 'salt'),
-	'zerply'		=> __('Connect on Zerply', 'salt'),
-	'wikipedia'		=> __('Learn more', 'salt'),
-	'stumbleupon'	=> __('Stumbleupon us', 'salt'),
-	'grooveshark'	=> __('Follow us on Grooveshark', 'salt'),
-	'digg'			=> __('Digg us', 'salt'),
-	'behance'		=> __('Check us out on Behance', 'salt'),
-	'technoratie'	=> __('Follow us on Technoratie', 'salt'),
-	'blogger'		=> __('Follow us on Blogger', 'salt'),
-	'tumblr'		=> __('Follow us on Tumblr', 'salt'),
-	'dropbox'		=> __('Check our our Dropbox', 'salt'),
-	'weibo'			=> __('Follow us on Weibo', 'salt'),
-	'wechat'		=> __('Follow us on Wechat', 'salt'),
-) );
+	'secondary-three-col-middle'	=> 'widget-area col-sm-3'
+);

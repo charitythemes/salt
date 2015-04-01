@@ -121,53 +121,6 @@ function salt_header_mobile_menu() {
 add_action('salt_header_inside','salt_header_mobile_menu'); 
 
 /**
- * Load social icon elements into the header
- *
- * @since 1.0
- */
-function salt_header_social_icons() {
-	?>
-	<div class="pull-right social-links">
-		<?php 
-		if ($t=get_theme_mod('salt_social_type'))
-			$args['type'] = $t;
-
-		if ($s=get_theme_mod('salt_social_shape'))
-			$args['shape'] = $s;
-
-		if ($args['shape'])
-			$args['background'] = true;
-		
-		salt_social_icons( $args ); ?>
-	</div>
-	<?php
-}
-add_action('salt_header_inside','salt_header_social_icons'); 
-
-/**
- * Loads the breadcrumb navigation above the container
- *
- * @since 1.0
- */
-function salt_display_breadcrumb() {
-
-	if (!get_theme_mod('salt_display_breadcrumb')) return;
-	?>
-	<div class="container"> 
-	<?php
-	if ($s=get_theme_mod('salt_breadcrumb_separator'))
-		$args['separator'] = $s;
-	
-	$args['display_home_link'] = get_theme_mod('salt_display_home');
-		
-	salt_breadcrumb($args);
-	?>
-	</div>
-	<?php
-}
-add_action('salt_container_above','salt_display_breadcrumb');
-
-/**
  * Close of the wrapper divs in the header
  *
  * @since 1.0
