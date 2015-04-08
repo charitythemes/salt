@@ -20,7 +20,7 @@ Salt is a simple, blog-focused theme that can also be used as parent theme. Salt
 * Social Icons
 * Retina Ready
 * Menu Description
-* The GPL v2.0 or later license. :) Use it to make something cool.
+* The GPL v3.0 or later license. :) Use it to make something cool.
 
 == Installation ==
 

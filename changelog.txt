@@ -1,5 +1,15 @@
 == Salt Changelog ==
 
+2015.04.08 - v1.0.3
+- Removed the meta content type from header.php
+- Include the license GPL
+- Updated text domain to salt instead of twentyfifteen
+- Include non-minified version of the js file
+- FIX: JS error
+- FIX: The add_theme_support and register_nav_menus needs to be in a function and added with after_setup_theme
+- FIX: Stop enqueuing jQuery as  its added as a dependancy
+- Add prefixes to the scripts
+
 2015.04.01 - v1.0.2
 - Fixed PHP errors
 - Fixed text domain and translation problems
