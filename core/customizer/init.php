@@ -8,88 +8,8 @@
  * 
  * @package WordPress
  * @subpackage Salt
- * @since Salt 1.0
+ * @since Salt 1.0.0
  */
-
-/**
- * Register New Controls to use in the Customizer
- *
- */
-function salt_register_new_controls() {
-	
-	/**
-	 * Adds an 'Image Select' option into the Customizer
-	 *
-	 */
-	class WP_Customize_ImageSelect_Control extends WP_Customize_Control {
-		public $type = 'imageselect';
-		
-		public function render_content() {
-			
-			if ( empty( $this->choices ) )
-				return;
-	
-			$name = '_customize-imageselect-' . $this->id;
-	
-			?>
-			<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
-			
-			<?php
-			foreach ( $this->choices as $value => $src ) :
-				?>
-				<span>
-					<label>
-						<input type="radio" id="<?php echo $value; ?>" value="<?php echo esc_attr( $value ); ?>" name="<?php echo esc_attr( $name ); ?>" <?php $this->link(); checked( $this->value(), $value ); ?> class="selectimages-radio" />
-						<?php $select = ($this->value() == $value) ? 'selected' : ''; ?>
-						<img alt="<?php echo $value; ?>" src="<?php echo $src; ?>" alt="" class="selectimages <?php echo $select; ?>" onClick="" />
-					</label>
-				</span>
-				<?php 
-			endforeach;
-			?>
-			</label>
-			<?php
-		}
-	}
-}
-add_action( 'customize_register' , 'salt_register_new_controls' );
-
-
-function salt_customize_controls_print_styles() {
-	?>
-	<style>
-		input[type=radio].selectimages-radio {
-			display: none; }
-			
-		.selectimages {
-			border: 3px solid #fff;
-			margin: 0 2px 10px 0;
-			cursor: pointer;
-			float: left; }
-			
-		.selectimages.selected {
-			border: 3px solid #2da3cc }
-		
-		.selectimages:hover {
-			opacity: .8; }
-	</style>
-	<?php
-}
-add_action( 'customize_controls_print_styles', 'salt_customize_controls_print_styles');
-
-function salt_customize_controls_print_scripts() {
-	?>
-	<script>
-		jQuery( document ).ready(function() {
-			jQuery('.selectimages').click(function() {
-				jQuery(this).parent().parent().parent().find('.selected').removeClass('selected');
-				jQuery(this).addClass('selected');
-			});
-		});
-	</script>
-	<?php
-}
-add_action( 'customize_controls_print_footer_scripts', 'salt_customize_controls_print_scripts');
 
 /**
 * This hooks into 'customize_register' (available as of WP 3.4) and allows
@@ -97,7 +17,7 @@ add_action( 'customize_controls_print_footer_scripts', 'salt_customize_controls_
 * 
 * @see add_action('customize_register',$func)
 * @param \WP_Customize_Manager $wp_customize
-* @since Salt 1.0
+* @since Salt 1.0.0
 */
 function salt_customize_register( $wp_customize ) {
 	
@@ -180,15 +100,17 @@ function salt_customize_register( $wp_customize ) {
         'sanitize_callback' => 'sanitize_text_field'
 	));
 	
-	$wp_customize->add_control( new WP_Customize_ImageSelect_Control( $wp_customize, 'salt_blog_layout', array(
+	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_blog_layout', array(
         'label'    => __( 'Blog Layout', 'salt' ),
         'section'  => 'general',
+        'description' => __('This option affects your category, tag, author, single and search pages.'),
         'settings' => 'salt_blog_layout',
+        'type'	   => 'select',
         'choices'  => array (
-			'one-col' 		   => $image_folder_url . '1c.png',
-			'two-col-left'     => $image_folder_url . '2cl.png',
-			'two-col-right'    => $image_folder_url . '2cr.png',
-			'three-col-middle' => $image_folder_url . '3cm.png'
+			'one-col' 		   => __('No Sidebars', 'salt'),
+			'two-col-left'     => __('Righthand Sidebar', 'salt'),
+			'two-col-right'    => __('Lefthand Sidebar', 'salt'),
+			'three-col-middle' => __('Both', 'salt')
 		)
 	)));
 	
@@ -242,16 +164,17 @@ function salt_customize_register( $wp_customize ) {
         'sanitize_callback' => 'sanitize_text_field'
 	));
 	
-	$wp_customize->add_control( new WP_Customize_ImageSelect_Control( $wp_customize, 'salt_footer_sidebars', array(
+	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_footer_sidebars', array(
         'label'    => __( 'Footer Widgets Areas', 'salt' ),
         'section'  => 'footer',
         'settings' => 'salt_footer_sidebars',
+        'type'	   => 'select',	        
         'choices'  => array (
-			'0' => $image_folder_url . 'footer-off.png',
-			'1' => $image_folder_url . 'footer-widgets-1.png',
-			'2' => $image_folder_url . 'footer-widgets-2.png',
-			'3' => $image_folder_url . 'footer-widgets-3.png',
-			'4' => $image_folder_url . 'footer-widgets-4.png'
+			'0' => '0',
+			'1' => '1',
+			'2' => '2',
+			'3' => '3',
+			'4' => '4'
 		)
 	)));			
 }
