@@ -138,7 +138,7 @@ function salt_pagination( $args = array(), $query = '' ) {
 			$search_query = get_query_var( 's' );
 			$paged = get_query_var( 'paged' );
 			
-			$base = user_trailingslashit( home_url() ) . '?s=' . $search_query . '&paged=%#%';
+			$base = user_trailingslashit( esc_url( home_url('/') ) ) . '?s=' . $search_query . '&paged=%#%';
 			
 			$defaults['base'] = $base;
 		} else {
