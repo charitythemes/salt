@@ -1,5 +1,14 @@
 == Salt Changelog ==
 
+2015.04.08 - v1.0.4
+- Remove theme-metaboxes.php not being used
+- Moved actions into the theme template files
+- Removed wp_title from the header
+- Reorganised files
+- Removed non required images and css files
+- Moved template parts into a partial folder
+- Escape home_url
+
 2015.04.08 - v1.0.3
 - Removed the meta content type from header.php
 - Include the license GPL
