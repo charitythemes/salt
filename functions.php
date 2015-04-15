@@ -95,10 +95,9 @@ if (!function_exists('salt_register_styles')) :
  */
 function salt_register_styles() {
 
-	wp_enqueue_style( 'bootstrap' 		, get_template_directory_uri() . '/css/bootstrap.min.css', false, '3.2.0');
-	wp_enqueue_style( 'fontawesome'		, get_template_directory_uri() . '/css/font-awesome.min.css', false, '4.2.0');
-	wp_enqueue_style( 'social' 			, get_template_directory_uri() . '/css/social.css', 'false', '1.0');
-	wp_enqueue_style( 'main'	 		, get_template_directory_uri() . '/css/main.css', 'false', '1.0');
+	wp_enqueue_style( 'bootstrap' 	, get_template_directory_uri() . '/css/bootstrap.min.css', false, '3.2.0');
+	wp_enqueue_style( 'fontawesome'	, get_template_directory_uri() . '/css/font-awesome.min.css', false, '4.2.0');
+	wp_enqueue_style( 'main'	 	, get_template_directory_uri() . '/css/main.css', 'false', '1.0');
 }
 endif;
 add_action( 'wp_enqueue_scripts', 'salt_register_styles' );
