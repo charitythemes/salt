@@ -103,7 +103,7 @@ function salt_customize_register( $wp_customize ) {
 	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_blog_layout', array(
         'label'    => __( 'Blog Layout', 'salt' ),
         'section'  => 'general',
-        'description' => __('This option affects your category, tag, author, single and search pages.'),
+        'description' => __('This option affects your category, tag, author, single and search pages.', 'salt'),
         'settings' => 'salt_blog_layout',
         'type'	   => 'select',
         'choices'  => array (
