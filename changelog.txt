@@ -1,5 +1,8 @@
 == Salt Changelog ==
 
+2015.05.13 - v1.0.5
+- Include 4 new page templates for full width, 2 sidebars and left / right sidebars
+
 2015.04.08 - v1.0.4
 - Remove theme-metaboxes.php not being used
 - Moved actions into the theme template files

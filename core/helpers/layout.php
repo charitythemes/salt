@@ -15,9 +15,33 @@
  * @return array of classes
  */
 function salt_layout_body_class( $classes ) {
-	global $post, $layout;
+	global $post, $layout, $template;
 	
-	$layout = (get_theme_mod('salt_blog_layout')) ? get_theme_mod('salt_blog_layout') : 'two-col-left';
+	if ( is_page_template( 'template-right-sidebar.php' ) ) {
+		
+		$layout = 'two-col-left';
+		
+	} elseif ( is_page_template( 'template-left-sidebar.php' ) ) {
+		
+		$layout = 'two-col-right';
+		
+	} elseif ( is_page_template( 'template-full-width.php' ) ) {
+		
+		$layout = 'one-col';
+		
+	} elseif ( is_page_template( 'template-both-sidebar.php' ) ) {
+		
+		$layout = 'three-col-middle';
+		
+	} elseif ( get_theme_mod('salt_blog_layout') ) {
+		
+		$layout = get_theme_mod('salt_blog_layout');
+		
+	} else {
+		
+		$layout = 'two-col-left';
+		
+	}
 	
 	$classes[] = apply_filters('salt_layout', $layout);
 
