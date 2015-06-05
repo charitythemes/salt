@@ -343,3 +343,46 @@ function salt_post_meta($args=array()) {
 	}
 }
 endif;
+
+if( !function_exists( 'salt_social_icons') ) :
+/*
+ * Create a unorganized list of social media icons
+ *
+ * @since Salt 1.1.0
+ * @param array $args
+ * @return string
+ */
+function salt_social_icons( $args=array() ) {
+	global $_salt_registered_social;
+
+	$defaults = array(
+		'attachment_id' => 0,
+		'type'			=> 'black',		// BLACK: use the black icons
+		'shape'			=> 'circle',		// CIRCLE: use the cicular icons
+		'size'			=> 'small', 	// SMALL: use small icons
+		'echo'          => true,		// TRUE: output the list
+	);
+
+	$args = wp_parse_args( $args, $defaults );
+	extract( $args, EXTR_SKIP );
+
+	$output = '<ul class="ico-social '.$type.' '.$shape.' '.$size.'">';
+	
+	foreach ($_salt_registered_social as $social => $title) {
+
+		$link = get_theme_mod('salt_social_'.$social);
+		
+		if ($link)
+			$output .= '<li><a target="_blank" href="'.$link.'" title="'.$title.'" class="'.$social.'"><i class="fa fa-'.$social.'"></i></a></li>';
+	
+	}
+	
+	$output .= '</ul>';
+	
+	if($echo) {
+		echo $output;
+	} else {
+		return $output;
+	}
+}
+endif;

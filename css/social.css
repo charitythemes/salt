@@ -1,0 +1,154 @@
+ul.ico-social {
+	list-style-type: none;
+	line-height: 1;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0; }
+
+ul.ico-social li {
+	display: inline; 
+	margin-right: 5px;
+}
+
+ul.ico-social.no-shape li {
+	margin-right: 3px;
+}
+
+ul.ico-social li a {
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	text-align: center; }
+
+ul.ico-social li a:hover {
+	opacity: .7;
+    transition: opacity .2s ease-out;
+    -moz-transition: opacity .2s ease-out;
+    -webkit-transition: opacity .2s ease-out;
+    -o-transition: opacity .2s ease-out; }
+ 
+ul.ico-social li a {
+	background: #333;
+	color: #fff;
+}
+
+/* Font Sizes */
+
+ul.ico-social.medium li a {
+	font-size: 1.2em;
+}
+
+ul.ico-social.large li a {
+	font-size: 1.5em;
+}
+   
+ul.ico-social li a i.fa {
+	margin-top: 9px;
+}
+
+ul.ico-social.medium li a i.fa {
+	margin-top: 8px;
+}
+
+ul.ico-social.large li a i.fa {
+	margin-top: 5px;
+}
+
+/* Shapes */
+  
+ul.ico-social.square li a {
+	border-radius: 3px;
+}
+
+ul.ico-social.circle li a {
+	border-radius: 32px;
+}
+
+ul.ico-social.white li a {
+	background: #fff;
+	color: #333;
+}
+
+/* No Shape */
+
+ul.ico-social.white.no-shape li a {
+	color: #fff;
+	background: none;
+}
+
+ul.ico-social.black.no-shape li a {
+	color: #333;
+	background: none;
+}
+
+/* Color Background */
+
+ul.ico-social.color li a.twitter {
+	background: #55acee;
+}
+
+ul.ico-social.color li a.facebook {
+	background: #3b5998;
+}
+
+ul.ico-social.color li a.youtube {
+	background: #cd201f;
+}
+
+ul.ico-social.color li a.linkedin {
+	background: #0077b5;
+}
+
+ul.ico-social.color li a.instagram {
+	background: #3f729b;
+}
+
+ul.ico-social.color li a.pinterest {
+	background: #cc2127;
+}
+
+ul.ico-social.color li a.wechat {
+	background: #7bb32e;
+}
+
+ul.ico-social.color li a.weibo {
+	background: #e4002e;
+}
+
+/* No background but still in color */
+
+ul.ico-social.color.no-shape li a {
+	background: none;
+}
+
+ul.ico-social.color.no-shape li a.twitter {
+	color: #55acee;
+}
+
+ul.ico-social.color.no-shape li a.facebook {
+	color: #3b5998;
+}
+
+ul.ico-social.color.no-shape li a.youtube {
+	color: #cd201f;
+}
+
+ul.ico-social.color.no-shape li a.linkedin {
+	color: #0077b5;
+}
+
+ul.ico-social.color.no-shape li a.instagram {
+	color: #3f729b;
+}
+
+ul.ico-social.color.no-shape li a.pinterest {
+	color: #cc2127;
+}
+
+ul.ico-social.color.no-shape li a.wechat {
+	color: #7bb32e;
+}
+
+ul.ico-social.color.no-shape li a.weibo {
+	color: #e4002e;
+}

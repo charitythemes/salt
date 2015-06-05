@@ -1,5 +1,10 @@
 == Salt Changelog ==
 
+2015.06.15 - v1.1.0
+- Added header image support
+- Added social media links into the customizer
+- Improvements on the responsive header menu code
+
 2015.05.13 - v1.0.5
 - Include 4 new page templates for full width, 2 sidebars and left / right sidebars
 

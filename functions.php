@@ -74,7 +74,18 @@ if (!function_exists('salt_theme_setup')) :
 	add_theme_support( 'html5', array(
 		'search-form', 'comment-form', 'comment-list', 'gallery', 'caption'
 	) );
-	
+
+	/*
+	 * Custom header is an image that is chosen as the representative image 
+	 * in the theme top header section.
+	 *
+	 * @link https://codex.wordpress.org/Custom_Headers
+	 * @since 1.1.0
+	 */	
+	add_theme_support( 'custom-header', array(
+		'width' => 1300, 'height' => 240, 'header-text' => true, 'flex-height' => true, 'flex-width' => true
+	) );
+		
 	/**
 	 * This theme uses wp_nav_menu() for the main menu.
 	 *
@@ -98,6 +109,7 @@ function salt_register_styles() {
 	wp_enqueue_style( 'bootstrap' 	, get_template_directory_uri() . '/css/bootstrap.min.css', false, '3.2.0');
 	wp_enqueue_style( 'fontawesome'	, get_template_directory_uri() . '/css/font-awesome.min.css', false, '4.2.0');
 	wp_enqueue_style( 'main'	 	, get_template_directory_uri() . '/css/main.css', 'false', '1.0');
+	wp_enqueue_style( 'social'	 	, get_template_directory_uri() . '/css/social.css', array( 'main' ), '1.0');
 }
 endif;
 add_action( 'wp_enqueue_scripts', 'salt_register_styles' );
@@ -195,3 +207,67 @@ $_salt_registered_classes = array(
 	//Add the classes for the secondary sidebar, depending on the layout options
 	'secondary-three-col-middle'	=> 'widget-area col-sm-3'
 );
+
+/**
+ * These are the social networks available to add links to.
+ *
+ * @since Salt 1.1.0
+ */
+global $_salt_registered_social;
+$_salt_registered_social = array(
+	'twitter'		=> __('Follow us on Twitter', 'eggplant'),
+	'facebook'		=> __('Connect on Facebook', 'eggplant'),
+	'instagram'		=> __('Follow us on Instagram', 'eggplant'),
+	'pinterest'		=> __('Follow us on Pinterest', 'eggplant'),
+	'youtube'		=> __('Watch on Youtube', 'eggplant'),
+	'linkedin'		=> __('Connect on Linkedin', 'eggplant'),
+	'weixin'		=> __('Connect on Weixin', 'eggplant'),
+	'weibo'			=> __('Connect on Weibo', 'eggplant'),
+);
+
+
+if (!function_exists('salt_css_template')) :
+/**
+ * Output the CSS template in the header.
+ *
+ * This adds a header background image within the header.
+ * Recommend header image size is '1300 x 240'.
+ *
+ * @since Salt 1.1.0
+ */
+function salt_css_template() {
+	
+	// Get the header image uploaded & header text color by the user in the customizer.
+	$header_image = get_custom_header();
+	$header_text_color = get_theme_mod( 'header_textcolor' );
+	
+	// If a header image has been uploaded, set the CSS to be output in the website header.
+	if ( $header_image ) {
+		$css = <<<CSS
+	
+#header {
+  background: url( {$header_image->url} ) top center no-repeat; 
+  background-size: cover; 
+}
+#header .inner-wrapper { 
+  height: {$header_image->height}px; };
+}
+CSS;
+	}
+	
+	// If the color of the header text has been selected, set the CSS to output the hex code.
+	if ( $header_text_color ) {
+		$css .= <<<CSS
+		
+#header h1,
+#header p {
+  color: #{$header_text_color};
+}
+CSS;
+	}
+	?>
+<style type="text/css" media="screen" id="salt-css-tmpl"><?php echo $css; ?></style>
+	<?php
+}
+add_action( 'wp_head', 'salt_css_template' );
+endif;
