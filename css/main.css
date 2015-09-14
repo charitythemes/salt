@@ -299,6 +299,10 @@ a:active {
 	margin: 3.670% 0;
 	display: block; }
 
+.wide .logo {
+	float: left;
+}
+
 .centered .logo {
 	text-align: center; }
 
@@ -322,11 +326,14 @@ a:active {
 .boxed .nav-wrapper {
 	border-top: 1px solid #e3e3e3;
 	border-bottom: 1px solid #e3e3e3; }
-	
-.navbar-toggle-wrapper,
+
 .wide .nav-wrapper {
 	border: none;
-	margin: 7% 0 0; }	
+	margin: 7% 0 0;
+	float: right;
+	display: inline-flex;
+	display: -webkit-inline-flex;
+}	
 
 .centered .nav-wrapper {
 	text-align: center; }
@@ -523,7 +530,8 @@ ul.menu > li,
 *****/
 
 #header-wrapper {
-	background: #fff; }
+	background: #fff;
+	position: relative; }
 
 #footer-widgets {
 	border-top: 12px solid #e9eaee;
@@ -540,15 +548,21 @@ ul.menu > li,
 	background: #282a2b;
 	border-top: 1px solid #4b4c4d; }
 
-#footer p {
+#footer p.credits,
+#footer p.copyright {
 	color: #8C8988;
 	font-size: 0.857em; }
 
-#footer a {
+#footer p.credits a,
+#footer p.copyright a {
 	color: #8C8988; }
 
-#footer a:hover {
+#footer p.copyright a:hover {
 	border-bottom: 1px solid #8C8988; }
+
+#footer p.copyright {
+	float: left;
+}
 
 #footer p.credits {
 	text-align: right; }
@@ -560,7 +574,7 @@ ul.menu > li,
 	background: url(../images/logo_ct_2x.png) no-repeat;
 	text-indent: -9999px;
 	text-align: left;
-	float: right;
+	display: inline-block;
 	width: 90px;
 	background-size: contain;
 	margin-left: 1px;
@@ -569,7 +583,7 @@ ul.menu > li,
 
 #footer a.ct_logo:hover {
 	opacity: 0.8; 
-	border-bottom: none; }
+}
 	
 #footer .seperator {
 	margin: 0 5px; }	
@@ -839,8 +853,10 @@ ul.menu > li,
 .boxed .hentry {
 	padding-top: 2.6923%; }
 
-.hentry.has-post-thumbnail {
-	padding-top: 0; }
+.blog .hentry.has-post-thumbnail,
+.single-post .hentry.has-post-thumbnail {
+	padding-top: 0; 
+}
 
 .hentry + .hentry {
 	border-top: 1px solid rgba(51, 51, 51, 0.1);
@@ -1074,6 +1090,7 @@ h3.author-title {
 	position: relative;
 	top: 1px; }
 
+.page-footer,
 .entry-footer {
 	background-color: #f7f7f7;
 	color: #707070;
@@ -1081,16 +1098,20 @@ h3.author-title {
 	line-height: 1.5;
 	padding: 3.8461% 7.6923%; }
 
+.page-footer a,
 .entry-footer a {
 	border-bottom: 1px solid transparent;
 	color: #707070;
 	color: rgba(51, 51, 51, 0.7);
 }
 
+.page-footer a:hover, 
 .entry-footer a:hover {
 	border-bottom: 1px solid #333;
 }
 
+.page-footer a:hover,
+.page-footer a:focus,
 .entry-footer a:hover,
 .entry-footer a:focus {
 	color: #333;
@@ -1293,6 +1314,51 @@ h3.author-title {
 }
 
 /*****
+/*  ~Cover Image
+*****/
+
+.banner-cover-wrapper {
+	position: relative;
+}
+
+.banner-cover-wrapper.cover-image {
+	background-position: 50%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin: 0 auto;
+	min-height: 300px;
+}
+
+.banner-cover-wrapper .darken {
+	text-align: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.banner-cover-wrapper .copy-container {
+	margin: 0 auto;	
+	left: 50%;
+	top: 50%;
+	position: absolute;
+    -ms-transform: translate( -50%, -50% );
+   	-webkit-transform: translate( -50%, -50% ); 
+    transform: translate( -50%, -50% );
+	box-sizing: border-box;
+}
+
+.banner-cover-wrapper h1,
+.banner-cover-wrapper p {
+	color: #fff;
+}
+
+.banner-cover-wrapper h1 {
+	margin-bottom: 10px;	
+}
+
+/*****
 /*  ~grid format
 *****/
 
@@ -1400,6 +1466,7 @@ h3.author-title {
 .boxed .entry-summary {
 	padding: 0 0 2.6923%; }
 
+.boxed .page-footer,
 .boxed .entry-footer {
 	padding: 1.8461% 2.6923%; }
 	
@@ -1768,11 +1835,9 @@ input[type="submit"] {
 	text-transform: uppercase; }
 
 .navbar-toggle {
-	background: none; 
-	border-radius: 3px;
-	color: #333; 
-	border: 1px solid #333; 
-	padding: 0.571em 0.714em; }
+	color: #fff; 
+	background: #333;
+	width: 100%; }
 
 button:hover,
 input[type="button"]:hover,
@@ -1788,7 +1853,7 @@ input[type="submit"]:focus {
 
 .navbar-toggle:hover,
 .navbar-toggle:focus {
-	background-color: #f1f1f1; }
+	background-color: #000; }
 
 input[type="search"] {
 	-webkit-appearance: textfield;
@@ -2072,7 +2137,6 @@ article.type-post footer {
 	
 /* Medium desktop */
 @media ( min-width: 768px ) and ( max-width: 979px ) {
-	.navbar-toggle-wrapper,
 	.wide .nav-wrapper {
 		border: none;
 		margin-top: 4em; }
@@ -2084,15 +2148,61 @@ article.type-post footer {
 }
 
 @media screen and (max-width : 767px){
-
+	
+	.logo {
+		clear: left;
+		text-align: center;
+		margin: 0;
+		padding-top: 10px;
+	}
+	
+	.wide .logo {
+		float: none;	
+	}
+		
+	#header-wrapper .inner-wrapper {
+		position: relative;
+		padding-bottom: 45px;
+	}
+	
+	#header-wrapper #header .container {
+		padding: 0;		
+	}
+	
+	.wide .nav-wrapper {
+		margin: 0;
+		float: none;
+		display: block;
+	}
+	
+	.navbar-toggle-wrapper {
+		bottom: 0;
+		position: absolute;
+		width: 100%;
+	}
+	
+	.nav-wrapper .container {
+		padding: 0;
+	}
+	
+	#primary-menu {
+		position: relative;
+		z-index: 99;
+	}
+	
+	#primary-menu .social-links.menu-right {
+		display: none;
+	}
+	
 	.navbar-collapse {
 		display: none; }
 	
 	ul { 
 		position: static; }
 
-	.menu ul li {
-		border-bottom: 1px solid #eee; }
+	.menu > ul > li {
+		border-bottom: 1px solid #eee;
+	}
 		
 	ul li, 
 	li a {
@@ -2102,6 +2212,17 @@ article.type-post footer {
 		display:block;
 	}
 
+	.menu {
+		position: absolute;
+		top: 0px;
+		background: #333;
+		width: 100%;	
+	}
+	
+	.menu li ul.sub-menu {
+		border-top-width: 1px;
+	}
+	
 	.menu li ul.children,
 	.menu li ul.sub-menu,
 	.menu li ul.children, 
@@ -2113,8 +2234,14 @@ article.type-post footer {
 		padding: 0;
 		position: inherit;	}
 	
+	.menu li > ul.children, 
+	.menu li > ul.sub-menu {
+		border-top: none;
+	}
+	
 	.menu li ul.children,
 	.menu li ul.sub-menu {
+		background: none;
 		width: 100%;
 		box-shadow: none;
 		-moz-box-shadow: none;
@@ -2124,14 +2251,30 @@ article.type-post footer {
 	.menu li ul.sub-menu li:last-child {
 		border-bottom: none; }
 
-	.navbar-toggle-wrapper {
-		border: none;
-		margin-top: 6%; }
-
-	.wide .nav-wrapper {
-		border: none;
-		margin-top: 0; }
+	.menu ul.children li a,
+	.menu ul.sub-menu li a,
+	.menu li a {
+		color: #fff;
+		padding: 8px 10px 6px 10px;	
+	}
+	
+	.menu ul.children li a:hover, 
+	.menu ul.sub-menu li a:hover {
+		background: rgba(255,255,255, 0.2);
+	}
 		
-	.logo img {
-		width: 70%; }
+	#footer p.copyright {
+		float: none;
+	}
+	
+	#footer p.copyright,
+	#footer p.credits,
+	#footer .social-links {
+		text-align: center;
+	}	
+	
+	.banner-cover-wrapper.cover-image {
+		height: 150px !important;
+		min-height: 150px;
+	}
 }

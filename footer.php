@@ -53,13 +53,18 @@
 	
 			<?php do_action('salt_footer_inside_above'); ?>
 
-			<p class="pull-left copyright"><span class="copy">&copy;</span> <?php echo date('Y'); ?> <?php echo get_theme_mod('salt_footer_text'); ?></p>
+			<p class="copyright"><span class="copy">&copy;</span> <?php echo date('Y'); ?> <?php echo get_theme_mod('salt_footer_text'); ?></p>
 	
 		    <?php if (get_option('salt_footer_credit')!='1') { ?>
-			<p class="pull-right credits">
+			<p class="credits">
 				<?php echo sprintf(__('Designed by %1s charity: themes %2s', 'salt'), '<a class="ct_logo" href="http://www.charitythemes.org" title="WordPress Themes for Nonprofits" target="_blank">','</a>'); ?>
 			</p>
 			<?php } ?>
+
+			<?php 
+			if ( 'footer' == get_theme_mod( 'salt_social_position' ) ) {			
+				get_template_part( 'partials/social' , 'links' );
+			} ?>			
 	
 			<?php do_action('salt_footer_inside_below'); ?>
 	

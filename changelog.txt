@@ -1,9 +1,25 @@
 == Salt Changelog ==
 
-2015.06.15 - v1.1.0
+2015.09.12 - v1.3.0
+- Allow bloggers to hide the about the author section on the single post
+- Bloggers can now add featured images to their pages
+- Fixed some small styling issues
+
+2015.07.31 - v1.2.1
+- Fixed some small errors
+
+2015.07.20 - v1.2.0
+- Support for custom Typography including Google fonts
+- New improved screenshot!
+
+2015.07.06 - v1.1.1
+- Amendments to text domain
+
+2015.06.26 - v1.1.0
 - Added header image support
 - Added social media links into the customizer
 - Improvements on the responsive header menu code
+- Make the main.css stylesheet dependant on loading bootstrap first
 
 2015.05.13 - v1.0.5
 - Include 4 new page templates for full width, 2 sidebars and left / right sidebars

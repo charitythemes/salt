@@ -32,14 +32,22 @@ if ( ! isset( $content_width ) ) {
 
 /*
  * Load Customizer Support
+ *
+ * 		Typography @since Salt 1.2.0
  */
 require_once get_template_directory() . '/core/customizer/init.php';
+require_once get_template_directory() . '/core/customizer/typography.php';
 
 /*
  * Load Front-end helpers
  */
 require_once get_template_directory() . '/core/helpers/post.php';
 require_once get_template_directory() . '/core/helpers/layout.php';
+
+/*
+ * Load theme actions, override in a child theme.
+ */
+get_template_part( 'actions/general' );
 
 if (!function_exists('salt_theme_setup')) :
 /**
@@ -108,7 +116,7 @@ function salt_register_styles() {
 
 	wp_enqueue_style( 'bootstrap' 	, get_template_directory_uri() . '/css/bootstrap.min.css', false, '3.2.0');
 	wp_enqueue_style( 'fontawesome'	, get_template_directory_uri() . '/css/font-awesome.min.css', false, '4.2.0');
-	wp_enqueue_style( 'main'	 	, get_template_directory_uri() . '/css/main.css', array( 'bootstrap' ), '1.0.1');
+	wp_enqueue_style( 'main'	 	, get_template_directory_uri() . '/css/main.css', array( 'bootstrap' ), '1.0.2');
 	wp_enqueue_style( 'social'	 	, get_template_directory_uri() . '/css/social.css', array( 'main' ), '1.0');
 }
 endif;
@@ -215,14 +223,14 @@ $_salt_registered_classes = array(
  */
 global $_salt_registered_social;
 $_salt_registered_social = array(
-	'twitter'		=> __('Follow us on Twitter', 'eggplant'),
-	'facebook'		=> __('Connect on Facebook', 'eggplant'),
-	'instagram'		=> __('Follow us on Instagram', 'eggplant'),
-	'pinterest'		=> __('Follow us on Pinterest', 'eggplant'),
-	'youtube'		=> __('Watch on Youtube', 'eggplant'),
-	'linkedin'		=> __('Connect on Linkedin', 'eggplant'),
-	'weixin'		=> __('Connect on Weixin', 'eggplant'),
-	'weibo'			=> __('Connect on Weibo', 'eggplant'),
+	'twitter'		=> __('Follow us on Twitter', 'salt'),
+	'facebook'		=> __('Connect on Facebook', 'salt'),
+	'instagram'		=> __('Follow us on Instagram', 'salt'),
+	'pinterest'		=> __('Follow us on Pinterest', 'salt'),
+	'youtube'		=> __('Watch on Youtube', 'salt'),
+	'linkedin'		=> __('Connect on Linkedin', 'salt'),
+	'weixin'		=> __('Connect on Weixin', 'salt'),
+	'weibo'			=> __('Connect on Weibo', 'salt'),
 );
 
 
@@ -240,9 +248,9 @@ function salt_css_template() {
 	// Get the header image uploaded & header text color by the user in the customizer.
 	$header_image = get_custom_header();
 	$header_text_color = get_theme_mod( 'header_textcolor' );
-	
+
 	// If a header image has been uploaded, set the CSS to be output in the website header.
-	if ( $header_image ) {
+	if ( isset( $header_image->url ) && $header_image->url != '' ) {
 		$css = <<<CSS
 	
 #header {
@@ -250,7 +258,7 @@ function salt_css_template() {
   background-size: cover; 
 }
 #header .inner-wrapper { 
-  height: {$header_image->height}px; };
+  height: {$header_image->height}px;
 }
 CSS;
 	}

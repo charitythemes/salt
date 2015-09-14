@@ -1,7 +1,7 @@
 (function($) {
 	$(document).ready(function() {
 		$('.navbar-toggle').on('click', function() {
-			$('.navbar-collapse').slideToggle();
+			$('.navbar-collapse').toggle();
 		});
 	});
 })(jQuery);

@@ -46,7 +46,6 @@ function salt_customize_register( $wp_customize ) {
     $wp_customize->add_setting('salt_custom_logo', array(
         'capability'    	=> 'edit_theme_options',
         'type'          	=> 'option',
-		'transport' 		=> 'postMessage',
 		'sanitize_callback' => 'esc_url_raw'
     ));
 
@@ -56,8 +55,6 @@ function salt_customize_register( $wp_customize ) {
         'settings' 		=> 'salt_custom_logo',
         'priority'		=> 15,
     )));
-   
-    $wp_customize->get_setting( 'salt_custom_logo' )->transport = 'postMessage'; 
     
     $wp_customize->add_setting('salt_custom_favicon', array(
         'capability'    	=> 'edit_theme_options',
@@ -105,7 +102,21 @@ function salt_customize_register( $wp_customize ) {
 		)
     )));
 
-	// Select a footer widget layout
+
+	/**
+	 * Blog
+	 *
+	 * Blog options 
+	 * 
+	 * @since Salt 1.3.0
+	 */
+	$wp_customize->add_section('blog', array(
+        'title'    		=> __('Blog', 'salt'),
+        'priority' 		=> 35,
+        'description' 	=> __('Customize your blog', 'salt'),
+    ));
+	
+	// Select a layout for the blog pages
     $wp_customize->add_setting('salt_blog_layout', array(
 	    'default'           => '4',
 	    'capability'        => 'edit_theme_options',
@@ -114,8 +125,8 @@ function salt_customize_register( $wp_customize ) {
 	));
 	
 	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_blog_layout', array(
-        'label'    => __( 'Blog Layout', 'salt' ),
-        'section'  => 'general',
+        'label'    => __( 'Layout', 'salt' ),
+        'section'  => 'blog',
         'description' => __('This option affects your category, tag, author, single and search pages.', 'salt'),
         'settings' => 'salt_blog_layout',
         'type'	   => 'select',
@@ -126,7 +137,23 @@ function salt_customize_register( $wp_customize ) {
 			'three-col-middle' => __('Both', 'salt')
 		)
 	)));
-
+	
+	// Turn on / off the about author section.
+	$wp_customize->add_setting('salt_blog_about_author', array(
+	    'default'           => false,
+	    'capability'        => 'edit_theme_options',
+	    'type'           	=> 'theme_mod',
+        'sanitize_callback' => 'sanitize_text_field'
+	));
+	
+	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_blog_about_author', array(
+        'label'    => __( 'Hide About Author', 'salt' ),
+        'description' 	=> __('Hide the "About The Author" section on the blog single post.', 'salt'),
+        'section'  => 'blog',
+        'settings' => 'salt_blog_about_author',
+        'type'     => 'checkbox',
+	)));
+	
 	/**
 	 * Social
 	 *
@@ -150,39 +177,45 @@ function salt_customize_register( $wp_customize ) {
 
     // Social Icons Position
     $wp_customize->add_setting('salt_social_position', array(
-    	'default'       => 'right',
-        'capability'    => 'edit_theme_options',
-        'type'          => 'theme_mod'
+    	'default'       	=> 'right',
+        'capability'    	=> 'edit_theme_options',
+        'type'          	=> 'theme_mod',
+        'sanitize_callback' => 'sanitize_text_field'
     ));
 
     $wp_customize->add_control( new WP_Customize_Control($wp_customize, 'salt_social_position', array(
-        'label'    		=> __('Position', 'eggplant'),
+        'label'    		=> __('Position', 'salt'),
         'section'  		=> 'look',
         'settings' 		=> 'salt_social_position',
-        'type'          => 'radio',
+        'type'          => 'select',
         'choices'       => array (
-        	'above'  => __('Above the menu bar', 'eggplant'),
-			'right'  => __('On the right of the menu bar', 'eggplant'),
+        	'' 	  		   => __('Hide', 'salt'),
+        	'header' 	   => __('At the top', 'salt'),
+			'menu-right'   => __('On the right of the menu', 'salt'),
+			'stick-right'  => __('Stick to the right', 'salt'),
+			'stick-left'   => __('Stick to the left', 'salt'),
+			'footer'   	   => __('At the bottom', 'salt'),
 		)
     )));
     
 	// Options for the look and feel of the social icons.
     $wp_customize->add_setting('salt_social_shape', array(
-    	'default'       => '',
-        'capability'    => 'edit_theme_options',
-        'type'          => 'theme_mod',
-        'transport' 	=> 'postMessage'
+    	'default'       	=> '',
+        'capability'   	 	=> 'edit_theme_options',
+        'type'         	 	=> 'theme_mod',
+        'transport' 		=> 'postMessage',
+        'sanitize_callback' => 'sanitize_text_field'
     ));
 
     $wp_customize->add_control( new WP_Customize_Control($wp_customize, 'salt_social_shape', array(
-        'label'    		=> __('Shape', 'eggplant'),
+        'label'    		=> __('Shape', 'salt'),
         'section'  		=> 'look',
         'settings' 		=> 'salt_social_shape',
         'type'          => 'select',
         'choices'       => array (
-        	'circle'   => __('Circular', 'eggplant'),
-			'square'   => __('Square', 'eggplant'),
-			'no-shape' => __('No Background', 'eggplant')
+        	'circle'   => __('Circular', 'salt'),
+			'square'   => __('Square', 'salt'),
+			'no-shape' => __('No Background', 'salt')
 		)
     )));
     
@@ -190,21 +223,22 @@ function salt_customize_register( $wp_customize ) {
     
     // Social Icons Type
     $wp_customize->add_setting('salt_social_type', array(
-    	'default'       => 'black',
-        'capability'    => 'edit_theme_options',
-        'type'          => 'theme_mod',
-        'transport' 	=> 'postMessage'
+    	'default'       	=> 'black',
+        'capability'    	=> 'edit_theme_options',
+        'type'          	=> 'theme_mod',
+        'transport' 		=> 'postMessage',
+        'sanitize_callback' => 'sanitize_text_field'
     ));
 
     $wp_customize->add_control( new WP_Customize_Control($wp_customize, 'salt_social_type', array(
-        'label'    		=> __('Type', 'eggplant'),
+        'label'    		=> __('Type', 'salt'),
         'section'  		=> 'look',
         'settings' 		=> 'salt_social_type',
         'type'          => 'select',
         'choices'       => array (
-        	'black' => __('Black', 'eggplant'),
-			'white' => __('White', 'eggplant'),
-			'color' => __('Color', 'eggplant')
+        	'black' => __('Black', 'salt'),
+			'white' => __('White', 'salt'),
+			'color' => __('Color', 'salt')
 		)
     )));
     
@@ -212,21 +246,22 @@ function salt_customize_register( $wp_customize ) {
 
     // Social Icons Size
     $wp_customize->add_setting('salt_social_size', array(
-    	'default'       => 'small',
-        'capability'    => 'edit_theme_options',
-        'type'          => 'theme_mod',
-        'transport' 	=> 'postMessage'
+    	'default'       	=> 'small',
+        'capability'   		=> 'edit_theme_options',
+        'type'          	=> 'theme_mod',
+        'transport' 		=> 'postMessage',
+        'sanitize_callback' => 'sanitize_text_field'
     ));
 
     $wp_customize->add_control( new WP_Customize_Control($wp_customize, 'salt_social_size', array(
-        'label'    		=> __('Size', 'eggplant'),
+        'label'    		=> __('Size', 'salt'),
         'section'  		=> 'look',
         'settings' 		=> 'salt_social_size',
         'type'          => 'select',
         'choices'       => array (
-        	'small'  => __('Small', 'eggplant'),
-			'medium' => __('Medium', 'eggplant'),
-			'large'  => __('Large', 'eggplant')
+        	'small'  => __('Small', 'salt'),
+			'medium' => __('Medium', 'salt'),
+			'large'  => __('Large', 'salt')
 		)
     )));
     
@@ -246,24 +281,22 @@ function salt_customize_register( $wp_customize ) {
 	if ($accounts) foreach ($accounts as $account => $name) {
 		
 		$setting_id = 'salt_social_'.$account;
-		$setting_args = array(
-	    	'default'       => '',
-	        'capability'    => 'edit_theme_options',
-	        'type'          => 'theme_mod',
-		);
 		
-		$wp_customize->add_setting( $setting_id, $setting_args ); 
+		$wp_customize->add_setting( $setting_id, array(
+	    	'default'       	=> '',
+	        'capability'    	=> 'edit_theme_options',
+	        'type'          	=> 'theme_mod',
+	        'sanitize_callback' => 'sanitize_text_field'
+		) ); 
 		
 		$control_id = 'salt_social_'.$account;
-		$control_args = array( 
+		
+		$wp_customize->add_control( $control_id, array( 
 		    'label'    		=> $name,
 		    'section'  		=> 'links',
 		    'settings' 		=> $control_id,
 		    'type'          => 'text',
-		);
-		
-		$wp_customize->add_control( $control_id, $control_args ); 
-		
+		) ); 
 	} 
 	
     /**

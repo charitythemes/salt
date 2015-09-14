@@ -1,154 +1,218 @@
 ul.ico-social {
-	list-style-type: none;
-	line-height: 1;
-    vertical-align: middle;
-    margin: 0;
-    padding: 0; }
+	list-style-type:none;
+	line-height:1;
+	vertical-align:middle;
+	margin:0;
+	padding:0;
+}
+
+.boxed .nav-wrapper ul.ico-social {
+	padding: 5px 0;
+}
 
 ul.ico-social li {
-	display: inline; 
-	margin-right: 5px;
+	display:inline;
+	margin-right:5px;
 }
 
 ul.ico-social.no-shape li {
-	margin-right: 3px;
+	margin-right:3px;
 }
 
 ul.ico-social li a {
-	display: inline-block;
-	width: 32px;
-	height: 32px;
-	text-align: center; }
+	display:inline-block;
+	width:32px;
+	height:32px;
+	text-align:center;
+}
 
 ul.ico-social li a:hover {
-	opacity: .7;
-    transition: opacity .2s ease-out;
-    -moz-transition: opacity .2s ease-out;
-    -webkit-transition: opacity .2s ease-out;
-    -o-transition: opacity .2s ease-out; }
- 
+	opacity:.7;
+	transition:opacity .2s ease-out;
+	-moz-transition:opacity .2s ease-out;
+	-webkit-transition:opacity .2s ease-out;
+	-o-transition:opacity .2s ease-out;
+}
+
 ul.ico-social li a {
-	background: #333;
-	color: #fff;
+	background:#333;
+	color:#fff;
+}
+
+/* Positioning */
+.social-links.stick-right, 
+.social-links.stick-left {
+	position: fixed;
+	top: 40%;
+	background: #f1f1f1;
+	border: solid 1px #b4ced4;
+	z-index: 999;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+}
+
+.social-links.header,
+.social-links.footer {
+	margin-top: 10px;
+	text-align: right;
+}
+
+.social-links.stick-right {
+	right: 0;
+	border-radius: 10px 0 0 10px;
+	border-right: none;
+}
+
+.social-links.stick-left {
+	left: 0;	
+	border-radius: 0 10px 10px 0;
+	border-left: none;
+}
+
+.social-links.stick-right li,
+.social-links.stick-left li {
+	display: block;
+}
+
+.social-links.stick-right ul.square li,
+.social-links.stick-right ul.circle li,
+.social-links.stick-left ul.square li,
+.social-links.stick-left ul.circle li  {
+	margin-bottom: 5px;
+}
+
+.social-links.menu-right {
+	text-align: right;
 }
 
 /* Font Sizes */
-
 ul.ico-social.medium li a {
-	font-size: 1.2em;
+	font-size:1.2em;
 }
 
 ul.ico-social.large li a {
-	font-size: 1.5em;
+	font-size:1.5em;
 }
-   
+
 ul.ico-social li a i.fa {
-	margin-top: 9px;
+	margin-top:9px;
 }
 
 ul.ico-social.medium li a i.fa {
-	margin-top: 8px;
+	margin-top:8px;
 }
 
 ul.ico-social.large li a i.fa {
-	margin-top: 5px;
+	margin-top:5px;
 }
 
 /* Shapes */
-  
 ul.ico-social.square li a {
-	border-radius: 3px;
+	border-radius:3px;
 }
 
 ul.ico-social.circle li a {
-	border-radius: 32px;
+	border-radius:32px;
 }
 
 ul.ico-social.white li a {
-	background: #fff;
-	color: #333;
+	background:#fff;
+	color:#333;
 }
 
 /* No Shape */
-
 ul.ico-social.white.no-shape li a {
-	color: #fff;
-	background: none;
+	color:#fff;
+	background:none;
 }
 
 ul.ico-social.black.no-shape li a {
-	color: #333;
-	background: none;
+	color:#333;
+	background:none;
 }
 
 /* Color Background */
-
 ul.ico-social.color li a.twitter {
-	background: #55acee;
+	background:#55acee;
 }
 
 ul.ico-social.color li a.facebook {
-	background: #3b5998;
+	background:#3b5998;
 }
 
 ul.ico-social.color li a.youtube {
-	background: #cd201f;
+	background:#cd201f;
 }
 
 ul.ico-social.color li a.linkedin {
-	background: #0077b5;
+	background:#0077b5;
 }
 
 ul.ico-social.color li a.instagram {
-	background: #3f729b;
+	background:#3f729b;
 }
 
 ul.ico-social.color li a.pinterest {
-	background: #cc2127;
+	background:#cc2127;
 }
 
 ul.ico-social.color li a.wechat {
-	background: #7bb32e;
+	background:#7bb32e;
 }
 
 ul.ico-social.color li a.weibo {
-	background: #e4002e;
+	background:#e4002e;
 }
 
 /* No background but still in color */
-
 ul.ico-social.color.no-shape li a {
-	background: none;
+	background:none;
 }
 
 ul.ico-social.color.no-shape li a.twitter {
-	color: #55acee;
+	color:#55acee;
 }
 
 ul.ico-social.color.no-shape li a.facebook {
-	color: #3b5998;
+	color:#3b5998;
 }
 
 ul.ico-social.color.no-shape li a.youtube {
-	color: #cd201f;
+	color:#cd201f;
 }
 
 ul.ico-social.color.no-shape li a.linkedin {
-	color: #0077b5;
+	color:#0077b5;
 }
 
 ul.ico-social.color.no-shape li a.instagram {
-	color: #3f729b;
+	color:#3f729b;
 }
 
 ul.ico-social.color.no-shape li a.pinterest {
-	color: #cc2127;
+	color:#cc2127;
 }
 
 ul.ico-social.color.no-shape li a.wechat {
-	color: #7bb32e;
+	color:#7bb32e;
 }
 
 ul.ico-social.color.no-shape li a.weibo {
-	color: #e4002e;
+	color:#e4002e;
+}
+
+@media screen and (max-width : 767px){
+
+	.social-links.menu-right,
+	.social-links.header,
+	.social-links {
+		text-align: center;
+		margin: 10px 0;
+	}
+	
+	.boxed .social-links.menu-right {
+		margin: 0;
+	}
 }

@@ -16,12 +16,16 @@ if ( ! function_exists( 'salt_author_meta' ) ) :
  *
  * Add an about the author block, generally used on the single post page.
  *
- * @since Salt 1.0
+ * @since Salt 1.0.0
  */
 function salt_author_meta() {
 
  	global $post;
-	?>
+ 	
+ 	// Allows the users to hide the about author text from the Customizer.
+ 	if ( get_theme_mod('salt_blog_about_author') == '1' ) 
+ 		return false;
+ 	?>
 	<div class="author-meta vcard">
 	
 		<h2 class="author-heading"><?php _e('About the author', 'salt'); ?></h2>
