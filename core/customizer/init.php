@@ -24,6 +24,21 @@ function salt_enqueue_live_preview() {
 add_action( 'customize_preview_init' , 'salt_enqueue_live_preview' );
 endif;
 
+if ( !function_exists( 'salt_customize_control_js' ) ) :
+/**
+ * Binds JS listener to make Customizer color_scheme control.
+ *
+ * Passes color scheme data as colorScheme global.
+ * 
+ * @since Salt 1.4.0
+ */
+function salt_customize_control_js() {
+	wp_enqueue_script( 'salt-color-scheme-control', get_template_directory_uri() . '/core/assets/js/color-scheme-control.js', array( 'customize-controls', 'iris', 'underscore', 'wp-util' ), '1.1.0', true );
+	wp_localize_script( 'salt-color-scheme-control', 'colorScheme', salt_get_color_schemes() );
+}
+add_action( 'customize_controls_enqueue_scripts', 'salt_customize_control_js' );
+endif;
+
 /**
 * This hooks into 'customize_register' (available as of WP 3.4) and allows
 * you to add new sections and controls to the Theme Customize screen.
@@ -35,7 +50,11 @@ endif;
 function salt_customize_register( $wp_customize ) {
 	
 	$image_folder_url =  get_template_directory_uri() . '/includes/images/';
-
+	
+	// Get the color scheme options
+	// Function can be found in functions.php
+	$color_scheme = salt_get_color_scheme();
+	
 	/**
 	 * Branding
 	 *
@@ -74,7 +93,6 @@ function salt_customize_register( $wp_customize ) {
 	 * General
 	 *
 	 * Change the site to full width or box it in to a set width 
-	 * Edit the colours of the site with some presets
 	 * 
 	 * @since Salt 1.0
 	 */
@@ -101,7 +119,6 @@ function salt_customize_register( $wp_customize ) {
         	'boxed'  => __('Boxed', 'salt'),
 		)
     )));
-
 
 	/**
 	 * Blog
@@ -153,6 +170,87 @@ function salt_customize_register( $wp_customize ) {
         'settings' => 'salt_blog_about_author',
         'type'     => 'checkbox',
 	)));
+	
+	/**
+	 * Color Scheme
+	 *
+	 * Edit the colour scheme of the website to presets, or  
+	 * select your own colors.
+	 * 
+	 * @since Salt 1.4.0
+	 */
+
+	$wp_customize->add_panel( 'color', array(
+        'title'    		=> __('Color Scheme', 'salt'),
+        'priority' 		=> 39,
+        'description' 	=> __('Customize your website colors', 'salt'),
+    ));
+    
+    // Options for color presets.
+    $wp_customize->add_section( 'color_presets', array(
+		'title' 		=> __('Color Presets', 'salt'),
+		'description' 	=> __('Select a preset color scheme for your site.', 'salt'),
+		'priority' 		=> '10',
+		'panel' 		=> 'color'
+    ));
+	 
+	// Select a color scheme.
+    $wp_customize->add_setting('salt_color_scheme', array(
+	    'default'           => 'light',
+	    'capability'        => 'edit_theme_options',
+	    'type'           	=> 'theme_mod',
+        'sanitize_callback' => 'sanitize_text_field'
+	));
+	
+	// 6 awesome color schemes to choose from
+	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_color_scheme', array(
+        'section'  => 'color_presets',
+        'settings' => 'salt_color_scheme',
+        'type'	   => 'radio',
+        'choices'  => array (
+			'light'  => __('Light', 'salt'),
+			'blue' 	 => __('Blue', 'salt'),
+			'green'  => __('Green', 'salt'),
+			'yellow' => __('Yellow', 'salt'),
+			'red'	 => __('Red', 'salt'),
+			'pink'	 => __('Pink', 'salt'),
+			'orange' => __('Orange', 'salt'),
+		)
+	)));
+
+    // 
+    $wp_customize->add_section( 'color_select', array(
+		'title' 		=> __('Override Presets', 'salt'),
+		'description' 	=> __('Change the color tones below to override the preset color scheme.', 'salt'),
+		'priority' 		=> '10',
+		'panel' 		=> 'color'
+    ));
+	
+	// Color keys for the available tones in this theme.
+	$color_keys = array( 
+		'darkest'   => __('Darkest Tone', 'salt'),
+		'dark'		=> __('Dark Tone', 'salt'),
+		'medium'	=> __('Medium Tone', 'salt'),
+		'light'		=> __('Light Tone', 'salt'),
+		'lightest'	=> __('Lightest Tone', 'salt')		
+	);
+	
+	// Cycle through the available color tones and set a control in the customizer for each one.
+	foreach ( $color_keys as $key => $label ) {
+
+		$wp_customize->add_setting('salt_color_scheme_'.$key, array(
+			'default'			=> $color_scheme[ $key ],
+		    'capability'        => 'edit_theme_options',
+		    'type'           	=> 'theme_mod',
+		    'sanitize_callback' => 'sanitize_hex_color',
+		));
+		
+		$wp_customize->add_control( new WP_Customize_Color_Control($wp_customize, 'salt_color_scheme_'.$key, array(
+		    'label'    => $label,
+		    'section'  => 'color_select',
+		    'settings' => 'salt_color_scheme_'.$key,
+		)));			
+	}
 	
 	/**
 	 * Social
@@ -313,7 +411,7 @@ function salt_customize_register( $wp_customize ) {
     ));
 
 	$wp_customize->add_setting('salt_footer_credit', array(
-	    'default'           => true,
+	    'default'           => false,
 	    'capability'        => 'edit_theme_options',
 	    'type'           	=> 'option',
         'sanitize_callback' => 'sanitize_text_field'

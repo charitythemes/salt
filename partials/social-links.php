@@ -1,5 +1,8 @@
 <div class="social-links <?php echo get_theme_mod('salt_social_position'); ?>">
-	<?php 
+	<?php
+	// Define the $args variable
+	$args=array();
+		
 	if ( $t=get_theme_mod('salt_social_type') )
 		$args['type'] = $t;
 

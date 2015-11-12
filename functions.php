@@ -248,7 +248,10 @@ function salt_css_template() {
 	// Get the header image uploaded & header text color by the user in the customizer.
 	$header_image = get_custom_header();
 	$header_text_color = get_theme_mod( 'header_textcolor' );
-
+	
+	// Setup the css variable
+	$css = '';
+	
 	// If a header image has been uploaded, set the CSS to be output in the website header.
 	if ( isset( $header_image->url ) && $header_image->url != '' ) {
 		$css = <<<CSS
@@ -273,9 +276,256 @@ CSS;
 }
 CSS;
 	}
-	?>
-<style type="text/css" media="screen" id="salt-css-tmpl"><?php echo $css; ?></style>
-	<?php
+	
+	if ( $css != '' )
+		echo '<style type="text/css" media="screen" id="salt-css-tmpl">'.$css.'</style>';
+
 }
 add_action( 'wp_head', 'salt_css_template' );
+endif;
+
+if (!function_exists('salt_get_color_schemes')) :
+/**
+ * Color schemes.
+ *
+ * Array to hold the color schemes. There 6 colors schemes apart from the default. 
+ * Add more by filtering the salt_color_schemes filter.
+ *
+ * @since Salt 1.4.0
+ */
+function salt_get_color_schemes() {
+	return apply_filters( 'salt_color_schemes', array (
+		'light' => array(
+			'label'  => __( 'Light', 'salt' ),
+			'colors' => array(
+				'darkest'	=> '',
+				'dark'		=> '',
+				'medium'	=> '',
+				'light'		=> '',
+				'lightest'	=> ''
+			)
+		),
+		'blue' => array(
+			'label'  => __( 'Blue', 'salt' ),
+			'colors' => array(
+				'darkest'	=> '#135282',
+				'dark'		=> '#196dad',
+				'medium'	=> '#2188d6',
+				'light'		=> '#9ed5ff',
+				'lightest'	=> '#c5d6e4'
+			)
+		),
+		'green' => array(
+			'label'  => __( 'Green', 'salt' ),
+			'colors' => array(
+				'darkest'	=> '#235d39',
+				'dark'		=> '#00953b',
+				'medium'	=> '#00b552',
+				'light'		=> '#7fdaa8',
+				'lightest'	=> '#bde4cc'
+			)
+		),
+		'yellow' => array(
+			'label'  => __( 'Yellow', 'salt' ),
+			'colors' => array(
+				'darkest'	=> '#ffa400',
+				'dark'		=> '#ffc72c',
+				'medium'	=> '#fdde40',
+				'light'		=> '#ffe395',
+				'lightest'	=> '#fff1c8'
+			)
+		),
+		'red' => array(
+			'label'  => __( 'Red', 'salt' ),
+			'colors' => array(
+				'darkest'	=> '#ce112d',
+				'dark'		=> '#f6343f',
+				'medium'	=> '#ff5b5b',
+				'light'		=> '#ff9d9d',
+				'lightest'	=> '#fdcacd'
+			)
+		),
+		'pink' => array(
+			'label'  => __( 'Pink', 'salt' ),
+			'colors' => array(
+				'darkest'	=> '#a9123e',
+				'dark'		=> '#d50058',
+				'medium'	=> '#e74883',
+				'light'		=> '#ee7fa8',
+				'lightest'	=> '#f4bdd4'
+			)
+		),
+		'orange' => array(
+			'label'  => __( 'Orange', 'salt' ),
+			'colors' => array(
+				'darkest'	=> '#e14602',
+				'dark'		=> '#ff6c38',
+				'medium'	=> '#ff8e6c',
+				'light'		=> '#ffb098',
+				'lightest'	=> '#ffd9cb'
+			)
+		)
+	));
+}
+endif;
+
+if (!function_exists('salt_get_color_scheme')) :
+/**
+ * Get Color Scheme.
+ *
+ * Function to get a single color scheme option. 
+ *
+ * @since Salt 1.4.0
+ */
+function salt_get_color_scheme() {
+	$color_scheme_option = get_theme_mod( 'salt_color_scheme', 'light' );
+	$color_schemes       = salt_get_color_schemes();
+
+	if ( array_key_exists( $color_scheme_option, $color_schemes ) ) {
+		return $color_schemes[ $color_scheme_option ]['colors'];
+	}
+
+	return $color_schemes['light']['colors'];
+}
+endif;
+
+if (!function_exists('salt_color_scheme_css_output')) :
+/**
+ * Output Color Scheme
+ *
+ * Output the color scheme based on the user choice from within the customize
+ *
+ * @since Salt 1.4.0
+ */
+function salt_color_scheme_css_output() {
+	
+	// If there is no color scheme selected then exit
+	if ( ! get_theme_mod( 'salt_color_scheme' ) )
+		return false;
+	
+	// Preset Colour Schemes
+	$color_presets = salt_get_color_schemes();
+	
+	$scheme = ( $c = get_theme_mod( 'salt_color_scheme' ) ) ? $color_presets[ $c ]['colors'] : $color_presets['light']['colors'];
+	
+	// Cycle through the preset scheme that has been chosen.
+	foreach ( $scheme as $name => $code ) {
+		
+		// Check if any of the colors have been overridden by the user.
+		if ( $new = get_theme_mod( 'salt_color_scheme_'.$name ) ) {
+			
+			// Set the color code to the overridden one.
+			$scheme[ $name ] = $new;
+		}
+	}
+	
+	 if ( $c == 'blue' || $c == 'green' || $c == 'red' || $c == 'pink' || $c == 'orange' ) {
+		 $menu = '#ffffff';
+	 } else {
+		 $menu = '#333333';
+	 }
+
+	$css = <<<CSS
+
+/* Lightest Background Color */
+body {
+	background:{$scheme['lightest']};
+}
+
+#wrapper.wide {
+	background:{$scheme['lightest']};
+}		
+
+/* Main Menu Background Color */
+.boxed .nav-wrapper {
+	background: {$scheme['darkest']};
+    border-top-color: {$scheme['darkest']};
+    border-bottom-color: {$scheme['darkest']};
+}
+
+/* Dropdown Menu Border Color */
+.boxed .nav-wrapper .menu li:hover .children,
+.boxed .nav-wrapper .menu li:hover .sub-menu {
+	border-color: {$scheme['lightest']};
+}
+
+/* Main Text Color */
+.page-header h1,
+.page-header h2,
+.page-header h3,
+.menu li ul.children li a:hover,
+.menu li ul.sub-menu li a:hover, 
+.menu li ul.children li.current_page_item > a,
+.menu li ul.sub-menu li.current_page_item > a {
+	color: {$scheme['dark']};
+}
+
+/* Wide Menu Selected Background */
+.wide .menu > li a:hover, 
+.wide .menu > li.current-menu-item > a, 
+.wide .menu > li.current-page-ancestor > a, 
+.wide .menu > li.current_page_parent > a {
+	background:{$scheme['light']};	
+}
+	
+/* Border Highlight Color */
+#footer-widgets {
+	border-color: {$scheme['light']};
+}
+
+/* Light Background Color */
+.boxed .entry-footer {
+	background-color: {$scheme['lightest']};
+}
+
+.wide .entry-footer {
+	background-color: {$scheme['light']};
+}
+
+/* Button Color */
+button, 
+input[type="button"], 
+input[type="reset"], 
+input[type="submit"] {
+	background-color:{$scheme['darkest']};
+}
+
+button:hover, 
+input[type="button"]:hover, 
+input[type="reset"]:hover, 
+input[type="submit"]:hover, 
+button:focus, 
+input[type="button"]:focus, 
+input[type="reset"]:focus, 
+input[type="submit"]:focus {
+	background-color:{$scheme['dark']};
+}
+
+/* Link Color */
+@media screen and (min-width : 768px){
+	.boxed .menu li a {
+		color:{$menu};
+	}
+}
+
+/* Pagination */
+.pagination .current, 
+.pagination a:hover {
+	background: {$scheme['dark']};
+	border-color: {$scheme['light']};
+	color:{$menu};
+}
+
+.pagination a:link, 
+.pagination a:visited, 
+.pagination a:active {
+	border-color: {$scheme['light']};
+}
+
+CSS;
+	?>
+<style type="text/css" media="screen" id="salt-color-tmpl"><?php echo $css; ?></style>
+	<?php
+}
+add_action( 'wp_head', 'salt_color_scheme_css_output' );
 endif;

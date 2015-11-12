@@ -280,7 +280,8 @@ a:active {
 .post p.tags a:link, 
 .post p.tags a:visited {
 	text-decoration: none;
-	color: #888; }
+    color: #707070;
+    color: rgba(51, 51, 51, 0.7); }
 	
 .post-more a:hover, 
 .post-meta a:hover, 
@@ -325,7 +326,8 @@ a:active {
 	
 .boxed .nav-wrapper {
 	border-top: 1px solid #e3e3e3;
-	border-bottom: 1px solid #e3e3e3; }
+	border-bottom: 1px solid #e3e3e3; 
+}
 
 .wide .nav-wrapper {
 	border: none;
@@ -805,7 +807,8 @@ ul.menu > li,
 	background: none;
 	color: #fff; }	
 
-.footer-widget .widget-title {	
+.footer-widget .widget-title,
+.footer-widget.widget_calendar caption {	
 	color: #dddddd; }
 
 .footer-widget.widget_archive li, 

@@ -56,10 +56,10 @@
 					} ?>					
 					
 					<div class="inner-wrapper">
-					<?php if( 'wide' == get_theme_mod( 'salt_layout_type' ) ) {
-						get_template_part( 'partials/header' , 'wide' );
-					} else {
+					<?php if( 'boxed' == get_theme_mod( 'salt_layout_type' ) ) {
 						get_template_part( 'partials/header' , 'boxed' );
+					} else {
+						get_template_part( 'partials/header' , 'wide' );
 					}  ?>
 					</div>
 					

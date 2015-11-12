@@ -1,5 +1,11 @@
 == Salt Changelog ==
 
+2015.10.22 - v1.4.0
+- Introducing 6 color scheme option in the Customizer including - blue, green, red, pink, yellow and orange
+
+2015.10.19 - v1.3.1
+- Fixed a bug where the top menu won't show until user saves customizer settings
+
 2015.09.12 - v1.3.0
 - Allow bloggers to hide the about the author section on the single post
 - Bloggers can now add featured images to their pages
