@@ -10,5 +10,5 @@
  */
 
 // Use the general page.php file to display the page
-// Manipulate the layout via filters inside /core/helps/layout.php
+// Manipulates the layout via filters inside /core/helpers/layout.php
 get_template_part( 'page' ); ?>

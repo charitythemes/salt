@@ -8,12 +8,16 @@
  * @subpackage Salt
  * @since Salt 1.0
  */
-?>
 
-<section class="no-results not-found">
+do_action('salt_article_above'); ?>
+
+<article class="type-page status-publish hentry">
+
+	<?php do_action('salt_article_inside_above'); ?>
+	
 	<header class="page-header">
-		<h1 class="page-title"><?php _e( 'Nothing Found', 'salt' ); ?></h1>
-	</header><!-- .page-header -->
+		<h1><?php _e( 'Nothing Found', 'salt' ); ?></h1>
+	</header>
 
 	<div class="page-content">
 
@@ -33,5 +37,10 @@
 
 		<?php endif; ?>
 
-	</div><!-- .page-content -->
-</section><!-- .no-results -->
+	</div>
+		
+	<?php do_action('salt_article_inside_below'); ?>
+
+</article>
+
+<?php do_action('salt_article_below'); ?>

@@ -37,7 +37,7 @@ do_action('salt_article_above'); ?>
 	</div>
 		
 	<footer class="page-footer">
-		<?php edit_post_link( __( 'Edit', 'salt' ), '<span class="edit-link">', '</span>' ); ?>
+		<?php edit_post_link( __( 'Edit Page', 'salt' ), '<span class="edit-link">', '</span>' ); ?>
 	</footer>
 	
 	<?php do_action('salt_article_inside_below'); ?>
