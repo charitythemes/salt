@@ -194,7 +194,8 @@ function salt_customize_register( $wp_customize ) {
 	$wp_customize->add_setting('salt_show_slider', array(
     	'default'       	=> false,
         'capability'    	=> 'edit_theme_options',
-        'type'          	=> 'theme_mod'
+        'type'          	=> 'theme_mod',
+        'sanitize_callback' => 'sanitize_text_field'
     ));
 	
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_show_slider', array(
@@ -208,21 +209,24 @@ function salt_customize_register( $wp_customize ) {
 	$wp_customize->add_setting('salt_slider_direction_nav', array(
     	'default'       	=> 'on',
         'capability'    	=> 'edit_theme_options',
-        'type'          	=> 'theme_mod'
+        'type'          	=> 'theme_mod',
+        'sanitize_callback' => 'sanitize_text_field'
     ));
 	
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_direction_nav', array(
         'label'    		=> __('Show Direction Nav', 'salt'),
         'section'  		=> 'slider',
         'settings' 		=> 'salt_slider_direction_nav',
-        'type'          => 'checkbox'
+        'type'          => 'checkbox',
+        'sanitize_callback' => 'sanitize_text_field'
     )));
 
 	// Show the control nav on the slider.
 	$wp_customize->add_setting('salt_slider_control_nav', array(
     	'default'       	=> 'on',
         'capability'    	=> 'edit_theme_options',
-        'type'          	=> 'theme_mod'
+        'type'          	=> 'theme_mod',
+        'sanitize_callback' => 'sanitize_text_field'
     ));
 	
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_control_nav', array(
@@ -236,7 +240,8 @@ function salt_customize_register( $wp_customize ) {
 	$wp_customize->add_setting('salt_slider_auto_scroll', array(
     	'default'       	=> 'on',
         'capability'    	=> 'edit_theme_options',
-        'type'          	=> 'theme_mod'
+        'type'          	=> 'theme_mod',
+        'sanitize_callback' => 'sanitize_text_field'
     ));
 	
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_auto_scroll', array(
@@ -337,7 +342,8 @@ function salt_customize_register( $wp_customize ) {
 	$wp_customize->add_setting('salt_slider_posts_in_loop', array(
     	'default'       	=> '',
         'capability'    	=> 'edit_theme_options',
-        'type'          	=> 'theme_mod'
+        'type'          	=> 'theme_mod',
+        'sanitize_callback' => 'sanitize_text_field'
     ));
 	
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_posts_in_loop', array(

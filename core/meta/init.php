@@ -243,7 +243,7 @@ class Salt_Meta_Box {
 					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" value="<?php echo $meta; ?>" size="30" /> 
 					<?php if ( ! empty( $field['desc'] ) ) : ?>
 						<br /><span class="description salt-metabox-description"><?php echo $field['desc']; ?></span>
-					<? endif; ?>
+					<?php endif; ?>
 				</label>
 				<?php
 				break;
@@ -271,7 +271,7 @@ class Salt_Meta_Box {
 						<input type="checkbox" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" size="30" <?php echo ( $meta=='on' ) ? 'checked' : ''; ?> /> 
 					<?php if ( ! empty( $field['desc'] ) ) : ?>
 						<span class="description salt-metabox-description"><?php echo $field['desc']; ?></span>
-					<? endif; ?>
+					<?php endif; ?>
 				</label>
 				<?php
 				break;
@@ -289,7 +289,7 @@ class Salt_Meta_Box {
 					</select>
 						<?php if ( ! empty( $field['desc'] ) ) : ?>
 						<br /><span class="description salt-metabox-description"><?php echo $field['desc']; ?></span>
-					<? endif; ?>
+					<?php endif; ?>
 				</label>
 				<?php
 				break;
@@ -304,7 +304,7 @@ class Salt_Meta_Box {
 				<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" value="<?php echo $meta; ?>" size="30" class="salt-select-color" /> 
 				<?php if ( ! empty( $field['desc'] ) ) : ?>
 					<br /><span class="description salt-metabox-description"><?php echo $field['desc']; ?></span>
-				<? endif; ?>
+				<?php endif; ?>
 				
 				<?php
 				break;

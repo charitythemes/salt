@@ -1,5 +1,9 @@
 == Salt Changelog ==
 
+2016.20.05 - v1.5.0
+- Introducing a new slider to proudly display your posts with images
+- Fixed several small problems
+
 2015.10.22 - v1.4.0
 - Introducing 6 color scheme option in the Customizer including - blue, green, red, pink, yellow and orange
 
