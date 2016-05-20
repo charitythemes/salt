@@ -45,7 +45,7 @@ ul.salt-metabox-section {
 }
 
 ul.salt-metabox-list li.salt-metabox .salt-metabox-title {
-	width: 130px;
+	width: 90px;
 	display: inline-block;
 	vertical-align: top;
 }
@@ -78,7 +78,7 @@ ul.salt-metabox-list .salt-image-upload-wrapper,
 ul.salt-metabox-list textarea,
 ul.salt-metabox-list input[type="text"],
 ul.salt-metabox-list select {
-	width: 45%;
+	width: 65%;
 }
 
 ul.salt-metabox-list .salt-image-upload-wrapper {
@@ -165,10 +165,18 @@ ul.salt-metabox-list .salt-image-upload-wrapper {
 }
 
 .postbox .salt-metabox-color .wp-picker-container {
-	position: absolute;
+	position: relative;
 }
 
 .postbox .salt-metabox-color .wp-picker-holder {
 	z-index: 99;
 	position: relative;
+}
+
+@media only screen and (max-width: 960px) {
+	.postbox .floatleft,
+	.postbox .col-2 {
+		float: none;
+		width: 100%;
+	}
 }

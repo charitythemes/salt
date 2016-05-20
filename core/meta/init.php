@@ -488,7 +488,7 @@ class Salt_Background_Meta_Box extends Salt_Meta_Box {
 			'priority'   => 'high',
 			'fields'     => array(	
 				array(
-			        'label'	=> __('Background Image', 'salt'),
+			        'label'	=> __('Image', 'salt'),
 			        'id'    => $this->prefix.'image',
 			        'type'  => ''
 				),
@@ -590,7 +590,7 @@ class Salt_Background_Meta_Box extends Salt_Meta_Box {
 		?>
 		<div class="floatleft col-2">
 			
-			<h4 class="salt-metabox-title"><?php _e('Background Image', 'salt'); ?></h4>
+			<h4 class="salt-metabox-title"><?php _e('Choose Your Image', 'salt'); ?></h4>
 			<div class="salt-image-display salt-image-upload-button">
 				<!-- Image -->
 				<?php if ( isset( $meta ) && $meta != '' ) : ?>
