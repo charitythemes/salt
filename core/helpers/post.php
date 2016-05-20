@@ -29,10 +29,12 @@ function salt_author_meta() {
 	<div class="author-meta vcard">
 	
 		<h2 class="author-heading"><?php _e('About the author', 'salt'); ?></h2>
-			
+		
+		<?php if ( get_option( 'show_avatars' ) ) : ?>
 		<div class="author-avatar">
 			<?php echo get_avatar( $post->post_author, '56' ); ?>
 		</div>
+		<?php endif; ?>
 				
 		<div class="author-description">
 			<h3 class="author-title"><?php the_author_meta('display_name', $post->post_author); ?></h3>
