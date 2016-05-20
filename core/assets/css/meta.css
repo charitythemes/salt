@@ -1,0 +1,174 @@
+ul.salt-metabox-tabs {
+	margin: 1em 0 0;
+	padding: 0;
+	z-index: 99;
+	position: relative;
+}
+
+ul.salt-metabox-tabs li {
+	display: inline;
+	margin-left: -1px;
+}
+
+ul.salt-metabox-tabs li:first-child {
+	margin-left: 0px;
+}
+
+ul.salt-metabox-tabs li a {
+	background: #f1f1f1;
+	display: inline-block;
+	padding: 10px 20px;
+	border: 1px solid #f1f1f1;
+	border-bottom: none;
+	text-decoration: none;
+	color: #ccc;
+}
+
+ul.salt-metabox-tabs li a:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+ul.salt-metabox-tabs li.active a {
+	background: #ffffff;
+	color: #333;
+}
+
+ul.salt-metabox-list {
+	margin: 1em 0;
+}
+
+ul.salt-metabox-section {
+	border: 1px solid #f1f1f1;
+	padding: 20px 20px 0;
+	margin-top: -1px;
+}
+
+ul.salt-metabox-list li.salt-metabox .salt-metabox-title {
+	width: 130px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+ul.salt-metabox-list li.salt-metabox .salt-metabox-description {
+	margin-left: 135px;
+	font-size: .875em;
+	color: #999;
+}
+
+ul.salt-metabox-list li.salt-metabox-checkbox .salt-metabox-description {
+	margin-left: 0;
+}
+
+ul.salt-metabox-list li.salt-metabox {
+	border-bottom: 1px solid #e5e5e5;
+	padding: 12px 0px; 
+	margin-bottom: 0;
+}
+
+ul.salt-metabox-list li.salt-metabox:first-child {
+	padding-top: 0;
+}
+
+ul.salt-metabox-list li.salt-metabox:last-child {
+	border-bottom: none;
+}
+
+ul.salt-metabox-list .salt-image-upload-wrapper,
+ul.salt-metabox-list textarea,
+ul.salt-metabox-list input[type="text"],
+ul.salt-metabox-list select {
+	width: 45%;
+}
+
+ul.salt-metabox-list .salt-image-upload-wrapper {
+    display: inline-block;
+}
+
+.col-2 ul.salt-metabox-list .salt-metabox-textarea textarea {
+	width: 100%;
+}
+
+.insert-post-type .dashicons {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    vertical-align: text-top;
+    color: #82878C;
+    font-size: 18px;		
+}
+
+.postbox .floatleft {
+	float: left;
+	display: inline;
+}
+
+.postbox .col-2 {
+	width: 49%;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.postbox .salt-image-display {
+	position: relative;
+	width: 100%;
+}
+
+.postbox .salt-background-image-holder,
+.postbox .placeholder {
+	border: 1px solid #e5e5e5;
+	background: #f1f1f1;
+	width: 100%;
+	height: 200px;	
+	border-radius: 3px;
+	z-index: 50;
+	overflow: hidden;
+}
+
+.postbox .salt-background-image-holder img {
+	width: 100%;
+}
+
+.postbox .salt-image-display a.salt-image-remove {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	z-index: 99;
+	text-decoration: none;
+	color: #333;
+}
+
+.postbox .salt-image-display a.salt-image-remove:focus {
+	outline: none;
+	box-shadow: none;
+}
+
+.postbox .salt-image-button {
+	margin: .5em 0 0 0;
+	width: 100%;
+}
+
+.postbox .placeholder .dashicons {
+	left: 50%;
+	top: 50%;
+	margin: -10px 0 0 -10px;
+	position: relative;
+}
+
+.postbox .salt-metabox-title {
+	text-transform: uppercase;
+	font-weight: 500;
+}
+
+.postbox h4.salt-metabox-title {
+	margin: 1em 0;
+}
+
+.postbox .salt-metabox-color .wp-picker-container {
+	position: absolute;
+}
+
+.postbox .salt-metabox-color .wp-picker-holder {
+	z-index: 99;
+	position: relative;
+}

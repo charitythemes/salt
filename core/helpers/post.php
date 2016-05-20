@@ -59,7 +59,7 @@ if ( ! function_exists( 'salt_post_thumbnail' ) ) :
  *
  * @since Salt 1.0
  */
-function salt_post_thumbnail() {
+function salt_post_thumbnail( $size = 'post-thumbnail', $attr = '' ) {
 	if ( post_password_required() || is_attachment() || ! has_post_thumbnail() ) {
 		return;
 	}
@@ -68,15 +68,13 @@ function salt_post_thumbnail() {
 	?>
 
 	<div class="post-thumbnail">
-		<?php the_post_thumbnail(); ?>
+		<?php the_post_thumbnail( $size, $attr ); ?>
 	</div><!-- .post-thumbnail -->
 
 	<?php else : ?>
 
 	<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
-		<?php
-			the_post_thumbnail( 'post-thumbnail', array( 'alt' => get_the_title() ) );
-		?>
+		<?php the_post_thumbnail( $size, $attr ); ?>
 	</a>
 
 	<?php endif; // End is_singular()
@@ -387,6 +385,90 @@ function salt_social_icons( $args=array() ) {
 		echo $output;
 	} else {
 		return $output;
+	}
+}
+endif;
+
+if (!function_exists('salt_post_background_image')) :
+/*
+ * Display a background image that is saved as post meta.
+ *
+ * @since Salt 1.5.0
+ * @param array $args
+ * @return string
+ */
+ 
+/**
+ * Salt Post Background Image
+ *
+ * Outputs the background image saved as meta with each post. Will be ouput inside a html tag as CSS.
+ * 
+ * @param array $args Holds the set arguments for the post background. Optional.
+ *
+ *     @type string  		$before Markup to prepend the.
+ *     @type string  		$after  Markup to append to the title.
+ * 	   @type string 		$color  Pass a background color, format #999999
+ * 	   @type string 		$repeat  Should the image repeat. Default no-repeat
+ * 	   @type string 		$stretch  Should the image be stretched to cover the entire background.
+ * 	   @type string 		$position  What should the position of the background. Top, middle or bottom.
+ *     @type bool   		$echo   Whether to echo or return the title. Default true for echo.
+ * 
+ * @return string CSS that can be used on a HTML tag to display the background.
+ * @since Salt 1.5.0 
+ */
+ 
+function salt_post_background_image( $args='' ) {
+	
+	global $post;
+
+	$m = get_post_custom( $post->ID );
+
+	$defaults = array(
+		'before'   => 'style="',
+		'after'    => '"',
+		'color'	   => ( isset( $m['_background_color'][0] ) ) ? $m['_background_color'][0] : '',
+		'repeat'   => ( isset( $m['_background_repeat'][0] ) ) ? $m['_background_repeat'][0] : 'no-repeat',
+		'stretch'  => ( isset( $m['_background_stretch'][0] ) ) ? $m['_background_stretch'][0] : '',
+		'position' => ( isset( $m['_background_position'][0] ) ) ? $m['_background_position'][0] : '',
+		'echo'	   => true
+	);
+	
+	$r = wp_parse_args( $args, $defaults );	
+
+	if ( isset( $m['_background_image'][0] ) || isset( $r['color'] ) ) {
+		
+		if ( isset( $m['_background_image'][0] ) ) 
+			$image = wp_get_attachment_image_src( $m['_background_image'][0], 'large' );
+		
+		$css = $r['before'];
+		
+		if ( isset( $image[0] ) ) {
+			$css .= 'background-image:url(' . $image[0] . ');';
+		}
+		
+		if ( isset( $r['color'] ) && $r['color']!='' ) {
+			$css .= 'background-color:' . $r['color'] . ';';
+		}
+		
+		if ( isset( $r['repeat'] ) && $r['repeat']!='' ) {
+			$css .= 'background-repeat:' . $r['repeat'] . ';';
+		}
+		
+		if ( isset( $r['stretch'] ) && $r['stretch'] == 'on' ) {
+			$css .= 'background-size:cover;';
+		}
+		
+		if ( isset( $r['position'] ) && $r['position']!='' ) {
+			$css .= 'background-position:' . $r['position'] . ';';
+		}
+				
+		$css .= $r['after'];
+	}
+	
+	if ( $r['echo'] ) {
+		echo $css;
+	} else {
+		return $css;
 	}
 }
 endif;

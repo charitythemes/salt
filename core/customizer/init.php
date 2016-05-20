@@ -33,10 +33,13 @@ if ( !function_exists( 'salt_customize_control_js' ) ) :
  * @since Salt 1.4.0
  */
 function salt_customize_control_js() {
-	wp_enqueue_script( 'salt-color-scheme-control', get_template_directory_uri() . '/core/assets/js/color-scheme-control.js', array( 'customize-controls', 'iris', 'underscore', 'wp-util' ), '1.1.0', true );
-	wp_localize_script( 'salt-color-scheme-control', 'colorScheme', salt_get_color_schemes() );
+	wp_enqueue_script( 'salt-extend-controls', get_template_directory_uri() . '/core/assets/js/customizer-extend.js', array( 'customize-controls', 'iris', 'underscore', 'wp-util' ), '1.1.0', true );
+	
+	if ( function_exists( 'salt_get_color_schemes' )) {
+		wp_localize_script( 'salt-extend-controls', 'colorScheme', salt_get_color_schemes() );
+	}
 }
-add_action( 'customize_controls_enqueue_scripts', 'salt_customize_control_js' );
+add_action( 'customize_controls_enqueue_scripts', 'salt_customize_control_js', 20 );
 endif;
 
 /**
@@ -53,14 +56,16 @@ function salt_customize_register( $wp_customize ) {
 	
 	// Get the color scheme options
 	// Function can be found in functions.php
-	$color_scheme = salt_get_color_scheme();
+	if ( function_exists( 'salt_get_color_scheme' ) ) {
+		$color_scheme = salt_get_color_scheme();
+	}
 	
 	/**
 	 * Branding
 	 *
 	 * Upload a logo and a favicon to make the site your own
 	 * 
-	 * @since Salt 1.0
+	 * @since Salt 1.0.0
 	 */
     $wp_customize->add_setting('salt_custom_logo', array(
         'capability'    	=> 'edit_theme_options',
@@ -94,7 +99,7 @@ function salt_customize_register( $wp_customize ) {
 	 *
 	 * Change the site to full width or box it in to a set width 
 	 * 
-	 * @since Salt 1.0
+	 * @since Salt 1.0.0
 	 */
     $wp_customize->add_section('general', array(
         'title'    		=> __('General', 'salt'),
@@ -170,6 +175,177 @@ function salt_customize_register( $wp_customize ) {
         'settings' => 'salt_blog_about_author',
         'type'     => 'checkbox',
 	)));
+
+	/**
+	 * Slider
+	 *
+	 * Customize the slider on the homepage. 
+	 * 
+	 * @since Salt 1.5.0
+	 */
+    // Options for the homepage slider area.
+    $wp_customize->add_section( 'slider', array(
+		'title' 		=> __('Slider', 'salt'),
+		'description' 	=> __('Settings for the slider on your homepage.', 'salt'),
+		'priority' 		=> '40',
+    ));
+
+	// Show the slider
+	$wp_customize->add_setting('salt_show_slider', array(
+    	'default'       	=> false,
+        'capability'    	=> 'edit_theme_options',
+        'type'          	=> 'theme_mod'
+    ));
+	
+    $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_show_slider', array(
+        'label'    		=> __('Show Slider', 'salt'),
+        'section'  		=> 'slider',
+        'settings' 		=> 'salt_show_slider',
+        'type'          => 'checkbox'
+    )));
+		
+	// Show the direction nav on the slider.
+	$wp_customize->add_setting('salt_slider_direction_nav', array(
+    	'default'       	=> 'on',
+        'capability'    	=> 'edit_theme_options',
+        'type'          	=> 'theme_mod'
+    ));
+	
+    $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_direction_nav', array(
+        'label'    		=> __('Show Direction Nav', 'salt'),
+        'section'  		=> 'slider',
+        'settings' 		=> 'salt_slider_direction_nav',
+        'type'          => 'checkbox'
+    )));
+
+	// Show the control nav on the slider.
+	$wp_customize->add_setting('salt_slider_control_nav', array(
+    	'default'       	=> 'on',
+        'capability'    	=> 'edit_theme_options',
+        'type'          	=> 'theme_mod'
+    ));
+	
+    $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_control_nav', array(
+        'label'    		=> __('Show Control Nav', 'salt'),
+        'section'  		=> 'slider',
+        'settings' 		=> 'salt_slider_control_nav',
+        'type'          => 'checkbox'
+    )));    
+
+	// Auto scroll.
+	$wp_customize->add_setting('salt_slider_auto_scroll', array(
+    	'default'       	=> 'on',
+        'capability'    	=> 'edit_theme_options',
+        'type'          	=> 'theme_mod'
+    ));
+	
+    $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_auto_scroll', array(
+        'label'    		=> __('Auto Change', 'salt'),
+        'section'  		=> 'slider',
+        'settings' 		=> 'salt_slider_auto_scroll',
+        'type'          => 'checkbox'
+    )));    
+
+    // Select fade or slide for the slider animation
+    $wp_customize->add_setting( 'salt_slider_animation', array(
+	    'default'           => 'horizontal',
+	    'capability'        => 'edit_theme_options',
+	    'type'           	=> 'theme_mod',
+        'sanitize_callback' => 'sanitize_text_field'
+	));
+	
+	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_animation', array(
+        'label'    => __( 'Animation', 'salt' ),
+        'section'  => 'slider',
+        'settings' => 'salt_slider_animation',
+        'type'	   => 'select',
+        'choices'  => array (
+			'horizontal' => __('Horizontal Slide', 'salt'),
+			'fade'  	 => __('Fade', 'salt'),
+			'vertical'   => __('Vertical Slide', 'salt'),
+		)
+	)));
+
+    // Speed
+	$wp_customize->add_setting('salt_slider_speed', array(
+    	'default'			=> '500',
+        'capability'    	=> 'edit_theme_options',
+        'type'          	=> 'option',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+	
+    $wp_customize->add_control( new WP_Customize_Control($wp_customize, 'salt_slider_speed', array(
+    	'label'       	=> __('Speed', 'salt'),
+        'section'  		=> 'slider',
+        'settings' 		=> 'salt_slider_speed',
+        'type'          => 'text'
+    )));
+
+	// Max Number of posts to show
+	$wp_customize->add_setting('salt_slider_num_of_posts', array(
+    	'default'			=> '5',
+        'capability'    	=> 'edit_theme_options',
+        'type'          	=> 'option',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+	
+    $wp_customize->add_control( new WP_Customize_Control($wp_customize, 'salt_slider_num_of_posts', array(
+    	'label'       	=> __('Max Number of Posts', 'salt'),
+        'section'  		=> 'slider',
+        'settings' 		=> 'salt_slider_num_of_posts',
+        'type'          => 'text'
+    )));
+		
+	// Show latest posts or sticky posts or posts with a tag
+    $wp_customize->add_setting( 'salt_slider_display_type', array(
+	    'default'           => 'latest',
+	    'capability'        => 'edit_theme_options',
+	    'type'           	=> 'theme_mod',
+        'sanitize_callback' => 'sanitize_text_field'
+	));
+	
+	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_display_type', array(
+        'label'    => __( 'Posts to Display', 'salt' ),
+ 	    'description' => '',
+        'section'  => 'slider',
+        'settings' => 'salt_slider_display_type',
+        'type'	   => 'select',
+        'choices'  => array (
+			'latest'	 => __('Latest Posts', 'salt'),
+			'sticky'  	 => __('Sticky Posts', 'salt'),
+			'tag'		 => __('Posts with a tag...', 'salt'),
+		)
+	)));		
+	
+	// Tag(s) to be select the posts in the slider
+	$wp_customize->add_setting('salt_slider_posts_tag', array(
+    	'default'			=> '',
+        'capability'    	=> 'edit_theme_options',
+        'type'          	=> 'option',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+	
+    $wp_customize->add_control( new WP_Customize_Control($wp_customize, 'salt_slider_posts_tag', array(
+    	'label'       	=> '',
+    	'description'	=> __('Use the tag(s) slug below separated by a comma.', 'salt'),
+        'section'  		=> 'slider',
+        'settings' 		=> 'salt_slider_posts_tag',
+        'type'          => 'text'
+    )));	
+	
+	// Show slider posts in the main loop
+	$wp_customize->add_setting('salt_slider_posts_in_loop', array(
+    	'default'       	=> '',
+        'capability'    	=> 'edit_theme_options',
+        'type'          	=> 'theme_mod'
+    ));
+	
+    $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_posts_in_loop', array(
+        'label'    		=> __('Repeat slider posts in the main blog', 'salt'),
+        'section'  		=> 'slider',
+        'settings' 		=> 'salt_slider_posts_in_loop',
+        'type'          => 'checkbox'
+    )));    	
 	
 	/**
 	 * Color Scheme
@@ -182,7 +358,7 @@ function salt_customize_register( $wp_customize ) {
 
 	$wp_customize->add_panel( 'color', array(
         'title'    		=> __('Color Scheme', 'salt'),
-        'priority' 		=> 39,
+        'priority' 		=> 45,
         'description' 	=> __('Customize your website colors', 'salt'),
     ));
     
@@ -402,7 +578,7 @@ function salt_customize_register( $wp_customize ) {
 	 *
 	 * Footer turn on / off the various credits and change the footer widget layout 
 	 * 
-	 * @since Salt 1.0
+	 * @since Salt 1.0.0
 	 */
     $wp_customize->add_section('footer', array(
         'title'    		=> __('Footer', 'salt'),
@@ -441,7 +617,7 @@ function salt_customize_register( $wp_customize ) {
 
 	// Select a footer widget layout
     $wp_customize->add_setting('salt_footer_sidebars', array(
-	    'default'           => '4',
+	    'default'           => '0',
 	    'capability'        => 'edit_theme_options',
 	    'type'           	=> 'theme_mod',
         'sanitize_callback' => 'sanitize_text_field'

@@ -22,6 +22,15 @@
  */
 
 /**
+ * Define some global variables to use within core functions
+ *
+ * @since 1.5.0
+ */
+define( 'SALT_TEMPLATE_URI' , get_template_directory_uri() );
+define( 'SALT_TEMPLATE_DIR' , get_template_directory() );
+define( 'SALT_VERSION' , '1.5.0' );
+
+/**
  * If it is not set already, we should set the content width.
  *
  * @link http://codex.wordpress.org/Content_Width
@@ -45,9 +54,17 @@ require_once get_template_directory() . '/core/helpers/post.php';
 require_once get_template_directory() . '/core/helpers/layout.php';
 
 /*
+ * Load Post Types & Post Meta Support
+ *
+ * @since Salt 1.5.0
+ */
+require_once get_template_directory() . '/core/meta/init.php';
+require_once get_template_directory() . '/core/meta/post-meta.php';
+
+/*
  * Load theme actions, override in a child theme.
  */
-get_template_part( 'actions/general' );
+require_once get_template_directory() . '/actions.php';
 
 if (!function_exists('salt_theme_setup')) :
 /**
@@ -62,7 +79,7 @@ if (!function_exists('salt_theme_setup')) :
 	 * Adds theme support for a few useful things.
 	 *
 	 * @link https://codex.wordpress.org/Function_Reference/add_theme_support
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
 	add_theme_support( 'post-thumbnails' );
 	add_theme_support( 'automatic-feed-links' );
@@ -116,8 +133,12 @@ function salt_register_styles() {
 
 	wp_enqueue_style( 'bootstrap' 	, get_template_directory_uri() . '/css/bootstrap.min.css', false, '3.2.0');
 	wp_enqueue_style( 'fontawesome'	, get_template_directory_uri() . '/css/font-awesome.min.css', false, '4.2.0');
-	wp_enqueue_style( 'main'	 	, get_template_directory_uri() . '/css/main.css', array( 'bootstrap' ), '1.0.2');
+	wp_enqueue_style( 'main'	 	, get_template_directory_uri() . '/css/main.css', array( 'bootstrap' ), '1.0.3');
 	wp_enqueue_style( 'social'	 	, get_template_directory_uri() . '/css/social.css', array( 'main' ), '1.0');
+	
+	if ( is_front_page() && get_theme_mod( 'salt_show_slider' ) ) {
+		wp_enqueue_style( 'bxslider' , get_template_directory_uri() . '/css/bxslider.min.css', false, '4.1.2');
+	}
 }
 endif;
 add_action( 'wp_enqueue_scripts', 'salt_register_styles' );
@@ -132,6 +153,10 @@ function salt_register_scripts() {
 	
 	wp_enqueue_script( 'salt_respond', get_template_directory_uri() . '/js/respond.min.js', array('jquery'), '1.4.2', true );
 	wp_enqueue_script( 'salt_global', get_template_directory_uri() . '/js/global.js', array('jquery'), '1.0.1', true );
+
+	if ( is_front_page() || is_home() && get_theme_mod( 'salt_show_slider', 'on' ) ) {
+		wp_enqueue_script( 'bxslider' , get_template_directory_uri() . '/js/bxslider.min.js', false, '1.4.2');
+	}
 
 	if ( is_singular() ) 
 		wp_enqueue_script( 'comment-reply' );		
@@ -483,18 +508,19 @@ body {
 }
 
 /* Button Color */
-button, 
+.button, button, 
 input[type="button"], 
 input[type="reset"], 
-input[type="submit"] {
+input[type="submit"],
+.bx-wrapper .bx-pager .bx-pager-item a:hover, 
+.bx-wrapper .bx-pager .bx-pager-item a.active {
 	background-color:{$scheme['darkest']};
 }
 
-button:hover, 
+button:hover, .button:hover, button:focus, .button:focus,
 input[type="button"]:hover, 
 input[type="reset"]:hover, 
-input[type="submit"]:hover, 
-button:focus, 
+input[type="submit"]:hover,  
 input[type="button"]:focus, 
 input[type="reset"]:focus, 
 input[type="submit"]:focus {
