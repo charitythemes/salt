@@ -62,6 +62,13 @@ require_once get_template_directory() . '/core/meta/init.php';
 require_once get_template_directory() . '/core/meta/post-meta.php';
 
 /*
+ * Load Welcome Screen
+ *
+ * @since Salt 1.5.0
+ */
+require_once get_template_directory() . '/core/admin/welcome.php';
+
+/*
  * Load theme actions, override in a child theme.
  */
 require_once get_template_directory() . '/actions.php';
