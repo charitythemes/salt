@@ -37,5 +37,36 @@
 			}
 		}
 	} );
+	
+	/**
+	 * Extend the 'Select' controls.
+	 *
+	 * @since Salt 1.5.0
+	 */	
+	api.controlConstructor.select = api.Control.extend( {
+		ready: function() {
+			
+			// Check if this input is the display type select box.
+			if ( 'salt_slider_display_type' === this.id ) {
+
+				// If the option tag is not currrently being used, lets hide the tag extra input field
+				if ( this.setting._value != 'tag' ) {
+					jQuery( '#customize-control-salt_slider_posts_tag' ).hide();			
+				}
+				
+				// When the display type select box is changed.
+				this.setting.bind( 'change', function( value ) {
+
+					// if the user selects 'tag'
+					if ( value == 'tag' ) {
+						// Show the input box for a certain tag
+						jQuery( '#customize-control-salt_slider_posts_tag' ).slideDown();
+					} else if ( value != 'tag' ) {
+						jQuery( '#customize-control-salt_slider_posts_tag' ).slideUp();
+					}
+				} );
+			}
+		}
+	} );
 
 } )( wp.customize );
