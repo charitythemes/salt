@@ -59,7 +59,14 @@ if ( ! function_exists( 'salt_post_thumbnail' ) ) :
  * Wraps the post thumbnail in an anchor element on index views, or a div
  * element when on single views.
  *
- * @since Salt 1.0
+ * @param string|array $size (Optional) Image size to use. Accepts any valid image size, 
+ * 									       or an array of width and height values in pixels (in that order).
+ * @param array $attr Holds the set arguments for the post thumbnail. See @link for more details. Optional.
+ * 
+ * @return string HTML string that can be used to display the image.
+ * @link https://developer.wordpress.org/reference/functions/the_post_thumbnail/
+ *
+ * @since Salt 1.0.0
  */
 function salt_post_thumbnail( $size = 'post-thumbnail', $attr = '' ) {
 	if ( post_password_required() || is_attachment() || ! has_post_thumbnail() ) {
@@ -90,7 +97,30 @@ if ( ! function_exists( 'salt_pagination' ) ) :
  * salt_pagination() is used for paginating the various archive pages created by WordPress. This is not
  * to be used on single.php or other single view pages.
  *
- * @since Salt 1.0
+ * @param array $args (Optional) ...
+ *
+ *     @type arg 		$base Reference the url, which will be used to create the paginated links.
+ *     @type string 	$format Used for replacing the page number.
+ *     @type numercial	$total Total amount of pages and is an integer.
+ *     @type numercial	$current The current page number. 
+ *     @type boolean	$prev_next Include prev and next links in the list by setting the ‘prev_next’ argument to true.
+ *     @type string		$prev_text Change the text for the prev link.
+ *     @type string		$next_text Change the text for the next link.
+ *     @type boolean	$show_all Show all of the pages instead of a short list of the pages near the current page, by default is false
+ *     @type numerical	$end_size How many numbers on either the start and the end list edges, by default is 1.
+ *     @type numerical	$mid_size How many numbers to either side of current page, but not including current page.
+ *     @type string		$add_args It is possible to add query vars to the link by using the ‘add_args’
+ *     @type string		$before Text added before the page number – within the anchor tag.
+ *     @type string		$after Text added after the page number – within the anchor tag.
+ *     @type boolean	$jump_to Include a Jump To option on the pagination.
+ *     @type boolean	$echo If set to true the pagination will be displayed or false will return as a string.
+ *     
+ * @param array	$query Pass the query that paginatio is being created for, by default uses $wp_query.
+ *
+ * @return (array|string|void) String of page links or array of page links.
+ * @link https://developer.wordpress.org/reference/functions/paginate_links/
+ *
+ * @since Salt 1.0.0
  */
 function salt_pagination( $args = array(), $query = '' ) {
 	global $wp_rewrite, $wp_query;
@@ -122,7 +152,7 @@ function salt_pagination( $args = array(), $query = '' ) {
 		'show_all' 		=> false,
 		'end_size' 		=> 1,
 		'mid_size' 		=> 1,
-		'add_fragment'	=> '',
+		'add_args'		=> '',
 		'type' 			=> 'plain',
 		'before' 		=> '<div class="pagination salt-pagination">', // Begin salt_pagination() arguments.
 		'after' 		=> '</div>',
@@ -237,7 +267,19 @@ if (!function_exists('salt_post_meta')) :
  * Creates the Post Meta Data - Date, Posted by, Category, Tags, Edit
  *
  * @param array $args
- * @since Salt 1.0
+ * 
+ * 		@type boolean	$show_post_date Display the post date, default is true.
+ * 		@type boolean	$show_post_author Display the post author, default is true.
+ * 		@type boolean	$show_post_category Display post category, default is true.
+ * 		@type boolean	$show_post_tags  Display post tags, default is true.
+ * 		@type string	$before Text added before the output.
+ * 		@type string	$after Text added after the output.
+ * 		@type boolean	$show_edit_link Display a edit link for the administrator, default is true.
+ *      @type boolean	$echo If set to true the post meta will be displayed or false will return as a string.
+ * 
+ * @return string of the post meta as HTML
+ *
+ * @since Salt 1.0.0
  *
  */
 function salt_post_meta($args=array()) {
@@ -262,18 +304,12 @@ function salt_post_meta($args=array()) {
 	
 	if($show_post_date) {
 		$output .= '<span class="post-date">';
-//			$output .= '<span class="small">';
-//			$output .= __('Posted on', 'salt');
-//			$output .= '</span> ';
 		$output .= get_the_time( get_option( 'date_format' ) );
 		$output .= '</span> ';
 	}
 	
 	if($show_post_author) {
 		$output .= '<span class="post-author">';
-//			$output .= '<span class="small">';
-//			$output .= __('by', 'salt');
-//			$output .= '</span> ';
 		
 		$link = sprintf(
 			'<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
@@ -292,10 +328,7 @@ function salt_post_meta($args=array()) {
 		$categories_link = '';
 		if($categories){
 			$output .= '<span class="post-category">';
-//				$output .= '<span class="small">';
-//				$output .= __('in', 'salt');
-//				$output .= '</span> ';
-			
+
 			foreach($categories as $category) {
 				$categories_link .= '<a href="' . get_category_link( $category->term_id ) . '" title="'
 								. esc_attr( sprintf( __( 'View all posts in %s', 'salt' ), $category->name ) ) . '">'
@@ -313,9 +346,6 @@ function salt_post_meta($args=array()) {
 		$tags_link = '';
 		if($tags){
 			$output .= '<span class="post-tags">';
-//				$output .= '<span class="small">';
-//				$output .= __('in', 'salt');
-//				$output .= '</span> ';
 			
 			foreach($tags as $tag) {
 				$tags_link .= '<a href="' . get_tag_link( $tag->term_id ) . '" title="'
@@ -351,16 +381,25 @@ endif;
 if( !function_exists( 'salt_social_icons') ) :
 /*
  * Create a unorganized list of social media icons
+ * 
+ * The organized link includes classes based on the options passed through the args array. These correspond to the CSS
+ * included in this theme. Just add new CSS to your child theme to create styles, then pass them through args array.
+ * 
+ * @param array $args
+ * 
+ * 		@type boolean	$type Displays black, white or color icons, default is black,
+ * 		@type boolean	$shape Displays square, circular or no background shaped icons, default is circle.
+ * 		@type boolean	$size  Displays small, medium or large icons, default is small.
+ *      @type boolean	$echo If set to true the icons will be displayed or false will return as a string.
+ * 
+ * @return string of the post meta as HTML
  *
  * @since Salt 1.1.0
- * @param array $args
- * @return string
  */
 function salt_social_icons( $args=array() ) {
 	global $_salt_registered_social;
 
 	$defaults = array(
-		'attachment_id' => 0,
 		'type'			=> 'black',		// BLACK: use the black icons
 		'shape'			=> 'circle',		// CIRCLE: use the cicular icons
 		'size'			=> 'small', 	// SMALL: use small icons
@@ -392,14 +431,6 @@ function salt_social_icons( $args=array() ) {
 endif;
 
 if (!function_exists('salt_post_background_image')) :
-/*
- * Display a background image that is saved as post meta.
- *
- * @since Salt 1.5.0
- * @param array $args
- * @return string
- */
- 
 /**
  * Salt Post Background Image
  *
@@ -418,7 +449,6 @@ if (!function_exists('salt_post_background_image')) :
  * @return string CSS that can be used on a HTML tag to display the background.
  * @since Salt 1.5.0 
  */
- 
 function salt_post_background_image( $args='' ) {
 	
 	global $post;
