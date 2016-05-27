@@ -2,9 +2,8 @@
 <div class="nav-wrapper">
 	<div class="navbar-toggle-wrapper">
 		<button type="button" class="navbar-toggle visible-xs-block">
-    		<i class="fa fa-bars fa-lg"></i>
-    		<?php _e('Menu', 'salt'); ?>
-		</button>
+			<span></span>
+		</button>		
 		<nav role="navigation" id="primary-menu" class="navbar-collapse">
 			<?php wp_nav_menu (  array (  'container' => 'div', 'items_wrap' => '<ul class="%2$s">%3$s</ul>', 'menu_class' => 'menu', 'theme_location' => 'primary-menu' )); ?>
 		</nav>

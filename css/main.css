@@ -1951,6 +1951,50 @@ input[type="submit"] {
 	background: #333;
 	width: 100%; }
 
+
+
+.navbar-toggle span { 
+	position: relative; 
+	display: inline-block; 
+	width: 25px; 
+	border-top: 3px solid #fff; 
+	top: -3px;
+	margin-right: 5px; }
+
+.navbar-toggle span:before,
+.navbar-toggle span:after { 
+	position: absolute; 
+	left: 0;
+	width: 100%; 
+	height: 3px; 
+	background: #fff; 
+	content: ''; }
+
+.navbar-toggle span:before { top: -9px; }
+.navbar-toggle span:after { top: 3px; }
+
+.navbar-toggle span:before,
+.navbar-toggle span:after,
+.navbar-toggle span {
+	-webkit-transition: all .2s linear;
+			transition: all .2s linear;
+ }
+
+.navbar-toggle.active span { border-color: transparent; }
+.navbar-toggle.active span:before,
+.navbar-toggle.active span:after { background: #e70000; }
+
+.navbar-toggle.active span:before {
+-webkit-transform: rotate(45deg) translate(2.5px, 6px);
+		transform: rotate(45deg) translate(2.5px, 6px); }
+
+.navbar-toggle.active span:after {
+-webkit-transform: rotate(-45deg) translate(2.5px, -6px);
+		transform: rotate(-45deg) translate(2.5px, -6px); }
+
+
+
+
 .button:hover,
 button:hover,
 input[type="button"]:hover,

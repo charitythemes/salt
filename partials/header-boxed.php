@@ -1,7 +1,7 @@
 <?php get_template_part( 'partials/header' , 'logo' ); ?>
 <div class="navbar-toggle-wrapper visible-xs-block">
-	<button type="button" class="navbar-toggle">
-    	<i class="fa fa-bars fa-lg"></i>
+	<button type="button" class="navbar-toggle visible-xs-block">
+		<span></span>
 	</button>
 </div>
 <?php if( 'menu-right' == get_theme_mod( 'salt_social_position' ) ) { ?>	
