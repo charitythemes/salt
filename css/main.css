@@ -1981,8 +1981,6 @@ input[type="submit"] {
  }
 
 .navbar-toggle.active span { border-color: transparent; }
-.navbar-toggle.active span:before,
-.navbar-toggle.active span:after { background: #e70000; }
 
 .navbar-toggle.active span:before {
 -webkit-transform: rotate(45deg) translate(2.5px, 6px);
@@ -1991,9 +1989,6 @@ input[type="submit"] {
 .navbar-toggle.active span:after {
 -webkit-transform: rotate(-45deg) translate(2.5px, -6px);
 		transform: rotate(-45deg) translate(2.5px, -6px); }
-
-
-
 
 .button:hover,
 button:hover,

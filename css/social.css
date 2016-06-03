@@ -166,6 +166,10 @@ ul.ico-social.color li a.weibo {
 	background:#e4002e;
 }
 
+ul.ico-social.color li a.rss {
+	background:#fa9839;
+}
+
 /* No background but still in color */
 ul.ico-social.color.no-shape li a {
 	background:none;
@@ -201,6 +205,10 @@ ul.ico-social.color.no-shape li a.wechat {
 
 ul.ico-social.color.no-shape li a.weibo {
 	color:#e4002e;
+}
+
+ul.ico-social.color.no-shape li a.rss {
+	color:#fa9839;
 }
 
 @media screen and (max-width : 767px){

@@ -261,10 +261,10 @@ $_salt_registered_social = array(
 	'pinterest'		=> __('Follow us on Pinterest', 'salt'),
 	'youtube'		=> __('Watch on Youtube', 'salt'),
 	'linkedin'		=> __('Connect on Linkedin', 'salt'),
-	'weixin'		=> __('Connect on Weixin', 'salt'),
+	'weixin'		=> __('Connect on Wechat', 'salt'),
 	'weibo'			=> __('Connect on Weibo', 'salt'),
+	'rss'			=> __('Blog RSS Feed', 'salt'),
 );
-
 
 if (!function_exists('salt_css_template')) :
 /**

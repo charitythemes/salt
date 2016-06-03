@@ -1,5 +1,11 @@
 == Salt Changelog ==
 
+2016.03.06 - v1.5.1
+- New animated navigation icon for mobile devices
+- Added an RSS feed option to the social icons
+- Added fuller comments and descriptions to the post helper functions
+- Fixed some other small problems
+
 2016.20.05 - v1.5.0
 - Introducing a new slider to proudly display your posts with images
 - Fixed several small problems
