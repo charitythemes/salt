@@ -1,7 +1,7 @@
 == Salt Changelog ==
 
-2016.09.27 - v1.5.2
-- Improve the post meta functions and layouts
+2016.09.27 - v1.5.11
+- Improve the post meta functions and layouts in the admin
 - Update fontawesome to version 4.6.3
 - Added email, google+, vimeo, reddit to the social icon options
 

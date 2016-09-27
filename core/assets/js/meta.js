@@ -1,7 +1,7 @@
 /*
  * Loads the custom metabox ColorPicker
  */
-jQuery(document).ready(function($){
+jQuery(document).ready(function ($) {	
  
     // Instantiates the variable that holds the media library frame.
     var meta_image_frame;
@@ -103,31 +103,30 @@ jQuery(document).ready(function($){
 	
 	/**
 	 * Metabox Tabs
-	 *
 	 * Make the first tab selected when the page has loaded
 	 */
- 	$('.salt-tabs-nav li:first-child a').each(function() {
-	 	
-	 	$(this).parent().addClass('active');
-	 	
-	 	// Hide all the sections and the show the selected one.
-	 	$('.salt-fields-section').hide();
-	 	$('#' + $(this).data('link')).fadeIn();
- 	});
+	$(".salt-fields-section").hide();
+		
+	// Cycle through tab sets and select the first tab.
+	$("ul.salt-tabs-nav").each(function() {
+		$(this).find('li:first').addClass("active");
+		$(this).nextAll('.salt-fields-section:first').show();
+	});
  	
  	// Click the tab item.
-    $( '.salt-tabs-nav li a' ).click( function(e) {
-		
-        // Prevents the default action from occuring.
-        e.preventDefault();
-		
+    $( '.salt-tabs-nav li' ).click( function(e) {
 		// Add an active class to the selected tab and remove others.
-		$(this ).parents().parent().find('.active').removeClass('active');
-		$(this).parent().addClass('active');
+		var cTab = $(this).closest('li');
+		cTab.siblings('li').removeClass("active");
+		cTab.addClass("active");
+		cTab.closest('ul.salt-tabs-nav').nextAll('.salt-fields-section').hide();
+				
+		// Find the data link value to identify the active tab + content.
+		var activeTab = $(this).find('a').data("link");
 		
-		// Hide all the sections and the show the selected one.
-		$('.salt-fields-section').hide();
-		$('#' + $(this).data('link')).show();
+		//Fade in the active ID content
+		$('#'+activeTab).fadeIn();
+		return false;
     });	
     
     $( '.salt-fa-modal .salt-fa a').on("click", function(e){
@@ -145,5 +144,24 @@ jQuery(document).ready(function($){
 		if ( $(this).data('id') != '' ) {
 			$('.salt-fa-preview i').addClass('fa fa-'+ $(this).data('id')+' fa-2x');
 		}
+    });
+    
+    $( '#salt-change-category' ).change(function() {
+		update_category( this.value );
+	});
+	
+	function update_category( selected ) {
+		$('.salt-fa-modal div.salt-fa[data-category*="' + selected + '"]').show();
+		$('.salt-fa-modal div.salt-fa:not([data-category*="' + selected + '"])').hide();	
+	}
+	
+    $( '.salt-fa-holder a.fa-clear').on("click", function(e){
+		
+		var current_ico = $('.salt-fa-preview i.fa').attr('class');
+		
+		$('.salt-fa-preview i.fa').removeClass( current_ico );
+    
+		$('.salt-fa-modal .salt-fa.selected').removeClass('selected');
+		$(this).parent().find('input').attr('checked', false);
     });
 });

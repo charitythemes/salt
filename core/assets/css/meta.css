@@ -57,6 +57,10 @@ ul.salt-tabs-nav li.active a span {
 	border-top: 0;
 }
 
+.salt-section-description {
+	padding: 0 10px;
+}
+
 .salt-fields-container label {
     display: block;
     padding: 2px 0;
@@ -113,6 +117,13 @@ ul.salt-tabs-nav li.active a span {
 	float: left;
 }
 
+#TB_ajaxContent {
+	height: 100% !important;
+	width: 100% !important;
+	padding: 0 !important;
+	background: #fff;
+}
+
 .salt-fa-modal {
 	padding: 10px;
 	text-align: center;
@@ -133,11 +144,9 @@ ul.salt-tabs-nav li.active a span {
 .salt-fa-modal .salt-fa a {
 	color: #C2C2C2;
     display: inline-block;
-	margin-right: 5px;
 	border: 1px solid #fff;
-    padding: 3px;
+    padding: 8px;
 	width: 25px;
-	height: 25px; 
 }
 
 .salt-fa-modal .salt-fa a:focus,
@@ -171,20 +180,44 @@ ul.salt-tabs-nav li.active a span {
 	display: block;
 }
 
+/*
 .salt-field .salt-fa-holder {
 	max-height: 200px;
 	overflow-y: scroll;
 }
+*/
+
+.fa-select {
+	margin-top: 10px;
+	margin-left: 15px;
+}
+
+.fa-clear {
+    font-size: 12px;
+    top: 5px;
+    margin-left: 5px;
+    position: relative;
+}
+
+.salt-fa-clear:after {
+	content: " ";
+	clear: left;
+	display: block;
+}
 
 .salt-fa-preview {
-	width: 25px;
-    height: 25px;
-    padding: 5px;
+	padding: 10px;
     border: 1px dashed #333;
     vertical-align: middle;
     text-align: center;
     float: left;
     margin-right: 10px;
+}
+
+.salt-fa-preview i {
+    min-height: 20px;
+    min-width: 25px;
+    display: block;
 }
 
 .salt-fields-row {

@@ -95,24 +95,24 @@ class Salt_Meta_Box {
 	 * @link https://codex.wordpress.org/Function_Reference/add_meta_box
 	 */
 	public function add_meta_box() {
-			
+		
 		// Add the meta box using the WordPress function
 		if ( isset( $this->settings->template ) ) {
 			
-		    if ( get_page_template_slug( $this->post->ID ) == $this->settings->template ) {
+			global $post;
+			if ( $this->settings->template == 'front-page' &&
+				get_option('page_on_front') == $post->ID || 
+			    get_page_template_slug( $post->ID ) == $this->settings->template ) {
 				
-				if ( !empty( $this->settings->id ) )
-					$id = $this->settings->id;
-									
 				add_meta_box (
-			        $id,
+			        $this->settings->id,
 			        $this->settings->title,
 					array( $this, "render" ),
 					$this->post_type,
 					$this->settings->context,
 					$this->settings->priority );
 			
-				add_filter( "postbox_classes_{$this->post_type}_{$this->settings['id']}", array( $this, 'postbox_classes' ) );
+				add_filter( "postbox_classes_{$this->post_type}_{$this->settings->id}", array( $this, 'postbox_classes' ) );
 			}
 			
 		} else {
@@ -200,7 +200,7 @@ class Salt_Meta_Box {
 	}
 	
 	/**
-	 * Render Section Tabs
+	 * Render Tabs
 	 *
 	 * Renders the tabs that are used to navigate the different sections.
 	 */
@@ -252,7 +252,13 @@ class Salt_Meta_Box {
 		
 		// Open a new section. ?>
 		<div id="<?php echo $field['id']; ?>" class="salt-fields-container salt-fields-section">
-						
+			
+			<?php
+			if ( isset( $field["desc"] ) ) : ?>
+				<p class="salt-section-description"><?php echo $field["desc"]; ?>		
+			<?php
+			endif; ?>
+	
 		<?php
 		// Notify the section is opened.
 		$this->section = 'open';		
@@ -596,19 +602,19 @@ class Salt_Link_Meta_Box extends Salt_Meta_Box {
 					'label' => __('URL', 'salt'),
 					'id'    => '_link_url',
 					'type'  => 'text',
-					'width' => 50
+					'width' => 25
 				),
 				array(
 					'label' => __('Label', 'salt'),
 					'id'    => '_link_text',
 					'type'  => 'text',
-					'width' => 50
+					'width' => 25
 				),
 				array(
 					'label' => __('Type', 'salt'),
 					'id'    => '_link_type',
 					'type'  => 'select',
-					'width' => 50,
+					'width' => 25,
 					'options' => array(
 						'' 	 	 => 'Text Link',
 						'button' => 'Button'
@@ -618,7 +624,7 @@ class Salt_Link_Meta_Box extends Salt_Meta_Box {
 					'label' => __('Open in Tab', 'salt'),
 					'id'    => '_link_target',
 					'type'  => 'checkbox',
-					'width' => 50
+					'width' => 25
 				),
 			)
 		);
@@ -770,20 +776,34 @@ class Salt_FontAwesome_Meta_Box extends Salt_Meta_Box {
 					'id'      => '_fontawesome_font',
 					'type'    => 'fontawesome',
 					'options' => $fa_list,
-					'width'   => 33
+					'width'   => 50
+				),
+				array(
+					'label' => __('Icon Size', 'salt'),
+					'id'    => '_fontawesome_size',
+					'type'  => 'select',
+					'width' => 50,
+					'options' => array(
+						'tiny'	 => __('Very Small', 'salt'),
+						'small'	 => __('Small', 'salt'),
+						'medium' => __('Medium', 'salt'),
+						'large'	 => __('Large', 'salt'),
+						'huge'	 => __('Very Large', 'salt'),
+					)
+				),
+				array(
+					'label' => __('Background Color', 'salt'),
+					'id'    => '_fontawesome_bg_color',
+					'type'  => 'color',
+					'width' => 50
 				),
 				array(
 					'label' => __('Color', 'salt'),
 					'id'    => '_fontawesome_color',
 					'type'  => 'color',
-					'width' => 33
+					'width' => 50
 				),
-				array(
-					'label' => __('Icon Size', 'salt'),
-					'id'    => '_fontawesome_size',
-					'type'  => 'text',
-					'width' => 33
-				),
+				
 			)
 		);
 		

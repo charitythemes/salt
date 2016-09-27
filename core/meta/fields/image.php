@@ -17,6 +17,3 @@
 	<input type="hidden" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" value="<?php if ( isset ( $meta ) ) echo $meta; ?>" class="salt-image-upload-field" />
 	<input type="button" class="button button-primary salt-image-button salt-choose-image" value="<?php _e('Choose Image', 'salt'); ?>" />
 </div>
-<?php if ( ! empty( $field['desc'] ) ) : ?>
-	<p class="salt-field-description"><?php echo $field['desc']; ?></p>
-<?php endif; ?>
