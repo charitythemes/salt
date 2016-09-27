@@ -106,18 +106,18 @@ jQuery(document).ready(function($){
 	 *
 	 * Make the first tab selected when the page has loaded
 	 */
- 	$('.salt-metabox-tabs li:first-child a').each(function() {
+ 	$('.salt-tabs-nav li:first-child a').each(function() {
 	 	
 	 	$(this).parent().addClass('active');
 	 	
 	 	// Hide all the sections and the show the selected one.
-	 	$('.salt-metabox-section').hide();
-	 	$('.salt-metabox-section' + $(this).attr('href')).fadeIn();
+	 	$('.salt-fields-section').hide();
+	 	$('#' + $(this).data('link')).fadeIn();
  	});
  	
  	// Click the tab item.
-    $( '.salt-metabox-tabs li a' ).click( function(e) {
-	   
+    $( '.salt-tabs-nav li a' ).click( function(e) {
+		
         // Prevents the default action from occuring.
         e.preventDefault();
 		
@@ -126,7 +126,24 @@ jQuery(document).ready(function($){
 		$(this).parent().addClass('active');
 		
 		// Hide all the sections and the show the selected one.
-		$('.salt-metabox-section').hide();
-		$('.salt-metabox-section' + $(this).attr('href')).fadeIn();
+		$('.salt-fields-section').hide();
+		$('#' + $(this).data('link')).show();
     });	
+    
+    $( '.salt-fa-modal .salt-fa a').on("click", function(e){
+	    
+		// Save current selected preview class
+		var current_ico = $('.salt-fa-preview i.fa').attr('class');
+		
+		// Deselect and select new icon
+		$('.salt-fa-modal .salt-fa.selected').removeClass('selected');
+		$(this).parent().find('input').attr('checked', true);
+		$(this).parent().addClass('selected'); 
+		
+		// Update Preview
+		$('.salt-fa-preview i.fa').removeClass( current_ico );
+		if ( $(this).data('id') != '' ) {
+			$('.salt-fa-preview i').addClass('fa fa-'+ $(this).data('id')+' fa-2x');
+		}
+    });
 });

@@ -30,6 +30,16 @@ class Salt_Meta_Box {
 	 */
 	public $saved = false;
 	
+	public $post = array();
+
+		// Set the section to be closed before we start looping through the fields.
+	public $section = 'closed';
+		
+	public $row = 'closed';
+		
+	public $count = 0;
+
+	
 	/**
 	 * Constructor
 	 *
@@ -41,8 +51,8 @@ class Salt_Meta_Box {
 	public function __construct( $post_type = 'post', $settings=array() ) {
 		
 		$this->post_type = $post_type;
-		$this->settings  = $settings;
-
+		$this->settings  = (object) $settings;
+				
 		$this->init();
 	}
 	
@@ -74,6 +84,9 @@ class Salt_Meta_Box {
 		
 		// Enqueue the stylesheet for the color picker.
 		wp_enqueue_style( 'wp-color-picker' );
+
+		// Enqueue the JS to initiate the color picker if it is displayed.
+        wp_enqueue_script( 'salt-meta-js', SALT_TEMPLATE_URI . '/core/assets/js/meta.js', array( 'jquery', 'wp-color-picker' ) );
 	}
 	
    /**
@@ -82,36 +95,45 @@ class Salt_Meta_Box {
 	 * @link https://codex.wordpress.org/Function_Reference/add_meta_box
 	 */
 	public function add_meta_box() {
-		
-		// Add the meta box using the WordPress function
-		
-		if ( isset( $this->settings["template"] ) ) {
 			
-			global $post;
-
-		    if ( get_page_template_slug( $post->ID ) == $this->settings["template"] ) {
+		// Add the meta box using the WordPress function
+		if ( isset( $this->settings->template ) ) {
+			
+		    if ( get_page_template_slug( $this->post->ID ) == $this->settings->template ) {
 				
+				if ( !empty( $this->settings->id ) )
+					$id = $this->settings->id;
+									
 				add_meta_box (
-			        $this->settings['id'],
-			        $this->settings["title"],
+			        $id,
+			        $this->settings->title,
 					array( $this, "render" ),
 					$this->post_type,
-					$this->settings["context"],
-					$this->settings["priority"] );
+					$this->settings->context,
+					$this->settings->priority );
 			
+				add_filter( "postbox_classes_{$this->post_type}_{$this->settings['id']}", array( $this, 'postbox_classes' ) );
 			}
 			
 		} else {
-
 			add_meta_box (
-		        $this->settings['id'],
-		        $this->settings["title"],
+			    $this->settings->id,
+		        $this->settings->title,
 				array( $this, "render" ),
 				$this->post_type,
-				$this->settings["context"],
-				$this->settings["priority"] );
-		
+				$this->settings->context,
+				$this->settings->priority );
+				
+			add_filter( "postbox_classes_{$this->post_type}_{$this->settings->id}", array( $this, 'postbox_classes' ) );
 		}
+	}
+	
+	/**
+	 * Classes to add to the post meta box
+	 */
+	public function postbox_classes( $classes ) {
+		$classes[] = 'salt-box';
+		return $classes;
 	}
 	
 	/**
@@ -120,66 +142,61 @@ class Salt_Meta_Box {
 	 * Renders the input wrapper and calls $this->render_field() for the fields.
 	 */
 	public function render() {
-
-		global $post;
+		
+		$this->post = $GLOBALS['post'];
 		
 		// Check if this post meta has been saved before.
-		$this->saved = $this->has_been_saved( $post->ID, $this->settings['fields'] );
+		$this->saved = $this->has_been_saved( $this->post->ID, $this->settings->fields );
 				
 		// Create a nonce field for security.
 		wp_nonce_field( SALT_TEMPLATE_DIR, 'salt_metabox_nonce' );
 
-		// Set the section to be closed before we start looping through the fields.
-		$section = 'closed';
-		
 		// Render the section tabs, if any sections exist.
 		// @return - boolean if we have created tabs or not.
-		$has_tabs = $this->render_section( $this->settings['fields'] );
-
-		// If there are no tabs, we need to open a list.	
-		if ( ! $has_tabs ) {
-			echo '<ul class="salt-metabox-list">';
-		}
+		$has_tabs = $this->render_section_tabs( $this->settings->fields );
 		
-		foreach ( $this->settings['fields'] as $field ) {
-
-			// If the section is closed and the type is a section
-			if ( $field['type'] == 'section' ) { 
-				
-				// Check if the section is already opened.
-				if ( $section == 'open' ) {
-					
-					// Close off the current section.
-					echo '</ul><!-- salt-metabox-list -->';	
-					
-					// Notify the section is closed.
-					$section = 'closed';
-				}
-				
-				// Open a new section. ?>
-				<ul id="<?php echo $field['id']; ?>" class="salt-metabox-list salt-metabox-section">
-					<?php if ( $field['desc'] ) echo '<p>' . $field['desc'] . '</p>'; ?>
-								
-			<?php
-				// Notify the section is opened.
-				$section = 'open';
-			} else { 
+		$this->render_container( $has_tabs );
+		
+		foreach ( $this->settings->fields as $field ) {
 			
-				$id    = 'salt-metabox-' . str_replace( '[', '-', str_replace( ']', '', $field['id'] ) );
-				$class = 'salt-metabox salt-metabox-' . $field['type'];		
+			if ( $field['type'] == 'section' ) {
+				
+				$this->render_section( $field );
+			
+			} else {
 
+				// 
+				$this->render_row( $field );
+				
+				// Create class based on the field type.
+				$class = "salt-field salt-{$field['type']}";
+				$style = '';
+				// 
+				if ( ! empty( $field['width'] ) ) {
+					$class .= " has-width width-{$field['width']}";
+					$style = "width:{$field['width']}%;";
+				}
 				?>
-				<li id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>">
-					<?php $this->render_field( $post->ID, $field ); ?>
-				</li><?php	
+				<div class="<?php echo esc_attr( $class ); ?>" style="<?php echo esc_attr( $style ); ?>">
+					<?php $this->render_field( $this->post->ID, $field ); ?>
+				</div><?php
 			}
 		}
 		
-		// If there is a section still open or there were no tabs, we need to close the list off.
-		if ( $section == 'open' || ! $has_tabs ) {
-			// Close off the current section.
-			echo '</ul><!-- salt-metabox-list -->';				
-		}
+		$this->render_close( $has_tabs );
+	}
+	
+	/**
+	 * Render Container
+	 *
+	 * .
+	 */	
+	public function render_container( $has_tabs = false ) {
+
+		// If there are no tabs, we need to open a list.	
+		if ( ! $has_tabs ) {
+			echo '<div class="salt-fields-container">';
+		}		
 	}
 	
 	/**
@@ -187,15 +204,15 @@ class Salt_Meta_Box {
 	 *
 	 * Renders the tabs that are used to navigate the different sections.
 	 */
-	public function render_section( $fields ) {
-		
+	public function render_section_tabs( $fields ) {
+		$tabs='';
 		// Loop through the fields
 		foreach ( $fields as $field ) {
 			
 			// If the type is a section, we need to create a tab.
 			if ( $field['type'] == 'section' ) {
 				// Create a tab item.
-				$tabs .= '<li><a href="#'.$field['id'].'">'.$field['label'].'</a></li>';
+				$tabs .= '<li><a href="javascript:" title="'.$field['label'].'" data-link="'.$field['id'].'"><span>'.$field['label'].'</span></a></li>';
 			}
 		}	
 		
@@ -203,7 +220,7 @@ class Salt_Meta_Box {
 		if ( $tabs ) {
 			
 			// Create tabs list.
-			echo '<ul class="salt-metabox-tabs">'.$tabs.'</ul><!-- salt-metabox-tabs -->';
+			echo '<ul class="salt-tabs-nav">'.$tabs.'</ul><!-- salt-tabs-nav -->';
 			
 			// Return true, we have created tabs!
 			return true;
@@ -214,6 +231,82 @@ class Salt_Meta_Box {
 			return false;
 		}
 		
+	}
+	
+	/**
+	 * Render Section
+	 *
+	 * .
+	 */
+	function render_section( $field ) {
+		
+		// Check if the section is already opened.
+		if ( $this->section == 'open' ) {
+			
+			// Close off the current section.
+			echo '</div><!-- salt-fields-container -->';	
+			
+			// Notify the section is closed.
+			$this->section = 'closed';
+		}
+		
+		// Open a new section. ?>
+		<div id="<?php echo $field['id']; ?>" class="salt-fields-container salt-fields-section">
+						
+		<?php
+		// Notify the section is opened.
+		$this->section = 'open';		
+	}
+
+	/**
+	 * Render Row
+	 *
+	 * .
+	 */		
+	function render_row( $field ) {
+	
+		if ( ! empty( $field['width'] ) || ( empty( $field['width'] ) && $this->row == 'open' ) ) {
+
+			if ( $this->row == 'open' && $this->count>=99 ) {
+				
+				// Close off the current row.
+				echo '</div><!-- salt-fields-row -->';
+				
+				// Notify the row is closed.
+				$this->row = 'closed';
+				
+				$this->count=0;
+			} 
+
+			if ( $this->row == 'closed' && ! empty( $field['width'] ) ) {
+				// Open a new row. ?>
+				<div class="salt-fields-row">
+				
+				<?php 
+				$this->row = 'open';				
+			}
+			
+			if ( ! empty( $field['width'] )) 
+				$this->count = $this->count + $field['width'];		
+		}
+	}
+
+	/**
+	 * Render Close
+	 *
+	 * .
+	 */	
+	function render_close( $has_tabs ) {
+	
+		if ( $this->row == 'open' ) {
+			echo '</div><!-- salt-fields-row -->';
+		}
+		
+		// If there is a section still open or there were no tabs, we need to close the list off.
+		if ( $this->section == 'open' || ! $has_tabs ) {
+			// Close off the current section.
+			echo '</div><!-- salt-fields-container -->';				
+		}
 	}
 	 
 	/**
@@ -232,117 +325,12 @@ class Salt_Meta_Box {
 		if ( ! $this->saved && $meta == '' && isset( $field['std'] ) ) {
 			$meta = $field['std'];
 		}
+		
+		$field_format = get_template_directory() . "/core/meta/fields/{$field['type']}.php";
 
-		switch ( $field['type'] ) {	
-			case 'text' :
-				?>
-				<label>
-					<?php if ( ! empty( $field['label'] ) ) : ?>
-						<span class="salt-metabox-title"><?php echo esc_html( $field['label'] ); ?></span>
-					<?php endif; ?>
-					<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" value="<?php echo $meta; ?>" size="30" /> 
-					<?php if ( ! empty( $field['desc'] ) ) : ?>
-						<br /><span class="description salt-metabox-description"><?php echo $field['desc']; ?></span>
-					<?php endif; ?>
-				</label>
-				<?php
-				break;
-				
-			case 'textarea' :
-				?>
-				<label>
-					<?php if ( ! empty( $field['label'] ) ) : ?>
-						<span class="salt-metabox-title"><?php echo esc_html( $field['label'] ); ?></span>
-					<?php endif; ?>
-					<textarea rows="5" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>"><?php echo esc_textarea( $meta ); ?></textarea>
-					<?php if ( ! empty( $field['description'] ) ) : ?>
-						<span class="description salt-metabox-description"><?php echo $field['description']; ?></span>
-					<?php endif; ?>
-				</label>
-				<?php
-				break;
-
-			case 'checkbox' :
-				?>
-				<label>
-					<?php if ( ! empty( $field['label'] ) ) : ?>
-						<span class="salt-metabox-title"><?php echo esc_html( $field['label'] ); ?></span>
-					<?php endif; ?>
-						<input type="checkbox" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" size="30" <?php echo ( $meta=='on' ) ? 'checked' : ''; ?> /> 
-					<?php if ( ! empty( $field['desc'] ) ) : ?>
-						<span class="description salt-metabox-description"><?php echo $field['desc']; ?></span>
-					<?php endif; ?>
-				</label>
-				<?php
-				break;
-
-			case 'select' :
-				?>
-				<label>
-					<?php if ( ! empty( $field['label'] ) ) : ?>
-						<span class="salt-metabox-title"><?php echo esc_html( $field['label'] ); ?></span>
-					<?php endif; ?>
-					<select name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>">
-						<?php if ( is_array( $field['options'] ) ) foreach ( $field['options'] as $key => $value ) : ?>
-					    	<option value="<?php echo $key; ?>" <?php echo ( $meta==$key ) ? 'selected' : ''; ?>><?php echo $value; ?></option>
-						<?php endforeach; ?>
-					</select>
-						<?php if ( ! empty( $field['desc'] ) ) : ?>
-						<br /><span class="description salt-metabox-description"><?php echo $field['desc']; ?></span>
-					<?php endif; ?>
-				</label>
-				<?php
-				break;
-
-			case 'color' :
-				?>
-				<label>
-					<?php if ( ! empty( $field['label'] ) ) : ?>
-						<span class="salt-metabox-title"><?php echo esc_html( $field['label'] ); ?></span>
-					<?php endif; ?>
-				</label>	
-				<input type="text" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" value="<?php echo $meta; ?>" size="30" class="salt-select-color" /> 
-				<?php if ( ! empty( $field['desc'] ) ) : ?>
-					<br /><span class="description salt-metabox-description"><?php echo $field['desc']; ?></span>
-				<?php endif; ?>
-				
-				<?php
-				break;
-			
-			case 'image' :
-				?>
-				<label>
-					<?php if ( ! empty( $field['label'] ) ) : ?>
-						<span class="salt-metabox-title"><?php echo esc_html( $field['label'] ); ?></span>
-					<?php endif; ?>
-				</label>
-				<div class="salt-image-upload-wrapper">
-					<div class="salt-image-display salt-image-upload-button">
-						<!-- Image -->
-						<?php if ( isset( $meta ) && $meta != '' ) : ?>
-						<?php $img = wp_get_attachment_image_src( $meta, 'medium' ); ?>
-						<div class="salt-background-image-holder">
-							<img src="<?php echo $img[0]; ?>" class="salt-background-image-preview" />
-						</div>
-						<a class="salt-image-remove" href="#"><span class="dashicons dashicons-no"></span></a>
-						<?php else : ?>
-						<div class="placeholder"><span class="dashicons dashicons-format-image"></span></div>
-						<!-- Remove button -->
-						<a class="salt-image-remove hidden" href="#"><span class="dashicons dashicons-no"></span></a>
-						<?php endif; ?>
-					</div>
-					<input type="hidden" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" value="<?php if ( isset ( $meta ) ) echo $meta; ?>" class="salt-image-upload-field" />
-					<input type="button" class="button button-primary salt-image-button salt-choose-image" value="<?php _e('Choose Image', 'salt'); ?>" />
-				</div>
-				<?php
-				break;
-			case 'section' :
-				continue;
-								
-				break;
-			default :
-				echo __('Sorry this field type doesn\'t exist', 'salt');
-				
+		// Include the template file.		
+		if ( file_exists( $field_format )) {
+			include( $field_format );
 		}
 	}
 	
@@ -398,10 +386,10 @@ class Salt_Meta_Box {
 	    if ( ! $this->verify_post_meta( $post_id ) ) :
 		    	    
 		    // Check if there are any fields to save.
-		    if ( $this->settings['fields'] ) :
+		    if ( $this->settings->fields ) :
 		    
 			    // Cycle through the settings
-			    foreach ( $this->settings['fields'] as $field ) :
+			    foreach ( $this->settings->fields as $field ) :
 				
 					// Get the post meta for the current field
 			        $old = get_post_meta( $post_id, $field['id'], true );
@@ -447,7 +435,7 @@ class Salt_Meta_Box {
 		}
 
 		return false;
-    }
+    }    
 }
 
 /**
@@ -461,13 +449,6 @@ class Salt_Meta_Box {
 class Salt_Background_Meta_Box extends Salt_Meta_Box {
 	
 	/**
-	 * User defined options assigned on __construct().
-	 *
-	 * @var stinrg The prefix used on the id for the fields
-	 */
-	public $prefix = '_background_';
-
-	/**
 	 * Constructor
 	 *
 	 * Register the post type meta.
@@ -480,33 +461,37 @@ class Salt_Background_Meta_Box extends Salt_Meta_Box {
 		$this->post_type = $post_type;
 		
 		// Create the settings for this meta box 
-		$this->settings = array(
+		$settings = array(
 			'id'		 => 'background',
 			'title'      => __('Background', 'salt'),
-			'pages'      => array('slider'),
+			'pages'      => array( $this->post_type ),
 			'context'    => 'normal',
 			'priority'   => 'high',
 			'fields'     => array(	
 				array(
-			        'label'	=> __('Image', 'salt'),
-			        'id'    => $this->prefix.'image',
-			        'type'  => ''
+			        'label'	=> __('Upload Image', 'salt'),
+					'desc'	=> __('Upload Image', 'salt'),
+			        'id'    => '_background_image',
+			        'type'  => 'image'
 				),
 				array(
-			        'label'	=> __('Height (px)', 'salt'),
+			        'label'	=> __('Set Image Height (px)', 'salt'),
 			        'std' 	=> '450',
-			        'id'    => $this->prefix.'height',
-			        'type'  => 'text'
+			        'id'    => '_background_height',
+			        'type'  => 'text',
+			        'width'	=> 50
 				),
 				array(
-			        'label'	=> __('Color', 'salt'),
-			        'id'    => $this->prefix.'color',
-			        'type'  => 'color'
+			        'label'	=> __('Background Color', 'salt'),
+			        'id'    => '_background_color',
+			        'type'  => 'color',
+			        'width'	=> 50
 				),
 				array(
 			        'label'	=> __('Repeat', 'salt'),
-			        'id'    => $this->prefix.'repeat',
+			        'id'    => '_background_repeat',
 			        'type'  => 'select',
+			        'width'	=> 25,
 			        'options' => array(
 				        'no-repeat' => 'No Repeat',
 				        'repeat'	=> 'Repeat',
@@ -516,8 +501,9 @@ class Salt_Background_Meta_Box extends Salt_Meta_Box {
 				),
 				array(
 			        'label'	=> __('Position', 'salt'),
-			        'id'    => $this->prefix.'position',
+			        'id'    => '_background_position',
 			        'type'  => 'select',
+			        'width'	=> 25,
 			        'options' => array(
 				        'center' => 'Center',
 				        'top' 	 => 'Top',
@@ -528,16 +514,20 @@ class Salt_Background_Meta_Box extends Salt_Meta_Box {
 				),
 				array(
 			        'label'	=> __('Stretch', 'salt'),
-			        'id'    => $this->prefix.'stretch',
+			        'id'    => '_background_stretch',
 			        'type'  => 'checkbox',
+			        'width'	=> 25
 				),
 				array(
 			        'label'	=> __('Darken', 'salt'),
-			        'id'    => $this->prefix.'darken',
+			        'id'    => '_background_darken',
 			        'type'  => 'checkbox',
+			        'width'	=> 25
 				)
 			)
 		);
+		
+		$this->settings = (object) $settings;
 		
 		// Initiate the meta box
 		$this->init();
@@ -560,9 +550,9 @@ class Salt_Background_Meta_Box extends Salt_Meta_Box {
 		wp_enqueue_style( 'wp-color-picker' );
 		
 		// Enqueue the JS to initiate the color picker if it is displayed.
-        wp_enqueue_script( 'salt-meta-js', SALT_TEMPLATE_URI . '/core/assets/js/meta.js', array( 'jquery', 'wp-color-picker' ) );		
+        wp_enqueue_script( 'salt-meta-js', SALT_TEMPLATE_URI . '/core/assets/js/meta.js', array( 'jquery', 'wp-color-picker' ) );
+        		
         // Register and enqueue the JS to add a background image.
-        // wp_register_script( 'salt-background-image', SALT_TEMPLATE_URI . '/core/assets/js/background-image.js', array( '' ) );
         wp_localize_script( 'salt-meta-js', 'meta_image',
             array(
                 'title' => __( 'Set background image', 'salt' ),
@@ -571,66 +561,290 @@ class Salt_Background_Meta_Box extends Salt_Meta_Box {
         );
         wp_enqueue_script( 'salt-meta-js' );
 	}
+}
+
+/**
+ * Class to extend the main Meta Box class with one specifically to add links / buttons.
+ *
+ * This class is called within the Salt_Post_Types class with predefined options.
+ *
+ * @package		Salt
+ * @since		1.5.2
+ */
+class Salt_Link_Meta_Box extends Salt_Meta_Box {
+	
+	/**
+	 * Constructor
+	 *
+	 * Register the post type meta.
+	 *
+	 * @param string $post_type The post type this meta box is added to
+	 */
+	function __construct( $post_type='post' ) {
+		
+		// Set the post type that this meta box should display on
+		$this->post_type = $post_type;
+		
+		// Create the settings for this meta box 
+		$settings = array(
+			'id'		 => 'link',
+			'title'      => __('Link / Button', 'salt'),
+			'context'    => 'normal',
+			'priority'   => 'high',
+			'fields'     => array(
+				array(
+					'label' => __('URL', 'salt'),
+					'id'    => '_link_url',
+					'type'  => 'text',
+					'width' => 50
+				),
+				array(
+					'label' => __('Label', 'salt'),
+					'id'    => '_link_text',
+					'type'  => 'text',
+					'width' => 50
+				),
+				array(
+					'label' => __('Type', 'salt'),
+					'id'    => '_link_type',
+					'type'  => 'select',
+					'width' => 50,
+					'options' => array(
+						'' 	 	 => 'Text Link',
+						'button' => 'Button'
+					)
+				),
+				array(
+					'label' => __('Open in Tab', 'salt'),
+					'id'    => '_link_target',
+					'type'  => 'checkbox',
+					'width' => 50
+				),
+			)
+		);
+		
+		$this->settings = (object) $settings;
+		
+		// Initiate the meta box
+		$this->init();		
+	}
+}
+
+/**
+ * Class to extend the main Meta Box class with one specifically to add a simple text box.
+ *
+ * This class is called within the Salt_Post_Types class with predefined options.
+ *
+ * @package		Salt
+ * @since		1.5.2
+ */
+class Salt_Text_Meta_Box extends Salt_Meta_Box {
+	
+	/**
+	 * User defined options assigned on __construct().
+	 *
+	 * @var stinrg The prefix used on the id for the fields
+	 */
+	public $prefix = '_text_';
 
 	/**
-	 * Render
+	 * Constructor
 	 *
-	 * Renders the field wrapper, background image and calls $this->render_field() for the fields.
-	 */	
-	function render() {
-		global $post;
+	 * Register the post type meta.
+	 *
+	 * @param string $post_type The post type this meta box is added to
+	 */
+	function __construct( $post_type='post' ) {
 		
-		// Check if this post meta has been saved before.
-		$this->saved = $this->has_been_saved( $post->ID, $this->settings['fields'] );		
+		// Set the post type that this meta box should display on
+		$this->post_type = $post_type;
 		
-		// Create a nonce field for security.
-		wp_nonce_field( SALT_TEMPLATE_DIR, 'salt_metabox_nonce' );
+		// Create the settings for this meta box 
+		$settings = array(
+			'id'		 => 'text',
+			'title'      => __('Text', 'salt'),
+			'context'    => 'normal',
+			'priority'   => 'high',
+			'fields'     => array(
+				array(
+					'label' => '',
+					'id'    => $this->prefix.'copy',
+					'type'  => 'textarea'
+				),
+				array(
+					'label' => __('Color', 'salt'),
+					'id'    => $this->prefix.'color',
+					'type'  => 'color',
+					'width' => 50
+				),
+				array(
+					'label' => __('Align', 'salt'),
+					'id'    => $this->prefix.'align',
+					'type'  => 'select',
+					'options' => array(
+						'left'	 => 'Left',
+						'center' => 'Center',
+						'right'  => 'Right'
+					),
+					'width' => 50
+				),
+				array(
+					'label' => __('Font Size', 'salt'),
+					'id'    => $this->prefix.'size',
+					'type'  => 'select',
+					'options' => array(
+						'small'	 => 'Small',
+						'medium' => 'Medium',
+						'large'  => 'Large'
+					),
+					'width' => 50
+				),
+				array(
+					'label' => __('Position', 'salt'),
+					'id'    => $this->prefix.'position',
+					'type'  => 'select',
+					'options' => array(
+						''	 	 => 'Above Featured Image',
+						'image-right' => 'Left of Featured Image',
+						'image-left'  => 'Right of Featured Image'
+					),
+					'width' => 50
+				)
+			)
+		);
+		
+		$this->settings = (object) $settings;
+		
+		// Initiate the meta box
+		$this->init();		
+	}	
+}
 
-		$meta = get_post_meta($post->ID, '_background_image', true);
-		?>
-		<div class="floatleft col-2">
-			
-			<h4 class="salt-metabox-title"><?php _e('Choose Your Image', 'salt'); ?></h4>
-			<div class="salt-image-display salt-image-upload-button">
-				<!-- Image -->
-				<?php if ( isset( $meta ) && $meta != '' ) : ?>
-				<?php $img = wp_get_attachment_image_src( $meta, 'medium' ); ?>
-				<div class="salt-background-image-holder">
-					<img src="<?php echo $img[0]; ?>" id="preview-background-img" class="salt-background-image" />
-				</div>
-				<a id="remove-background-img" class="salt-image-remove" href="#"><span class="dashicons dashicons-no"></span></a>
-				<?php else : ?>
-				<div class="placeholder"><span class="dashicons dashicons-format-image"></span></div>
-				<!-- Remove button -->
-				<a id="remove-background-img" class="salt-image-remove hidden" href="#"><span class="dashicons dashicons-no"></span></a>
-				<?php endif; ?>
-			</div>
-			<input type="hidden" name="_background_image" id="_background_image" class="salt-image-upload-field" value="<?php if ( isset ( $meta ) ) echo $meta; ?>" />
-			<input type="button" class="button button-primary salt-image-button salt-choose-image" value="<?php _e('Choose Image', 'salt'); ?>" />
-		</div>
+/**
+ * Class to extend the main Meta Box class with one specifically to add a simple text box.
+ *
+ * This class is called within the Salt_Post_Types class with predefined options.
+ *
+Icon select
+Icon position - next to title - above 
+Icon color
+Icon background color
+Icon size 
+Icon Border
+ *
+ * @package		Salt
+ * @since		1.5.2
+ */
+class Salt_FontAwesome_Meta_Box extends Salt_Meta_Box {
 	
-		<div class="floatleft col-2">
-			<ul class="salt-metabox-list">
-			<?php 
-			// Cycle through the pre-defined field settings	
-			foreach ( $this->settings['fields'] as $field ) {
-				
-				if ( $field['id'] == '_background_image' )
-					continue;
-					
-				// Create ID's and Classes based on the field type and id.
-				$id    = 'salt-metabox-' . str_replace( '[', '-', str_replace( ']', '', $field['id'] ) );
-				$class = 'salt-metabox salt-metabox-' . $field['type'];		
-	
-				?><li id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>">
-					<?php $this->render_field( $post->ID, $field ); ?>
-				</li><?php	
-			
-			} ?>
-			</ul>
-		</div>
-		<div class="clear"></div>
-		<?php
+	/**
+	 * User defined options assigned on __construct().
+	 *
+	 * @var stinrg The prefix used on the id for the fields
+	 */
+	public $prefix = '_icon_';
+
+	/**
+	 * Constructor
+	 *
+	 * Register the post type meta.
+	 *
+	 * @param string $post_type The post type this meta box is added to
+	 */
+	function __construct( $post_type='post' ) {
+		
+		// Set the post type that this meta box should display on
+		$this->post_type = $post_type;
+		
+		$fa_list = $this->get_fontawesome_icons_list();
+		
+		// Create the settings for this meta box 
+		$settings = array(
+			'id'		 => 'fontawesome',
+			'title'      => __('Icons', 'salt'),
+			'context'    => 'normal',
+			'priority'   => 'high',
+			'fields'     => array(
+				array(
+					'label'   => __('Select an icon', 'salt'),
+					'id'      => '_fontawesome_font',
+					'type'    => 'fontawesome',
+					'options' => $fa_list,
+					'width'   => 33
+				),
+				array(
+					'label' => __('Color', 'salt'),
+					'id'    => '_fontawesome_color',
+					'type'  => 'color',
+					'width' => 33
+				),
+				array(
+					'label' => __('Icon Size', 'salt'),
+					'id'    => '_fontawesome_size',
+					'type'  => 'text',
+					'width' => 33
+				),
+			)
+		);
+		
+		$this->settings = (object) $settings;
+		
+		// Initiate the meta box
+		$this->init();		
 	}
+
+	/**
+	 * Enqeue
+	 * 
+	 * Enqueue background iamge related scripts.
+	 */
+	function enqueue() {
+	
+		// Enqueue the media panel.
+        wp_enqueue_media();
+        
+        // Enqueue metabox styling
+		wp_enqueue_style(  'salt-admin', SALT_TEMPLATE_URI.'/core/assets/css/meta.css', false, '1.5.0' );
+
+		// Enqueue the stylesheet for the color picker.
+		wp_enqueue_style( 'wp-color-picker' );
+		
+		// Enqueue the JS to initiate the color picker if it is displayed.
+        wp_enqueue_script( 'salt-meta-js', SALT_TEMPLATE_URI . '/core/assets/js/meta.js', array( 'jquery', 'wp-color-picker' ) );
+        
+    	wp_enqueue_style( 'fontawesome'	, get_template_directory_uri() . '/css/font-awesome.min.css', false, '4.2.0');        
+	}
+		
+	/**
+	 * FontAwesome 4.6.3 json list
+	 *
+	 * A helpful list FontAwesome fonts for use within the beautiful meta fields of this theme.
+	 *
+	 * @link https://github.com/FortAwesome/Font-Awesome/blob/master/src/icons.yml
+	 * @link converted to json with help from http://yamltojson.com/
+	 */
+ 	public function get_fontawesome_icons_list() {
+ 		
+		$fa_json  = wp_remote_fopen( get_template_directory_uri() . '/core/assets/fonts/fontawesome.json' );
+		
+		return $this->json_decode( $fa_json, true );
+	}
+	
+	/**
+	 * Decode JSON
+	 *
+	 * Attempts to decode json into an array.
+	 * This new function accounts for servers
+	 * running an older version of PHP with
+	 * magic quotes gpc enabled.
+	 * 
+	 * @param  string  $str   - JSON string to convert into an array
+	 * @param  boolean $accoc [- Whether to return an associative array
+	 * @return array - Decoded JSON array
+	 */
+	public static function json_decode( $str = '', $accoc = false ) {
+		$json_string = get_magic_quotes_gpc() ? stripslashes( $str ) : $str;
+		return json_decode( $json_string, $accoc );
+	}    	
 }
 endif;

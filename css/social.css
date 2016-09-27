@@ -146,6 +146,18 @@ ul.ico-social.color li a.youtube {
 	background:#cd201f;
 }
 
+ul.ico-social.color li a.google-plus {
+	background:#C63D2D;
+}
+
+ul.ico-social.color li a.reddit {
+	background:#CEE3F8;
+}
+
+ul.ico-social.color li a.vimeo {
+	background:#44BBFF;
+}
+
 ul.ico-social.color li a.linkedin {
 	background:#0077b5;
 }
@@ -158,7 +170,7 @@ ul.ico-social.color li a.pinterest {
 	background:#cc2127;
 }
 
-ul.ico-social.color li a.wechat {
+ul.ico-social.color li a.weixin {
 	background:#7bb32e;
 }
 
@@ -168,6 +180,10 @@ ul.ico-social.color li a.weibo {
 
 ul.ico-social.color li a.rss {
 	background:#fa9839;
+}
+
+ul.ico-social.color li a.envelope {
+	background:#278BD9;
 }
 
 /* No background but still in color */
@@ -187,6 +203,18 @@ ul.ico-social.color.no-shape li a.youtube {
 	color:#cd201f;
 }
 
+ul.ico-social.color.no-shape li a.google-plus {
+	color:#C63D2D;
+}
+
+ul.ico-social.color.no-shape li a.reddit {
+	color:#CEE3F8;
+}
+
+ul.ico-social.color.no-shape li a.vimeo {
+	color:#44BBFF;
+}
+
 ul.ico-social.color.no-shape li a.linkedin {
 	color:#0077b5;
 }
@@ -199,7 +227,7 @@ ul.ico-social.color.no-shape li a.pinterest {
 	color:#cc2127;
 }
 
-ul.ico-social.color.no-shape li a.wechat {
+ul.ico-social.color.no-shape li a.weixin {
 	color:#7bb32e;
 }
 
@@ -209,6 +237,10 @@ ul.ico-social.color.no-shape li a.weibo {
 
 ul.ico-social.color.no-shape li a.rss {
 	color:#fa9839;
+}
+
+ul.ico-social.color.no-shape li a.envelope {
+	color:#278BD9;
 }
 
 @media screen and (max-width : 767px){

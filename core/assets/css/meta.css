@@ -1,92 +1,211 @@
-ul.salt-metabox-tabs {
-	margin: 1em 0 0;
+#poststuff .salt-box .inside {
+    margin: 0;
+    padding: 0;
+}
+
+ul.salt-tabs-nav {
+	margin: 1em 1em 0;
 	padding: 0;
 	z-index: 99;
 	position: relative;
 }
 
-ul.salt-metabox-tabs li {
+ul.salt-tabs-nav li {
 	display: inline;
 	margin-left: -1px;
 }
 
-ul.salt-metabox-tabs li:first-child {
+ul.salt-tabs-nav li:first-child {
 	margin-left: 0px;
 }
 
-ul.salt-metabox-tabs li a {
+ul.salt-tabs-nav li a {
 	background: #f1f1f1;
 	display: inline-block;
 	padding: 10px 20px;
-	border: 1px solid #f1f1f1;
+	border: 1px solid #d9d9d9;
 	border-bottom: none;
 	text-decoration: none;
 	color: #ccc;
 }
 
-ul.salt-metabox-tabs li a:focus {
+ul.salt-tabs-nav li a:focus {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
 
-ul.salt-metabox-tabs li.active a {
+ul.salt-tabs-nav li.active a {
 	background: #ffffff;
 	color: #333;
+    top: 1px;
+    position: relative;
+    padding-bottom: 10px;
+    padding-top: 11px;
 }
 
-ul.salt-metabox-list {
-	margin: 1em 0;
+ul.salt-tabs-nav li.active a span {
+    top: -1px;
+    position: relative;
+	
 }
 
-ul.salt-metabox-section {
-	border: 1px solid #f1f1f1;
-	padding: 20px 20px 0;
-	margin-top: -1px;
+.salt-fields-section {
+	border-top: 1px solid #d9d9d9;
 }
 
-ul.salt-metabox-list li.salt-metabox .salt-metabox-title {
-	width: 90px;
-	display: inline-block;
-	vertical-align: top;
+.salt-fields-section > .salt-fields-row {
+	border-top: 0;
 }
 
-ul.salt-metabox-list li.salt-metabox .salt-metabox-description {
+.salt-fields-container label {
+    display: block;
+    padding: 2px 0;
+    color: #000;
+}
+
+.salt-field label {
+    padding-bottom: 6px;
+    font-weight: bold;
+}
+
+.salt-fields-container li.salt-metabox .salt-metabox-description {
 	margin-left: 135px;
 	font-size: .875em;
 	color: #999;
 }
 
-ul.salt-metabox-list li.salt-metabox-checkbox .salt-metabox-description {
+.salt-fields-container li.salt-metabox-checkbox .salt-metabox-description {
 	margin-left: 0;
 }
 
-ul.salt-metabox-list li.salt-metabox {
+.salt-fields-container li.salt-metabox {
 	border-bottom: 1px solid #e5e5e5;
 	padding: 12px 0px; 
 	margin-bottom: 0;
 }
 
-ul.salt-metabox-list li.salt-metabox:first-child {
-	padding-top: 0;
+.salt-fields-container .salt-field {
+	padding: 10px;
 }
 
-ul.salt-metabox-list li.salt-metabox:last-child {
+.salt-fields-container .salt-fields-row + .salt-field,
+.salt-fields-container .salt-field + .salt-field {
+    border-top: 1px solid #d9d9d9;
+}
+
+.salt-fields-container li.salt-metabox:last-child {
 	border-bottom: none;
 }
 
-ul.salt-metabox-list .salt-image-upload-wrapper,
-ul.salt-metabox-list textarea,
-ul.salt-metabox-list input[type="text"],
-ul.salt-metabox-list select {
-	width: 65%;
-}
-
-ul.salt-metabox-list .salt-image-upload-wrapper {
-    display: inline-block;
-}
-
-.col-2 ul.salt-metabox-list .salt-metabox-textarea textarea {
+.salt-field input[type="text"], 
+.salt-field textarea {
+	display: block;
+	padding: 4px 5px 3px;
 	width: 100%;
+	resize: vertical;	
+}
+
+.salt-field select {
+    width: 100%;
+}
+
+.salt-field .salt-select-color {
+	float: left;
+}
+
+.salt-fa-modal {
+	padding: 10px;
+	text-align: center;
+}
+
+.salt-fa-modal .salt-fa,
+.salt-fa-modal .salt-fa:focus {
+	float: left;
+    text-align: center;
+    vertical-align: middle;
+    outline: 0;
+}
+
+.salt-fa-modal .salt-fa input {
+	display: none;
+}
+
+.salt-fa-modal .salt-fa a {
+	color: #C2C2C2;
+    display: inline-block;
+	margin-right: 5px;
+	border: 1px solid #fff;
+    padding: 3px;
+	width: 25px;
+	height: 25px; 
+}
+
+.salt-fa-modal .salt-fa a:focus,
+.salt-fa-modal .salt-fa.selected a,
+.salt-fa-modal .salt-fa a:hover {
+	color: #666666;
+	-webkit-box-shadow: none;
+	box-shadow: none;	
+}
+
+.salt-fa-modal .salt-fa.selected a {
+	border: 1px solid #0074a2;
+	color: #0074a2;
+}
+
+.salt-fa-modal .salt-fa i.fa {
+	font-size: 1.7em;
+}
+
+.salt-fa-modal .salt-fa i.fa:focus {
+	outline: 0;
+}
+
+.salt-fa-modal .salt-fa .tooltip {
+	display: none;
+}
+
+.salt-field .salt-fa-holder:after {
+	content: " ";
+	clear: left;
+	display: block;
+}
+
+.salt-field .salt-fa-holder {
+	max-height: 200px;
+	overflow-y: scroll;
+}
+
+.salt-fa-preview {
+	width: 25px;
+    height: 25px;
+    padding: 5px;
+    border: 1px dashed #333;
+    vertical-align: middle;
+    text-align: center;
+    float: left;
+    margin-right: 10px;
+}
+
+.salt-fields-row {
+    display: table;
+    width: 100%;
+    border-top: 1px solid #d9d9d9;
+}
+
+.salt-fields-container .salt-fields-row:first-child {
+	border-top: none;
+}
+
+.salt-fields-container .salt-fields-row > .salt-field {
+	display: table-cell;
+    min-width: 0;
+    vertical-align: top;
+    border: 0;	
+}
+
+.salt-fields-row > .salt-field + .salt-field {
+    border-left: 1px solid #d9d9d9;
 }
 
 .insert-post-type .dashicons {
@@ -96,17 +215,6 @@ ul.salt-metabox-list .salt-image-upload-wrapper {
     vertical-align: text-top;
     color: #82878C;
     font-size: 18px;		
-}
-
-.postbox .floatleft {
-	float: left;
-	display: inline;
-}
-
-.postbox .col-2 {
-	width: 49%;
-	padding: 10px;
-	box-sizing: border-box;
 }
 
 .postbox .salt-image-display {

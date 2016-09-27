@@ -13,7 +13,7 @@ if ( ! function_exists( 'salt_post_metabox' ) ) :
 function salt_post_metabox() {	
 
 	$post_metabox = new Salt_Background_Meta_Box( 'post' );	
-	$post_metabox->settings['title'] = __('Post Slider Image', 'salt');
+	$post_metabox->settings->title = __('Post Slider Image', 'salt');
 }
 endif;
 add_action( 'admin_init', 'salt_post_metabox' );

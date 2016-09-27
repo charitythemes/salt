@@ -1,6 +1,11 @@
 == Salt Changelog ==
 
-2016.03.06 - v1.5.1
+2016.09.27 - v1.5.2
+- Improve the post meta functions and layouts
+- Update fontawesome to version 4.6.3
+- Added email, google+, vimeo, reddit to the social icon options
+
+2016.06.03 - v1.5.1
 - New animated navigation icon for mobile devices
 - Added an RSS feed option to the social icons
 - Added fuller comments and descriptions to the post helper functions

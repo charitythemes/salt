@@ -69,7 +69,7 @@ if ( !function_exists('salt_welcome_screen_content')) :
 function salt_welcome_screen_content() {
 ?>
 	<div class="wrap about-wrap">
-		<h1><?php printf( __( 'Salt Theme v%s', 'salt' ), SALT_VERSION ); ?><span class="ct_logo"><a href="https://www.charitythemes.org" target="_blank"><img src="<?php echo get_stylesheet_directory_uri(); ?>/core/assets/img/logo_ct_2x_pink.png" alt="" style="margin-top: 10px;
+		<h1><?php printf( __( 'Salt Theme v%s', 'salt' ), SALT_VERSION ); ?><span class="ct_logo"><a href="https://www.charitythemes.org" target="_blank"><img src="<?php echo get_template_directory_uri(); ?>/core/assets/img/logo_ct_2x_pink.png" alt="" style="margin-top: 10px;
     margin-left: 10px;" /></a></span></h1>
 
 		<div class="about-text"><?php _e( 'Thank you for using Salt Theme!', 'salt' ); ?></div>
@@ -81,7 +81,7 @@ function salt_welcome_screen_content() {
 		<div class="headline-feature feature-section one-col" style="text-align: center;">
 			<h2><?php _e( 'New Feature: Blog Posts Slider', 'salt' ); ?></h2>
 			<div class="media-container">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?>/screenshot.png" />
+				<img src="<?php echo get_template_directory_uri(); ?>/screenshot.png" />
 			</div>
 		</div>
 
@@ -90,7 +90,7 @@ function salt_welcome_screen_content() {
 		<div class="feature-section two-col">
 			<div class="col">
 				<div class="media-container">
-					<img src="<?php echo get_stylesheet_directory_uri(); ?>/core/assets/img/post-slider-background-options.png" alt="Post%20Slider%20Background%20Options" width="777" height="402" />
+					<img src="<?php echo get_template_directory_uri(); ?>/core/assets/img/post-slider-background-options.png" alt="Post%20Slider%20Background%20Options" width="777" height="402" />
 				</div>
 			</div>
 			<div class="col">
@@ -104,7 +104,7 @@ function salt_welcome_screen_content() {
 		<div class="feature-section two-col">
 			<div class="col">
 				<div class="media-container" style="text-align: center;">
-					<img src="<?php echo get_stylesheet_directory_uri(); ?>/core/assets/img/slider-customizer.png" alt="slider-customizer" width="283" height="322" />
+					<img src="<?php echo get_template_directory_uri(); ?>/core/assets/img/slider-customizer.png" alt="slider-customizer" width="283" height="322" />
 				</div>
 			</div>
 			<div class="col">
@@ -118,7 +118,7 @@ function salt_welcome_screen_content() {
 		<div class="feature-section two-col">
 			<div class="col">
 				<div class="media-container" style="text-align: center;">
-					<img src="<?php echo get_stylesheet_directory_uri(); ?>/core/assets/img/layout-customizer.png" alt="" />
+					<img src="<?php echo get_template_directory_uri(); ?>/core/assets/img/layout-customizer.png" alt="" />
 				</div>
 			</div>
 			<div class="col">

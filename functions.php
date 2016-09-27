@@ -40,9 +40,17 @@ if ( ! isset( $content_width ) ) {
 }
 
 /*
+ * Register the Post Types to included with salt
+ *
+ * @since Salt 1.5.2
+ */
+global $_salt_registered_post_types;
+$_salt_registered_post_types[] = get_template_directory() . '/core/post-types/section.php';
+
+/*
  * Load Customizer Support
  *
- * 		Typography @since Salt 1.2.0
+ *		Typography @since Salt 1.2.0
  */
 require_once get_template_directory() . '/core/customizer/init.php';
 require_once get_template_directory() . '/core/customizer/typography.php';
@@ -141,7 +149,7 @@ function salt_register_styles() {
 	wp_enqueue_style( 'bootstrap' 	, get_template_directory_uri() . '/css/bootstrap.min.css', false, '3.2.0');
 	wp_enqueue_style( 'fontawesome'	, get_template_directory_uri() . '/css/font-awesome.min.css', false, '4.2.0');
 	wp_enqueue_style( 'main'	 	, get_template_directory_uri() . '/css/main.css', array( 'bootstrap' ), '1.0.3');
-	wp_enqueue_style( 'social'	 	, get_template_directory_uri() . '/css/social.css', array( 'main' ), '1.0');
+	wp_enqueue_style( 'social'	 	, get_template_directory_uri() . '/css/social.css', array( 'main' ), '1.0.2');
 	
 	if ( is_front_page() && get_theme_mod( 'salt_show_slider' ) ) {
 		wp_enqueue_style( 'bxslider' , get_template_directory_uri() . '/css/bxslider.min.css', false, '4.1.2');
@@ -258,12 +266,20 @@ $_salt_registered_social = array(
 	'twitter'		=> __('Follow us on Twitter', 'salt'),
 	'facebook'		=> __('Connect on Facebook', 'salt'),
 	'instagram'		=> __('Follow us on Instagram', 'salt'),
-	'pinterest'		=> __('Follow us on Pinterest', 'salt'),
 	'youtube'		=> __('Watch on Youtube', 'salt'),
+	
+	'google-plus'	=> __('Follow us on Google+', 'salt'),
+	'reddit'		=> __('Follow us on Reddit', 'salt'),
+	'vimeo'			=> __('Watch on Vimeo', 'salt'),
+		
+	'pinterest'		=> __('Follow us on Pinterest', 'salt'),
 	'linkedin'		=> __('Connect on Linkedin', 'salt'),
+
 	'weixin'		=> __('Connect on Wechat', 'salt'),
 	'weibo'			=> __('Connect on Weibo', 'salt'),
+
 	'rss'			=> __('Blog RSS Feed', 'salt'),
+	'envelope'		=> __('Get in touch via email', 'salt')
 );
 
 if (!function_exists('salt_css_template')) :
