@@ -611,7 +611,7 @@ function salt_customize_register( $wp_customize ) {
     	'default'       	=> 'ABC Ltd, All Rights Reserved.',
         'capability'    	=> 'edit_theme_options',
         'type'          	=> 'theme_mod',
-		'sanitize_callback' => 'sanitize_text_field'
+		'sanitize_callback' => 'salt_sanitize_html_text'
     ));
 
     $wp_customize->add_control( new WP_Customize_Control($wp_customize, 'salt_footer_text', array(
@@ -644,3 +644,19 @@ function salt_customize_register( $wp_customize ) {
 	)));			
 }
 add_action( 'customize_register' , 'salt_customize_register' );
+
+if ( ! function_exists( 'salt_sanitize_html_text' ) ) :
+/**
+ * Salt Sanitize HTML text
+ *
+ * Used to clean up the textarea saved through the WP customizer.
+ * Allows the limited HTML tags.
+ *
+ * @ref https://codex.wordpress.org/Function_Reference/wp_kses_post
+ * @ref https://codex.wordpress.org/Function_Reference/force_balance_tags
+ * @since Salt 1.5.11
+ **/
+function salt_sanitize_html_text( $input ) {
+	return wp_kses_post( force_balance_tags( $input ) );
+}
+endif;

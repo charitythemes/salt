@@ -560,11 +560,11 @@ ul.menu > li,
 	color: #8C8988; }
 
 #footer p.copyright a:hover {
-	border-bottom: 1px solid #8C8988; }
+	color: #c0b8b5;
+	border-bottom: 1px solid #c0b8b5; }
 
 #footer p.copyright {
-	float: left;
-}
+	float: left; }
 
 #footer p.credits {
     font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
