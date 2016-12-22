@@ -72,13 +72,13 @@ if ( $slider_query->have_posts() ) :
 jQuery(document).ready(function() {
 	jQuery('.bxslider').bxSlider({
 		easing			: 'ease-in-out',
-		autoStart		: <?php echo ( get_theme_mod('salt_slider_auto_scroll', 'on') == 'on' ) ? 'true' : 'false'; ?>,
+		auto			: <?php echo ( get_theme_mod('salt_slider_auto_scroll', '1') == '1' ) ? 'true' : 'false'; ?>,
 		mode			: '<?php echo ( $a = get_theme_mod('salt_slider_animation') ) ? $a : 'horizontal'; ?>',
-		controls		: <?php echo ( get_theme_mod('salt_slider_direction_nav', 'on') == 'on' ) ? 'true' : 'false'; ?>,
+		controls		: <?php echo ( get_theme_mod('salt_slider_direction_nav', '1') == '1' ) ? 'true' : 'false'; ?>,
 	    nextText		: '',
 	    prevText		: '',
 	    preloadImages	: 'all',
-		pager			: <?php echo ( get_theme_mod('salt_slider_control_nav', 'on') == 'on' ) ? 'true' : 'false'; ?>,
+		pager			: <?php echo ( get_theme_mod('salt_slider_control_nav', '1') == '1' ) ? 'true' : 'false'; ?>,
 		speed			: <?php echo ( $s = get_option('salt_slider_speed') ) ? $s : '500'; ?>,
 		adaptiveHeight	: 'true',
 		useCSS			: 'false',

@@ -162,10 +162,10 @@ function salt_customize_register( $wp_customize ) {
 	
 	// Turn on / off the about author section.
 	$wp_customize->add_setting('salt_blog_about_author', array(
-	    'default'           => false,
+	    'default'           => '',
 	    'capability'        => 'edit_theme_options',
 	    'type'           	=> 'theme_mod',
-        'sanitize_callback' => 'sanitize_text_field'
+        'sanitize_callback' => 'salt_sanitize_checkbox'
 	));
 	
 	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_blog_about_author', array(
@@ -192,10 +192,10 @@ function salt_customize_register( $wp_customize ) {
 
 	// Show the slider
 	$wp_customize->add_setting('salt_show_slider', array(
-    	'default'       	=> false,
+    	'default'       	=> '',
         'capability'    	=> 'edit_theme_options',
         'type'          	=> 'theme_mod',
-        'sanitize_callback' => 'sanitize_text_field'
+        'sanitize_callback' => 'salt_sanitize_checkbox'
     ));
 	
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_show_slider', array(
@@ -207,26 +207,25 @@ function salt_customize_register( $wp_customize ) {
 		
 	// Show the direction nav on the slider.
 	$wp_customize->add_setting('salt_slider_direction_nav', array(
-    	'default'       	=> 'on',
+    	'default'       	=> '1',
         'capability'    	=> 'edit_theme_options',
         'type'          	=> 'theme_mod',
-        'sanitize_callback' => 'sanitize_text_field'
+        'sanitize_callback' => 'salt_sanitize_checkbox'
     ));
 	
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_direction_nav', array(
         'label'    		=> __('Show Direction Nav', 'salt'),
         'section'  		=> 'slider',
         'settings' 		=> 'salt_slider_direction_nav',
-        'type'          => 'checkbox',
-        'sanitize_callback' => 'sanitize_text_field'
+        'type'          => 'checkbox'
     )));
 
 	// Show the control nav on the slider.
 	$wp_customize->add_setting('salt_slider_control_nav', array(
-    	'default'       	=> 'on',
+    	'default'       	=> '1',
         'capability'    	=> 'edit_theme_options',
         'type'          	=> 'theme_mod',
-        'sanitize_callback' => 'sanitize_text_field'
+        'sanitize_callback' => 'salt_sanitize_checkbox'
     ));
 	
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_control_nav', array(
@@ -238,10 +237,10 @@ function salt_customize_register( $wp_customize ) {
 
 	// Auto scroll.
 	$wp_customize->add_setting('salt_slider_auto_scroll', array(
-    	'default'       	=> 'on',
+    	'default'       	=> '1',
         'capability'    	=> 'edit_theme_options',
         'type'          	=> 'theme_mod',
-        'sanitize_callback' => 'sanitize_text_field'
+        'sanitize_callback' => 'salt_sanitize_checkbox'
     ));
 	
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_auto_scroll', array(
@@ -343,7 +342,7 @@ function salt_customize_register( $wp_customize ) {
     	'default'       	=> '',
         'capability'    	=> 'edit_theme_options',
         'type'          	=> 'theme_mod',
-        'sanitize_callback' => 'sanitize_text_field'
+        'sanitize_callback' => 'salt_sanitize_checkbox'
     ));
 	
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_slider_posts_in_loop', array(
@@ -593,10 +592,10 @@ function salt_customize_register( $wp_customize ) {
     ));
 
 	$wp_customize->add_setting('salt_footer_credit', array(
-	    'default'           => false,
+	    'default'           => '',
 	    'capability'        => 'edit_theme_options',
 	    'type'           	=> 'option',
-        'sanitize_callback' => 'sanitize_text_field'
+        'sanitize_callback' => 'salt_sanitize_checkbox'
 	));
 	
 	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_footer_credit', array(
@@ -658,5 +657,23 @@ if ( ! function_exists( 'salt_sanitize_html_text' ) ) :
  **/
 function salt_sanitize_html_text( $input ) {
 	return wp_kses_post( force_balance_tags( $input ) );
+}
+endif;
+
+if ( ! function_exists( 'salt_sanitize_checkbox' ) ) :
+/**
+ * Santize a checkbox
+ *
+ * If the input is a 1 (indicating a checked box) then the function returns a one. 
+ * If the input is anything else at all, the function returns a blank string.
+ *
+ * @since Salt 1.5.2
+ **/
+function salt_sanitize_checkbox( $input ) {
+    if ( $input == 1 ) {
+        return 1;
+    } else {
+        return '';
+    }
 }
 endif;

@@ -27,7 +27,13 @@ body {
 	margin-top: 1.429em; }
 
 .container {
-	max-width: 1100px; }	
+	max-width: 1100px; }
+	
+* {
+	-moz-hyphens:none;
+	-ms-hyphens:none;
+	-webkit-hyphens: none;
+	hyphens:none; }	
 
 /*****
 /*  ~headers
