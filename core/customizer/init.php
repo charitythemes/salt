@@ -602,7 +602,7 @@ function salt_customize_register( $wp_customize ) {
         'label'    => __( 'Hide website credits.', 'salt' ),
         'section'  => 'footer',
         'settings' => 'salt_footer_credit',
-        'type'     => 'checkbox',
+        'type'     => 'checkbox'
 	)));
 
     // Footer Copyright Text

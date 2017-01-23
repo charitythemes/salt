@@ -16,13 +16,15 @@ do_action('salt_article_above'); ?>
 	<?php do_action('salt_article_inside_above'); ?>
 
 	<?php salt_post_thumbnail(); ?>
-	
+
+	<?php if ( apply_filters( 'salt_show_page_title', true ) ) : ?>
+
 	<header class="entry-header">
-		
-		<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-			
+		<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>	
 	</header>
-	
+
+	<?php endif; ?>
+
 	<div class="entry-content">
 	
 		<?php 

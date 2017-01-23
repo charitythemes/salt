@@ -25,6 +25,10 @@ function salt_author_meta() {
  	// Allows the users to hide the about author text from the Customizer.
  	if ( get_theme_mod('salt_blog_about_author') == '1' ) 
  		return false;
+
+ 	// Only show on the default post type.
+ 	if ( get_post_type() != 'post' ) 
+ 		return false;
  	?>
 	<div class="author-meta vcard">
 	
@@ -470,7 +474,7 @@ function salt_post_background_image( $args='' ) {
 	if ( isset( $m['_background_image'][0] ) || isset( $r['color'] ) ) {
 		
 		if ( isset( $m['_background_image'][0] ) ) 
-			$image = wp_get_attachment_image_src( $m['_background_image'][0], 'large' );
+			$image = wp_get_attachment_image_src( $m['_background_image'][0], 'slide-image' );
 		
 		$css = $r['before'];
 		

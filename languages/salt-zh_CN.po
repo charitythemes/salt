@@ -1,0 +1,374 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: Salt Theme\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 1.8.11\n"
+"Language: zh_CN\n"
+
+#. Text in function
+#: salt/core/helpers/post.php:93
+msgid "&laquo; Previous"
+msgstr "&laquo;上一则"
+
+#. Text in echo
+#: salt/core/meta/fields/term_select.php:8
+msgid "--- Select ---"
+msgstr "--- 选择 ---"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:125
+msgid "2 different layouts"
+msgstr "2 个不同的板块"
+
+#. Text in echo
+#: salt/core/helpers/post.php:35
+msgid "About the author"
+msgstr "关于作者"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:97
+msgid "Background Images"
+msgstr "背景图片"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Blog RSS Feed"
+msgstr "订阅博客"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Blue"
+msgstr "蓝色"
+
+#. Text in echo
+#: salt/core/meta/fields/image.php:18
+msgid "Choose Image"
+msgstr "选择图片"
+
+#. Text in echo
+#: salt/core/meta/fields/fontawesome.php:9
+msgid "Clear Selection"
+msgstr "清楚选项"
+
+#. Text in echo
+#: salt/comments.php:55
+msgid "Comments are closed."
+msgstr "回应功能已关闭"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Connect on Facebook"
+msgstr "加入脸书"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Connect on Linkedin"
+msgstr "加入联英"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Connect on Wechat"
+msgstr "加入微信"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Connect on Weibo"
+msgstr "加入微博"
+
+#. Text in echo
+#: salt/partials/content-slider.php:26
+msgid "Continue Reading"
+msgstr "继续阅读"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:111
+msgid "Customize your slider"
+msgstr "客制你的幻灯片"
+
+#. Text in function
+#: salt/footer.php:60
+msgid "Designed by %1s charity: themes %2s"
+msgstr "%1s charity: themes %2s的设计"
+
+#. Text in function
+#: salt/core/admin/welcome.php:138
+msgid "Do you have an idea for a great feature on our next version of Salt Theme? Or perhaps there is something you don\\'t like and want us to improve, <a href=\"%s\" target=\"_blank\">please let us know</a>, we\\'d love to hear from you!"
+msgstr "您对Salt theme的下一个升级版本是否有任何想法？ 或是您有任何不满意想要我们改进的地方, <a href=\"%s\" target=\"_blank\">请告诉我们</a>, 我们很乐意听听您的想法！"
+
+#. Text in function
+#: salt/partials/content-page.php:39
+msgid "Edit Page"
+msgstr "编辑页面"
+
+#. Text in function
+#: salt/partials/content-slider.php:28
+msgid "Edit Slide"
+msgstr "编辑幻灯片"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Follow us on Google+"
+msgstr "在Google+关注我们"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Follow us on Instagram"
+msgstr "在Instagram关注我们"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Follow us on Pinterest"
+msgstr "在Pinterest关注我们"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Follow us on Reddit"
+msgstr "在Reddit关注我们"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Follow us on Twitter"
+msgstr "在Twitter关注我们"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Footer Widget Area"
+msgstr "网页底部板块"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:112
+msgid "From the WordPress customizer, you can change a few of the slider settings, such as the animation speed, whether to show the controls or not and the direction your images slider."
+msgstr "在WordPress客制化里面，您可以自行变更幻灯片的设定，比如幻灯速度，是否要显示幻灯片指示箭头"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Get in touch via email"
+msgstr "发邮件给我们"
+
+#. Text in function
+#: salt/core/admin/welcome.php:146
+msgid "Get our latest updates by <a href=\"%s\" target=\"_blank\">following us on Facebook!</a>"
+msgstr "以<a href=\"%s\" target=\"_blank\">关注脸书</a>来收到我们的最新消息 "
+
+#. Text in function
+#: salt/core/helpers/post.php:93
+msgid "Go"
+msgstr "前往"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:156
+msgid "Go to Dashboard"
+msgstr "前往操作台"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:156
+msgid "Go to Dashboard &rarr; Home"
+msgstr "前往操作台 &rarr; 首页"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Green"
+msgstr "绿色"
+
+#. Text in echo
+#: salt/404.php:37
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr "看起来这里什么都没有，试试搜寻"
+
+#. Text in echo
+#: salt/partials/content-none.php:39
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "网页不存在，试试看搜寻页面"
+
+#. Text in function
+#: salt/core/helpers/post.php:93
+msgid "Jump to"
+msgstr "跳至"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Light"
+msgstr "亮色"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:141
+msgid "Like Salt Theme? Give us 5 stars!"
+msgstr "喜欢Salt Theme吗？来给我们5颗星"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:145
+msgid "Like us on Facebook"
+msgstr "来我们的脸书点赞"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:82
+msgid "New Feature: Blog Posts Slider"
+msgstr "新功能：博客文章幻灯片"
+
+#. Text in function
+#: salt/core/helpers/post.php:93
+msgid "Next &raquo;"
+msgstr ";下一则 &raquo"
+
+#. Text in echo
+#: salt/partials/content-none.php:21
+msgid "Nothing Found"
+msgstr "什么都没找到"
+
+#. Text in function
+#: salt/core/meta/fields/term_select.php:13
+msgid "Oops! Nothing Found"
+msgstr "哦哦！什么都没找到"
+
+#. Text in echo
+#: salt/404.php:31
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "哦哦！找不到这个页面"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Orange"
+msgstr "橘色"
+
+#. Text in function
+#: salt/partials/content-page.php:26
+msgid "Page"
+msgstr "页面"
+
+#. Text in function
+#: salt/partials/content-page.php:26
+msgid "Pages:"
+msgstr ":页面"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Pink"
+msgstr "粉色"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Primary Menu"
+msgstr "主菜單"
+
+#. Text in function
+#: salt/partials/content-none.php:30
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "准备好發布您的第一个文章了吗？<a href=\"%1$s\">从这里开始</a>."
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Red"
+msgstr "红色"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:153
+msgid "Return to Dashboard &rarr; Updates"
+msgstr "返回操作台；更新"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:153
+msgid "Return to Updates"
+msgstr "返回到更新"
+
+#. Text in function
+#: salt/core/admin/welcome.php:72
+msgid "Salt Theme v%s"
+msgstr "Salt Theme 第v%s版"
+
+#. Text in echo
+#: salt/searchform.php:3
+msgid "Search &hellip;"
+msgstr ";搜寻 &hellip"
+
+#. Text in echo
+#: salt/searchform.php:2
+msgid "Search for:"
+msgstr ""
+"：\n"
+"搜索"
+
+#. Text in echo
+#: salt/core/meta/fields/fontawesome.php:7
+msgid "Select Icon"
+msgstr "选择图示"
+
+#. Text in echo
+#: salt/partials/content-none.php:34
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "抱歉，找寻不到您所搜索的项目。请用不同关键字再搜索一次"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:137
+msgid "Suggest a feature!"
+msgstr "！建议一个新功能"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:126
+msgid "Swapping between the Wide and Boxed layouts for your blog, also changes the arrangement of the slider."
+msgstr "当您的博客在宽版布局和框版布局中做更换时，您的幻灯片板块也会有所改变。"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:75
+msgid "Thank you for using Salt Theme!"
+msgstr "!感谢您使用Salt Theme"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "The primary sidebar"
+msgstr "主要侧栏"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "The secondary sidebar"
+msgstr "次要侧栏"
+
+#. Text in function
+#: salt/core/helpers/post.php:48
+msgid "View all posts by %s"
+msgstr "查看全部文章 %s"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Watch on Vimeo"
+msgstr "在Vimeo观看"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Watch on Youtube"
+msgstr "在Youtube观看"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:133
+msgid "We Need Your Help!"
+msgstr "我们需要您的帮忙"
+
+#. Text in function
+#: salt/core/admin/welcome.php:142
+msgid "We have over a 1000 active users of Salt Theme, which is pretty great! But no one has rated us yet, if you can spare a moment, please rate us on <a href=\"%s\" target=\"_blank\">wordpress.org</a>."
+msgstr "Salt Themes有超过1000位活跃用户，但是我们尚未收到任何评论，希望您能够抽一点时间在<a href=\"%s\" target=\"_blank\">wordpress.org</a>为我们评价"
+
+#. Text in function
+#: salt/core/admin/welcome.php:1
+msgid "Welcome To Salt Theme"
+msgstr "欢迎使用Salt Themes"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:78
+msgid "What&#8217;s New"
+msgstr "有什么新鲜事"
+
+#. Text in echo
+#: salt/core/admin/welcome.php:98
+msgid "When you add or edit a blog post, you will see a new control panel (shown on left). This is used to add either a background image or color to this posts slide. Giving you full control to make each slide look unique!"
+msgstr "当你在添加或编辑文章时，你在左方会看到新的操作台。这是用来添加此文章中幻灯片的背景图案或颜色，让你能够为自己制作一个独一无二的幻灯片。"
+
+#. Text in function
+#: salt/functions.php:1
+msgid "Yellow"
+msgstr "黄色"

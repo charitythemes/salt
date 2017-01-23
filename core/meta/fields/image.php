@@ -3,7 +3,7 @@
 	<div class="salt-image-display salt-image-upload-button">
 		<!-- Image -->
 		<?php if ( isset( $meta ) && $meta != '' ) : ?>
-		<?php $img = wp_get_attachment_image_src( $meta, 'medium' ); ?>
+		<?php $img = wp_get_attachment_image_src( $meta, 'slide-image' ); ?>
 		<div class="salt-background-image-holder">
 			<img src="<?php echo $img[0]; ?>" class="salt-background-image-preview" />
 		</div>

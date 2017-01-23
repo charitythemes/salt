@@ -38,13 +38,13 @@
 		get_template_part( 'partials/social' , 'links' );
 	} ?>
 
-	<div id="wrapper" <?php do_action('salt_wrapper_class'); ?>>
+	<div id="wrapper">
 
 		<div id="header-wrapper">
 			
 			<?php do_action('salt_header_above'); ?>
 						
-			<header id="header" <?php do_action('salt_header_class'); ?>>
+			<header id="header">
 		
 				<?php do_action('salt_header_inside_above'); ?>
 		

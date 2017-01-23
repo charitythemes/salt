@@ -12,15 +12,14 @@ do_action('salt_article_above'); ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	
 	<?php do_action('salt_article_inside_above'); ?>
-	
-	<?php 
-	if (!is_front_page()) {
-	?>
+
+	<?php if ( apply_filters( 'salt_show_page_title', true ) ) : ?>
+
 	<header class="page-header">
 		<?php the_title( '<h1>', '</h1>' ); ?>		
 	</header>
-	<?php
-	} ?>
+
+	<?php endif; ?>
 	
 	<div class="page-content">
 		<?php the_content(); ?>
@@ -35,10 +34,12 @@ do_action('salt_article_above'); ?>
 			) );
 		?>		
 	</div>
-		
+	
+	<?php if ( ! is_front_page() ) : ?>
 	<footer class="page-footer">
 		<?php edit_post_link( __( 'Edit Page', 'salt' ), '<span class="edit-link">', '</span>' ); ?>
 	</footer>
+	<?php endif; ?>
 	
 	<?php do_action('salt_article_inside_below'); ?>
 

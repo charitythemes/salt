@@ -139,7 +139,7 @@ class Salt_Typography {
 			'paragraph' => array(
 				'id'			=> 'salt_paragraph_font',
 				'label' 		=> __( 'Paragraph', 'salt' ),
-				'selector'		=> 'body p',
+				'selector'		=> 'body p,body ul,body ol,body dl,body address',
 				'properties' 	=> array(
 					'font-family'		=> 'helvetica',
 					'font-weight'		=> '500',
@@ -642,7 +642,6 @@ class Salt_Typography {
 				 * 
 				 * {@link https://developers.google.com/fonts/docs/developer_api}
 				 */
-				 	
 				$response = wp_remote_get( "https://www.googleapis.com/webfonts/v1/webfonts?sort=alpha&key={$this->api_key}", array( 'sslverify' => false ) );	
 			
 				/*
@@ -741,7 +740,7 @@ class Salt_Typography {
 	 * magic quotes gpc enabled.
 	 * 
 	 * @param  string  $str   - JSON string to convert into an array
-	 * @param  boolean $accoc [- Whether to return an associative array
+	 * @param  boolean $accoc - Whether to return an associative array
 	 * @return array - Decoded JSON array
 	 *
 	 * @since Salt 1.2.0
@@ -895,7 +894,11 @@ class Salt_Typography {
 							$line .= "  font-style: italic; \n";
 						}
 						
-						$line .= "  $property: $option; \n";
+						if ( $property == 'font-family' ) {
+							$line .= "  $property: \"$option\"; \n";	
+						} else {
+							$line .= "  $property: $option; \n";
+						}					
 					}
 				}
 

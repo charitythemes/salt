@@ -15,9 +15,13 @@ do_action('salt_article_above'); ?>
 
 	<?php do_action('salt_article_inside_above'); ?>
 	
+	<?php if ( apply_filters( 'salt_show_page_title', true ) ) : ?>
+
 	<header class="page-header">
 		<h1><?php _e( 'Nothing Found', 'salt' ); ?></h1>
 	</header>
+
+	<?php endif; ?>
 
 	<div class="page-content">
 

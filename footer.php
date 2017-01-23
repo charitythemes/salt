@@ -49,16 +49,16 @@
 	<?php } ?>
 
 	<div id="footer-wrapper">		
-		<footer id="footer" <?php do_action('salt_footer_class'); ?>>
+		<footer id="footer" class="container">
 	
 			<?php do_action('salt_footer_inside_above'); ?>
 
 			<p class="copyright"><span class="copy">&copy;</span> <?php echo date('Y'); ?> <?php echo get_theme_mod('salt_footer_text'); ?></p>
 	
 		    <?php if (get_option('salt_footer_credit')!='1') { ?>
-			<p class="credits">
-				<?php echo sprintf(__('Designed by %1s charity: themes %2s', 'salt'), '<a class="ct_logo" href="http://www.charitythemes.org" title="WordPress Themes for Nonprofits" target="_blank">','</a>'); ?>
-			</p>
+		    
+			<p class="credits"><?php echo sprintf( esc_html__('Designed by %1s charity: themes %2s', 'salt'), '<a class="ct_logo" href="https://charitythemes.org" title="WordPress Themes for Nonprofits" target="_blank">','</a>'); ?></p>
+			
 			<?php } ?>
 
 			<?php 

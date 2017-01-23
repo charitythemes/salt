@@ -11,15 +11,15 @@ get_header(); ?>
 
 	<?php do_action('salt_container_above'); ?>
 
-	<div id="container" <?php do_action('salt_container_class'); ?> role="container">
+	<div id="container" class="container" role="container">
 
 		<?php do_action('salt_container_inside_above'); ?>
 		
-		<main id="main" <?php do_action('salt_main_class'); ?> role="main">
+		<main id="main" class="row" role="main">
 			
 			<?php do_action('salt_section_above'); ?>
 	
-			<section <?php do_action('salt_section_class'); ?>>
+			<section <?php salt_section_class(); ?>>
 			
 				<?php do_action('salt_section_inside_above'); ?>
 	

@@ -164,3 +164,86 @@ function salt_exclude_slider_posts( $query ) {
 }
 add_action( 'pre_get_posts', 'salt_exclude_slider_posts' );
 endif;
+
+if (!function_exists('salt_hide_page_title')) :
+/**
+ * Hide Page Title
+ *
+ * Hide the page title on the front page.
+ * 
+ * @since 1.6.0
+ */
+function salt_hide_page_title() {
+	
+	if ( is_front_page() )
+		return false;
+		
+	return true;
+}
+add_filter( 'salt_show_page_title', 'salt_hide_page_title', 5 );
+endif;
+
+if ( ! function_exists('salt_front_page_blog')) :
+/**
+ * Show 3 blog posts to the homepage
+ *
+ * @since 1.6.0
+ */
+function salt_front_page_blog() {
+	
+	global $post;
+	
+	if ( is_front_page() && get_option( 'show_on_front')!='posts' ) {
+		?>
+		<div class="blog-grid-wrapper">
+			<div class="row">
+				<?php 
+				global $slider_query;
+				
+				$query_args = array(
+					'post_type' 	 => 'post',
+					'posts_per_page' => 3,
+					'post__not_in'   => get_option('sticky_posts')
+				);
+				
+				// If the admin is not asking to repeat posts in the main loop, pluck them out.
+				if ( ! get_theme_mod( 'salt_slider_posts_in_loop' ) )	{				
+					$post_ids = wp_list_pluck( $slider_query->posts, 'ID' );
+					$query_args['post__not_in'] = $post_ids;
+				}
+				
+				// Query the blog posts.
+				$the_query = new WP_Query( $query_args );
+
+				// Default grid arguments
+				$args = array(
+					'item'			=> 'div',
+					'total_posts'	=> sizeof($the_query->posts)
+				);
+				
+				$cols = 3;
+				$span = 'col-sm-4';
+				
+				// The Loop
+				if ( $the_query->have_posts() ) {
+					while ( $the_query->have_posts() ) {
+						?>
+						<div class="<?php echo $span; ?>">
+						
+						<?php $the_query->the_post();
+						
+						get_template_part( 'partials/content' ); ?>
+					
+						</div>
+						<?php
+					}
+				}
+				wp_reset_postdata();
+				?>
+			</div>
+		</div>
+		<?php
+	}	
+}
+add_action( 'salt_section_inside_below', 'salt_front_page_blog', 15 );
+endif;

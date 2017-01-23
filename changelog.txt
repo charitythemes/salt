@@ -1,6 +1,17 @@
 == Salt Changelog ==
 
-2016.09.27 - v1.5.12
+2017.01.22 - v1.6.0
+- Rewritten the layout functions
+- Updated the screenshot & theme description
+- Escape HTML in the footer credit
+- Added slider image size
+- Added 3 blogs posts to the front page
+- Added the latest Google Fonts list
+- Slightly nicer search form
+- Included Translations for Chinese
+- Other small styling fixes
+
+2016.12.20 - v1.5.12
 - Stop words becoming hyphenated on small screens
 - Small fixes to the slider
 
@@ -16,7 +27,7 @@
 - Added fuller comments and descriptions to the post helper functions
 - Fixed some other small problems
 
-2016.20.05 - v1.5.0
+2016.05.20 - v1.5.0
 - Introducing a new slider to proudly display your posts with images
 - Fixed several small problems
 

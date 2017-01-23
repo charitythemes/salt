@@ -9,7 +9,7 @@
 
 do_action('salt_sidebar_above'); ?>
 
-	<div id="primary-sidebar" <?php do_action('salt_primary_sidebar_class'); ?> role="sidebar">
+	<div id="primary-sidebar" <?php salt_primary_sidebar_class(); ?> role="sidebar">
 	
 		<?php do_action('salt_sidebar_inside_above'); ?>
 		    

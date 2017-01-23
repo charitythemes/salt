@@ -824,7 +824,7 @@ class Salt_FontAwesome_Meta_Box extends Salt_Meta_Box {
         wp_enqueue_media();
         
         // Enqueue metabox styling
-		wp_enqueue_style(  'salt-admin', SALT_TEMPLATE_URI.'/core/assets/css/meta.css', false, '1.5.0' );
+		wp_enqueue_style( 'salt-admin', SALT_TEMPLATE_URI.'/core/assets/css/meta.css', false, '1.5.0' );
 
 		// Enqueue the stylesheet for the color picker.
 		wp_enqueue_style( 'wp-color-picker' );
@@ -832,7 +832,8 @@ class Salt_FontAwesome_Meta_Box extends Salt_Meta_Box {
 		// Enqueue the JS to initiate the color picker if it is displayed.
         wp_enqueue_script( 'salt-meta-js', SALT_TEMPLATE_URI . '/core/assets/js/meta.js', array( 'jquery', 'wp-color-picker' ) );
         
-    	wp_enqueue_style( 'fontawesome'	, get_template_directory_uri() . '/css/font-awesome.min.css', false, '4.2.0');        
+        // Enqueue fontawesome to load on the backend.
+    	wp_enqueue_style( 'fontawesome'	, get_template_directory_uri() . '/css/font-awesome.min.css', false, '4.2.1');        
 	}
 		
 	/**

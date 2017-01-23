@@ -28,7 +28,7 @@
  */
 define( 'SALT_TEMPLATE_URI' , get_template_directory_uri() );
 define( 'SALT_TEMPLATE_DIR' , get_template_directory() );
-define( 'SALT_VERSION' , '1.5.11' );
+define( 'SALT_VERSION' , '1.6.0' );
 
 /**
  * If it is not set already, we should set the content width.
@@ -40,14 +40,6 @@ if ( ! isset( $content_width ) ) {
 }
 
 /*
- * Register the Post Types to included with salt
- *
- * @since Salt 1.5.2
- */
-global $_salt_registered_post_types;
-$_salt_registered_post_types[] = get_template_directory() . '/core/post-types/section.php';
-
-/*
  * Load Customizer Support
  *
  *		Typography @since Salt 1.2.0
@@ -57,6 +49,8 @@ require_once get_template_directory() . '/core/customizer/typography.php';
 
 /*
  * Load Front-end helpers
+ *
+ * 		Layout @since Salt 1.6.0
  */
 require_once get_template_directory() . '/core/helpers/post.php';
 require_once get_template_directory() . '/core/helpers/layout.php';
@@ -133,7 +127,15 @@ if (!function_exists('salt_theme_setup')) :
 	 */
 	register_nav_menus( array(
 		'primary-menu' => __('Primary Menu', 'salt'),
-	) );	
+	) );
+	
+	/**
+	 * A slider sized image for the slide.
+	 *
+	 * @link http://codex.wordpress.org/Function_Reference/wp_nav_menu
+	 * @since 1.6.0
+	 */
+	add_image_size( 'slide-image', 1200, 450, false );
 }
 endif;
 add_action( 'after_setup_theme', 'salt_theme_setup');
@@ -147,9 +149,9 @@ if (!function_exists('salt_register_styles')) :
 function salt_register_styles() {
 
 	wp_enqueue_style( 'bootstrap' 	, get_template_directory_uri() . '/css/bootstrap.min.css', false, '3.2.0');
-	wp_enqueue_style( 'fontawesome'	, get_template_directory_uri() . '/css/font-awesome.min.css', false, '4.2.0');
-	wp_enqueue_style( 'main'	 	, get_template_directory_uri() . '/css/main.css', array( 'bootstrap' ), '1.0.3');
-	wp_enqueue_style( 'social'	 	, get_template_directory_uri() . '/css/social.css', array( 'main' ), '1.0.2');
+	wp_enqueue_style( 'fontawesome'	, get_template_directory_uri() . '/css/font-awesome.min.css', false, '4.2.1');
+	wp_enqueue_style( 'main'	 	, get_template_directory_uri() . '/css/main.css', array( 'bootstrap' ), '1.1.0');
+	wp_enqueue_style( 'social'	 	, get_template_directory_uri() . '/css/social.css', array( 'main' ), '1.0.3');
 	
 	if ( is_front_page() && get_theme_mod( 'salt_show_slider' ) == '1' ) {
 		wp_enqueue_style( 'bxslider' , get_template_directory_uri() . '/css/bxslider.min.css', false, '4.1.2');
@@ -229,32 +231,6 @@ function salt_register_sidebars() {
 }
 endif;
 add_action( 'widgets_init', 'salt_register_sidebars' );
-
-/**
- * These are the main classes used throughout theme on key elements.
- */
-global $_salt_registered_classes;
-$_salt_registered_classes = array(
-	//Add extra classes to the main ID's - leave blank for none
-	'wrapper' 						=> '',
-	'header' 						=> '',
-	'container' 					=> 'container',
-	'main' 							=> 'row',
-	'footer' 						=> 'container',
-	'footer-widgets'       			=> '',
-	'article' 						=> '',
-	//Add the classes for the main column, depending on the layout options
-	'main-one-col' 					=> 'col-sm-12',
-	'main-two-col-left' 			=> 'col-sm-8',
-	'main-two-col-right'    		=> 'col-sm-8 col-sm-push-4',
-	'main-three-col-middle' 		=> 'col-sm-6 col-sm-push-3',
-	//Add the classes for the primary sidebar, depending on the layout options
-	'primary-two-col-left'  		=> 'widget-area col-sm-4',
-	'primary-two-col-right'     	=> 'widget-area col-sm-4 col-sm-pull-8',
-	'primary-three-col-middle'  	=> 'widget-area col-sm-3 col-sm-pull-6',
-	//Add the classes for the secondary sidebar, depending on the layout options
-	'secondary-three-col-middle'	=> 'widget-area col-sm-3'
-);
 
 /**
  * These are the social networks available to add links to.
