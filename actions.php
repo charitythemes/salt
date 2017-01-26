@@ -201,13 +201,13 @@ function salt_front_page_blog() {
 				global $slider_query;
 				
 				$query_args = array(
-					'post_type' 	 => 'post',
-					'posts_per_page' => 3,
-					'post__not_in'   => get_option('sticky_posts')
+					'post_type' 	 	  => 'post',
+					'posts_per_page' 	  => 3,
+					'ignore_sticky_posts' => 1
 				);
-				
+
 				// If the admin is not asking to repeat posts in the main loop, pluck them out.
-				if ( ! get_theme_mod( 'salt_slider_posts_in_loop' ) )	{				
+				if ( isset( $slider_query ) && ! get_theme_mod( 'salt_slider_posts_in_loop' ) )	{				
 					$post_ids = wp_list_pluck( $slider_query->posts, 'ID' );
 					$query_args['post__not_in'] = $post_ids;
 				}

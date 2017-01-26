@@ -1,5 +1,8 @@
 == Salt Changelog ==
 
+2017.01.26 - v1.6.1
+- Fix an error for the blog posts on a static front page
+
 2017.01.22 - v1.6.0
 - Rewritten the layout functions
 - Updated the screenshot & theme description
