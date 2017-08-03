@@ -125,6 +125,22 @@ function salt_customize_register( $wp_customize ) {
 		)
     )));
 
+	// Disable the homepage posts
+	$wp_customize->add_setting('salt_disable_posts', array(
+    	'default'       	=> '',
+        'capability'    	=> 'edit_theme_options',
+        'type'          	=> 'theme_mod',
+        'sanitize_callback' => 'salt_sanitize_checkbox'
+    ));
+	
+    $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_disable_posts', array(
+        'label'    		=> __('Disable latest posts on the homepage', 'salt'),
+        'description'   => sprintf( __('Note: The latest posts will only appear when using a <a href="%s" target="_blank">static front page</a>', 'salt' ), 'https://codex.wordpress.org/Creating_a_Static_Front_Page' ),
+        'section'  		=> 'general',
+        'settings' 		=> 'salt_disable_posts',
+        'type'          => 'checkbox'
+    )));
+
 	/**
 	 * Blog
 	 *

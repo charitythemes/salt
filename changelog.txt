@@ -1,5 +1,8 @@
 == Salt Changelog ==
 
+2017.02.17 - v1.6.2
+- Add a new option in the customizer to disable latest posts on the a static page
+
 2017.01.26 - v1.6.1
 - Fix an error for the blog posts on a static front page
 

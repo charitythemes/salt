@@ -193,7 +193,9 @@ function salt_front_page_blog() {
 	
 	global $post;
 	
-	if ( is_front_page() && get_option( 'show_on_front')!='posts' ) {
+	if ( is_front_page() && get_option( 'show_on_front')!='posts' && ! get_theme_mod( 'salt_disable_posts' ) ) {
+		
+		
 		?>
 		<div class="blog-grid-wrapper">
 			<div class="row">
