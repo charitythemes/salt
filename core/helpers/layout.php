@@ -33,10 +33,14 @@ function salt_layout_body_class( $classes ) {
 		
 		$layout = 'three-col-middle';
 		
-	} elseif ( get_theme_mod('salt_blog_layout') && ( is_home() || is_archive() ) ) { //Not sure if this should be here?
+	} elseif ( get_theme_mod('salt_blog_layout') && ( is_home() || is_archive() || is_search() ) ) {
 		
 		$layout = get_theme_mod('salt_blog_layout');
 		
+	} elseif ( get_theme_mod('salt_post_layout') && is_single() && get_post_type() == 'post' ) {	
+
+		$layout = get_theme_mod('salt_post_layout');
+			
 	} else {
 		
 		$layout = 'two-col-left';

@@ -156,7 +156,7 @@ function salt_customize_register( $wp_customize ) {
 	
 	// Select a layout for the blog pages
     $wp_customize->add_setting('salt_blog_layout', array(
-	    'default'           => '4',
+	    'default'           => 'two-col-left',
 	    'capability'        => 'edit_theme_options',
 	    'type'           	=> 'theme_mod',
         'sanitize_callback' => 'sanitize_text_field'
@@ -165,7 +165,7 @@ function salt_customize_register( $wp_customize ) {
 	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_blog_layout', array(
         'label'    => __( 'Layout', 'salt' ),
         'section'  => 'blog',
-        'description' => __('This option affects your category, tag, author, single and search pages.', 'salt'),
+        'description' => __('This option affects your category, tag, author and search pages.', 'salt'),
         'settings' => 'salt_blog_layout',
         'type'	   => 'select',
         'choices'  => array (
@@ -175,7 +175,29 @@ function salt_customize_register( $wp_customize ) {
 			'three-col-middle' => __('Both', 'salt')
 		)
 	)));
-	
+
+	// Select a layout for the blog post
+    $wp_customize->add_setting('salt_post_layout', array(
+	    'default'           => 'two-col-left',
+	    'capability'        => 'edit_theme_options',
+	    'type'           	=> 'theme_mod',
+        'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_post_layout', array(
+        'label'    => __( 'Post Layout', 'salt' ),
+        'section'  => 'blog',
+        'description' => __('This option affects single blog posts.', 'salt'),
+        'settings' => 'salt_post_layout',
+        'type'	   => 'select',
+        'choices'  => array (
+			'one-col' 		   => __('No Sidebars', 'salt'),
+			'two-col-left'     => __('Righthand Sidebar', 'salt'),
+			'two-col-right'    => __('Lefthand Sidebar', 'salt'),
+			'three-col-middle' => __('Both', 'salt')
+		)
+	)));
+		
 	// Turn on / off the about author section.
 	$wp_customize->add_setting('salt_blog_about_author', array(
 	    'default'           => '',
