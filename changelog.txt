@@ -1,5 +1,8 @@
 == Salt Changelog ==
 
+2017.11.16 - v1.6.4
+- Add a new option in the customizer to allow users to filter the posts on the homepage with a tag
+
 2017.09.29 - v1.6.3
 - Add a new option in the customizer to allow users to alter the single post layout
 

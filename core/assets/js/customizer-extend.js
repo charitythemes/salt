@@ -69,4 +69,35 @@
 		}
 	} );
 
+
+	/**
+	 * Extend the 'Checkbox' controls.
+	 *
+	 * @since Salt 1.6.4
+	 */	
+	api.controlConstructor.checkbox = api.Control.extend( {
+		ready: function() {
+			
+			// Check if this input is the display type select box.
+			if ( 'salt_filter_homepage_posts' === this.id ) {
+				
+				// If the option tag is not currrently being used, lets hide the tag extra input field
+				if ( this.setting._value != 1 ) {
+					jQuery( '#customize-control-salt_tag_homepage_posts' ).hide();			
+				}
+				
+				// When the display type select box is changed.
+				this.setting.bind( 'change', function( value ) {
+					// if the user selects 'tag'
+					if ( value == '1' ) {
+						// Show the input box for a certain tag
+						jQuery( '#customize-control-salt_tag_homepage_posts' ).slideDown();
+					} else if ( value != '1' ) {
+						jQuery( '#customize-control-salt_tag_homepage_posts' ).slideUp();
+					}
+				} );
+			}
+		}
+	} );
+
 } )( wp.customize );

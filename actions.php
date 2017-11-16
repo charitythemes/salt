@@ -213,7 +213,15 @@ function salt_front_page_blog() {
 					$post_ids = wp_list_pluck( $slider_query->posts, 'ID' );
 					$query_args['post__not_in'] = $post_ids;
 				}
-				
+
+				// If set in Customizer use posts with a certain tag.
+				if ( get_theme_mod( 'salt_filter_homepage_posts' ) == '1' ) {
+					$tags = get_option( 'salt_tag_homepage_posts' );
+					if ( $tags != '' ) {
+						$query_args['tag'] = $tags;
+					}
+				}
+
 				// Query the blog posts.
 				$the_query = new WP_Query( $query_args );
 

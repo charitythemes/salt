@@ -125,7 +125,10 @@ function salt_customize_register( $wp_customize ) {
 		)
     )));
 
-	// Disable the homepage posts
+	/**
+	 * Disable latest posts on the homepage 
+	 * @since Salt 1.6.2
+	 */
 	$wp_customize->add_setting('salt_disable_posts', array(
     	'default'       	=> '',
         'capability'    	=> 'edit_theme_options',
@@ -140,6 +143,41 @@ function salt_customize_register( $wp_customize ) {
         'settings' 		=> 'salt_disable_posts',
         'type'          => 'checkbox'
     )));
+
+	/**
+	 * Use a tag to filter the posts
+	 * @since Salt 1.6.4
+	 */
+	 $wp_customize->add_setting('salt_filter_homepage_posts', array(
+    	'default'       	=> '',
+        'capability'    	=> 'edit_theme_options',
+        'type'          	=> 'theme_mod',
+        'sanitize_callback' => 'salt_sanitize_checkbox'
+    ));
+	
+    $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'salt_filter_homepage_posts', array(
+        'label'    		=> __('Filter the posts that appear on the homepage using a tag', 'salt'),
+        'description'   => __('', 'salt' ),
+        'section'  		=> 'general',
+        'settings' 		=> 'salt_filter_homepage_posts',
+        'type'          => 'checkbox'
+    )));
+
+	// Tag(s) to be select the posts in the slider
+	$wp_customize->add_setting('salt_tag_homepage_posts', array(
+    	'default'			=> '',
+        'capability'    	=> 'edit_theme_options',
+        'type'          	=> 'option',
+        'sanitize_callback' => 'sanitize_text_field'
+    ));
+	
+    $wp_customize->add_control( new WP_Customize_Control($wp_customize, 'salt_tag_homepage_posts', array(
+    	'label'       	=> '',
+    	'description'	=> __('Use the tag(s) slug below separated by a comma.', 'salt'),
+        'section'  		=> 'general',
+        'settings' 		=> 'salt_tag_homepage_posts',
+        'type'          => 'text'
+    )));	
 
 	/**
 	 * Blog
@@ -176,7 +214,10 @@ function salt_customize_register( $wp_customize ) {
 		)
 	)));
 
-	// Select a layout for the blog post
+	/**
+	 * Allow users to alter the single post layout 
+	 * @since Salt 1.6.3
+	 */
     $wp_customize->add_setting('salt_post_layout', array(
 	    'default'           => 'two-col-left',
 	    'capability'        => 'edit_theme_options',
