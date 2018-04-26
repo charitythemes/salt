@@ -28,7 +28,7 @@
  */
 define( 'SALT_TEMPLATE_URI' , get_template_directory_uri() );
 define( 'SALT_TEMPLATE_DIR' , get_template_directory() );
-define( 'SALT_VERSION' , '1.6.3' );
+define( 'SALT_VERSION' , '1.6.5' );
 
 /**
  * If it is not set already, we should set the content width.
@@ -71,9 +71,13 @@ require_once get_template_directory() . '/core/meta/post-meta.php';
 require_once get_template_directory() . '/core/admin/welcome.php';
 
 /*
- * Load theme actions, override in a child theme.
+ * Load Includes
+ *
+ * @since Salt 1.6.5
  */
-require_once get_template_directory() . '/actions.php';
+require_once get_template_directory() . '/inc/hooks.php';
+require_once get_template_directory() . '/inc/template-parts.php';
+
 
 if (!function_exists('salt_theme_setup')) :
 /**
@@ -170,7 +174,7 @@ function salt_register_scripts() {
 	
 	wp_enqueue_script( 'salt_respond', get_template_directory_uri() . '/js/respond.min.js', array('jquery'), '1.4.2', true );
 	wp_enqueue_script( 'salt_global', get_template_directory_uri() . '/js/global.js', array('jquery'), '1.0.1', true );
-
+	
 	if ( ( is_front_page() || is_home() ) && get_theme_mod( 'salt_show_slider' ) == '1' ) {
 		wp_enqueue_script( 'bxslider' , get_template_directory_uri() . '/js/bxslider.min.js', false, '1.4.2');
 	}
@@ -522,13 +526,14 @@ input[type="reset"]:hover,
 input[type="submit"]:hover,  
 input[type="button"]:focus, 
 input[type="reset"]:focus, 
-input[type="submit"]:focus {
+input[type="submit"]:focus,
+.boxed .page-title-bar {
 	background-color:{$scheme['dark']};
 }
 
 /* Link Color */
 @media screen and (min-width : 768px){
-	.boxed .menu li a {
+	.boxed .nav-wrapper .menu li a {
 		color:{$menu};
 	}
 }

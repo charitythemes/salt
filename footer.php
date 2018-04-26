@@ -61,9 +61,9 @@
 			
 			<?php } ?>
 
-			<?php 
+			<?php
 			if ( 'footer' == get_theme_mod( 'salt_social_position' ) ) {			
-				get_template_part( 'partials/social' , 'links' );
+				get_template_part( 'partials/global/parts/social' , 'links' );
 			} ?>			
 	
 			<?php do_action('salt_footer_inside_below'); ?>
