@@ -1,6 +1,6 @@
 == Salt Changelog ==
 
-2017.04.26 - v1.6.5
+2018.10.05 - v1.6.5
 - Update Google Webfonts
 - Update file structure and re-organise in preparation for the next release.
 
