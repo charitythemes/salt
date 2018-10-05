@@ -130,16 +130,18 @@ if (!function_exists('salt_theme_setup')) :
 	 * @link http://codex.wordpress.org/Function_Reference/wp_nav_menu
 	 */
 	register_nav_menus( array(
-		'primary-menu' => __('Primary Menu', 'salt'),
+		'primary-menu' => __('Primary Menu', 'salt')
 	) );
 	
 	/**
 	 * A slider sized image for the slide.
+	 * Cropping behavior for the homepage blog post images.
+	 * Hard Crop Top Left.
 	 *
-	 * @link http://codex.wordpress.org/Function_Reference/wp_nav_menu
-	 * @since 1.6.0
+	 * @link https://developer.wordpress.org/reference/functions/add_image_size/
 	 */
 	add_image_size( 'slide-image', 1200, 450, false );
+	add_image_size ( 'home-posts', 700, 580, array( 'left', 'top' ) );	
 }
 endif;
 add_action( 'after_setup_theme', 'salt_theme_setup');
@@ -152,14 +154,14 @@ if (!function_exists('salt_register_styles')) :
  */
 function salt_register_styles() {
 
-	wp_enqueue_style( 'bootstrap' 	, get_template_directory_uri() . '/css/bootstrap.min.css', false, '3.2.0');
+	wp_enqueue_style( 'bootstrap' 	, get_template_directory_uri() . '/css/bootstrap.min.css', false, '3.3.7');
 	wp_enqueue_style( 'fontawesome'	, get_template_directory_uri() . '/css/font-awesome.min.css', false, '4.2.1');
 	wp_enqueue_style( 'main'	 	, get_template_directory_uri() . '/css/main.css', array( 'bootstrap' ), '1.1.0');
 	wp_enqueue_style( 'social'	 	, get_template_directory_uri() . '/css/social.css', array( 'main' ), '1.0.3');
 	
 	if ( is_front_page() && get_theme_mod( 'salt_show_slider' ) == '1' ) {
-		wp_enqueue_style( 'bxslider' , get_template_directory_uri() . '/css/bxslider.min.css', false, '4.1.2');
-	}
+		wp_enqueue_style( 'bxslider' , get_template_directory_uri() . '/css/bxslider.min.css', false, '4.2.12');
+	}	
 }
 endif;
 add_action( 'wp_enqueue_scripts', 'salt_register_styles' );
@@ -481,27 +483,32 @@ body {
 .page-header h1,
 .page-header h2,
 .page-header h3,
-.menu li ul.children li a:hover,
-.menu li ul.sub-menu li a:hover, 
-.menu li ul.children li.current_page_item > a,
-.menu li ul.sub-menu li.current_page_item > a {
+.nav-wrapper .menu li ul.children li a:hover,
+.nav-wrapper .menu li ul.sub-menu li a:hover, 
+.nav-wrapper .menu li ul.children li.current_page_item > a,
+.nav-wrapper .menu li ul.sub-menu li.current_page_item > a {
 	color: {$scheme['dark']};
 }
 
 /* Wide Menu Selected Background */
-.wide .menu > li a:hover, 
-.wide .menu > li.current-menu-item > a, 
-.wide .menu > li.current-page-ancestor > a, 
-.wide .menu > li.current_page_parent > a {
-	background:{$scheme['light']};	
+.wide .nav-wrapper .menu > li:hover:not(.menu-item-has-children) > a, 
+.wide .nav-wrapper .menu > li.current-menu-item > a,
+.nav-wrapper .menu li > ul.children, 
+.nav-wrapper .menu li > ul.sub-menu,
+.wide  .nav-wrapper .menu > li.current-page-ancestor > a, 
+.wide  .nav-wrapper .menu > li.current_page_parent > a {
+	border-color: {$scheme['dark']};
+	color: {$scheme['dark']};
 }
 	
 /* Border Highlight Color */
-#footer-widgets {
-	border-color: {$scheme['light']};
+#footer-widgets,
+#footer-subscribe-wrapper {
+	border-color: {$scheme['medium']};
 }
 
 /* Light Background Color */
+.top-bar,
 .boxed .entry-footer {
 	background-color: {$scheme['lightest']};
 }

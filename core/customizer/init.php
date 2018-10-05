@@ -264,7 +264,7 @@ function salt_customize_register( $wp_customize ) {
 	 */
     // Options for the homepage slider area.
     $wp_customize->add_section( 'slider', array(
-		'title' 		=> __('Slider', 'salt'),
+		'title' 		=> __('Posts Slider', 'salt'),
 		'description' 	=> __('Settings for the slider on your homepage.', 'salt'),
 		'priority' 		=> '40',
     ));

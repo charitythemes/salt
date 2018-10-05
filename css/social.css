@@ -110,6 +110,22 @@ ul.ico-social.large li a i.fa {
 	margin-top:5px;
 }
 
+/* Tiny Size */
+
+ul.ico-social.tiny li a i.fa {
+	margin-top:3px;
+}
+
+ul.ico-social.tiny li {
+	margin-right: 1px;
+}
+
+ul.ico-social.tiny li a {
+	display:inline-block;
+	width:20px;
+	height:20px;
+}
+
 /* Shapes */
 ul.ico-social.square li a {
 	border-radius:3px;
