@@ -28,7 +28,7 @@
  */
 define( 'SALT_TEMPLATE_URI' , get_template_directory_uri() );
 define( 'SALT_TEMPLATE_DIR' , get_template_directory() );
-define( 'SALT_VERSION' , '1.6.1' );
+define( 'SALT_VERSION' , '1.6.3' );
 
 /**
  * If it is not set already, we should set the content width.

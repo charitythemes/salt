@@ -53,7 +53,7 @@
 					<?php 
 					if ( 'header' == get_theme_mod( 'salt_social_position' ) ) {				
 						get_template_part( 'partials/social' , 'links' );
-					} ?>					
+					} ?>
 					
 					<div class="inner-wrapper">
 					<?php if( 'boxed' == get_theme_mod( 'salt_layout_type' ) ) {
