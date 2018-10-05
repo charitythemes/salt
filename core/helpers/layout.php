@@ -33,8 +33,12 @@ function salt_layout_body_class( $classes ) {
 		
 		$layout = 'three-col-middle';
 		
-	} elseif ( get_theme_mod('salt_blog_layout') && ( is_home() || is_archive() || is_search() ) ) {
+	} elseif ( get_theme_mod('salt_page_layout') && is_page() ) {
 		
+		$layout = get_theme_mod('salt_page_layout');
+		
+	} elseif ( get_theme_mod('salt_blog_layout') && ( is_home() || is_archive() || is_search() ) ) { 
+				
 		$layout = get_theme_mod('salt_blog_layout');
 		
 	} elseif ( get_theme_mod('salt_post_layout') && is_single() && get_post_type() == 'post' ) {	
@@ -106,6 +110,7 @@ add_action('salt_section_below', 'salt_add_right_sidebar', 20);
  * @param string|array $class   One or more classes to add to the class list.
  */
 function salt_section_class(  $class = '' ) {
+
 	// Separates classes with a single space, collates classes for post DIV
 	echo 'class="' . join( ' ', salt_get_section_class( $class ) ) . '"';
 }

@@ -10,6 +10,7 @@
  */
 
 $height = ( $h = get_post_meta( get_the_ID(), '_background_height', true ) ) ? $h : '450';
+
 ?>
 <li id="bx-slide-<?php echo get_the_ID(); ?>" class="slide" <?php salt_post_background_image(); ?>>
 
@@ -19,11 +20,11 @@ $height = ( $h = get_post_meta( get_the_ID(), '_background_height', true ) ) ? $
 
 			<div class="copy-container <?php echo ( $align=get_post_meta( get_the_ID(), '_text_align', true ) ) ? $align : '';?> <?php echo ( $size=get_post_meta( get_the_ID(), '_text_size', true ) ) ? $size : '';?>">
 
-				<h3 class="heading"><?php the_title(); ?></h3>
+				<?php get_template_part( 'partials/slider/parts/title' ); ?>
 
-				<?php the_excerpt(); ?>
+				<?php get_template_part( 'partials/slider/parts/excerpt' ); ?>
 
-				<a href="<?php the_permalink(); ?>" class="bx-slider-btn button" title="<?php _e('Continue Reading', 'salt'); ?>"><?php _e('Continue Reading', 'salt'); ?></a>
+				<?php get_template_part( 'partials/slider/parts/link' ); ?>
 				
 				<?php edit_post_link( __( 'Edit Slide', 'salt' ), '<span class="edit-link">', '</span>' ); ?>
 			</div>

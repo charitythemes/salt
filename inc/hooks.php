@@ -72,7 +72,7 @@ function salt_front_page_slider() {
 
 	if ( is_front_page() && get_theme_mod( 'salt_show_slider' ) ) {
 		
-		get_template_part( 'slider');
+		get_template_part( 'partials/slider/default');
 	
 	}
 }
@@ -81,7 +81,7 @@ add_action( 'salt_container_above', 'salt_front_page_slider' );
 
 if (!function_exists('salt_slider_query')) :
 /**
- * Slider Query
+ * Posts Slider Query
  * 
  * This query grabs the posts depending on the options selected in the Customizer.
  *
@@ -190,69 +190,8 @@ if ( ! function_exists('salt_front_page_blog')) :
  * @since 1.6.0
  */
 function salt_front_page_blog() {
-	
-	global $post;
-	
 	if ( is_front_page() && get_option( 'show_on_front')!='posts' && ! get_theme_mod( 'salt_disable_posts' ) ) {
-		
-		
-		?>
-		<div class="blog-grid-wrapper">
-			<div class="row">
-				<?php 
-				global $slider_query;
-				
-				$query_args = array(
-					'post_type' 	 	  => 'post',
-					'posts_per_page' 	  => 3,
-					'ignore_sticky_posts' => 1
-				);
-
-				// If the admin is not asking to repeat posts in the main loop, pluck them out.
-				if ( isset( $slider_query ) && ! get_theme_mod( 'salt_slider_posts_in_loop' ) )	{				
-					$post_ids = wp_list_pluck( $slider_query->posts, 'ID' );
-					$query_args['post__not_in'] = $post_ids;
-				}
-
-				// If set in Customizer use posts with a certain tag.
-				if ( get_theme_mod( 'salt_filter_homepage_posts' ) == '1' ) {
-					$tags = get_option( 'salt_tag_homepage_posts' );
-					if ( $tags != '' ) {
-						$query_args['tag'] = $tags;
-					}
-				}
-
-				// Query the blog posts.
-				$the_query = new WP_Query( $query_args );
-
-				// Default grid arguments
-				$args = array(
-					'item'			=> 'div',
-					'total_posts'	=> sizeof($the_query->posts)
-				);
-				
-				$cols = 3;
-				$span = 'col-sm-4';
-				
-				// The Loop
-				if ( $the_query->have_posts() ) {
-					while ( $the_query->have_posts() ) {
-						?>
-						<div class="<?php echo $span; ?>">
-						
-						<?php $the_query->the_post();
-						
-						get_template_part( 'partials/content' ); ?>
-					
-						</div>
-						<?php
-					}
-				}
-				wp_reset_postdata();
-				?>
-			</div>
-		</div>
-		<?php
+		get_template_part( 'partials/blog/posts', 'grid' );
 	}	
 }
 add_action( 'salt_section_inside_below', 'salt_front_page_blog', 15 );

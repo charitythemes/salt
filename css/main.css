@@ -454,6 +454,10 @@ ul.menu > li,
 	background: #FFE433;
 }
 
+.navbar-collapse {
+	padding: 0;
+}
+
 /*****
 /*  ~pagination
 *****/
@@ -498,6 +502,7 @@ ul.menu > li,
 	color:#666 !important; }
 
 .pagination { 
+	display: block;
 	margin: 0 0 2.500em 0;
 	text-align: center; }
 	
@@ -556,6 +561,9 @@ ul.menu > li,
 	padding: 18px 10px 12px;
 	background: #282a2b;
 	border-top: 1px solid #4b4c4d; }
+
+#footer p {
+	margin: 0; }
 
 #footer p.credits,
 #footer p.copyright {
@@ -1098,7 +1106,7 @@ a.post-thumbnail:focus {
 
 h3.author-title {
 	clear: none;
-	margin: 0; }
+	margin: 0 0 10px; }
 
 .author-bio {
 	font-size: 0.857em;

@@ -1,9 +1,10 @@
 ul.ico-social {
+	font-size: 100%;
 	list-style-type:none;
 	line-height:1;
-	vertical-align:middle;
 	margin:0;
 	padding:0;
+	vertical-align:middle;
 }
 
 .boxed .nav-wrapper ul.ico-social {

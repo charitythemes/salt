@@ -58,7 +58,7 @@ if ( $slider_query->have_posts() ) :
 	// Start the loop
 	while ( $slider_query->have_posts() ) : $slider_query->the_post();
 	
-		get_template_part( 'partials/content', 'slider' );
+		get_template_part( 'partials/slider/slide' );
 	
 	// End the loop
 	endwhile;
@@ -70,7 +70,7 @@ if ( $slider_query->have_posts() ) :
 
 <script type="text/javascript">
 jQuery(document).ready(function() {
-	jQuery('.bxslider').bxSlider({
+	jQuery('.slider-wrapper .bxslider').bxSlider({
 		easing			: 'ease-in-out',
 		auto			: <?php echo ( get_theme_mod('salt_slider_auto_scroll', '1') == '1' ) ? 'true' : 'false'; ?>,
 		mode			: '<?php echo ( $a = get_theme_mod('salt_slider_animation') ) ? $a : 'horizontal'; ?>',
