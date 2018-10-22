@@ -265,14 +265,20 @@ pre {
 a {
 	color: #333;
 	font-weight: 400;
-	text-decoration: none; }
+	text-decoration: none;
+	opacity:1; }
 
 a:hover,
 a:focus,
 a:active {
 	color: #444444;
 	outline: 0;
-	text-decoration: none; }
+	text-decoration: none; 
+	opacity:0.8;
+	transition: opacity .2s ease-out;
+	-moz-transition: opacity .2s ease-out;
+	-webkit-transition: opacity .2s ease-out;
+	-o-transition: opacity .2s ease-out; }
 
 ::selection {
 	background: #999999;
@@ -383,7 +389,7 @@ ul.menu > li,
 .menu > li.current-menu-item > a,
 .menu > li.current-page-ancestor > a,
 .menu > li.current_page_parent > a {
-	background-color: rgba(255,255,255, 0.2); }
+	background-color: rgba(238, 238, 238, 0.5); }
 
 .nav-wrapper .menu li ul.children,
 .nav-wrapper .menu li ul.sub-menu { 
@@ -2137,6 +2143,9 @@ div.aligncenter {
 .alignleft {
     float: left;
     margin: 5px 20px 20px 0; }
+
+.post-thumbnail.popup.alignleft {
+	width: 40%; }
 
 a img.alignright {
     float: right;

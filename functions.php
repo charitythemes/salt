@@ -76,6 +76,7 @@ require_once get_template_directory() . '/core/admin/welcome.php';
  * @since Salt 1.6.5
  */
 require_once get_template_directory() . '/inc/hooks.php';
+require_once get_template_directory() . '/inc/template-hooks.php';
 require_once get_template_directory() . '/inc/template-parts.php';
 
 

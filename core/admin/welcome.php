@@ -47,9 +47,14 @@ if ( !function_exists('salt_welcome_screen_pages')) :
 * @since 1.5.0
 */
 function salt_welcome_screen_pages() {
+	
+	global $theme;
+	
+	$theme = wp_get_theme();
+
 	add_theme_page(
-		__( 'Welcome To Salt Theme', 'salt' ),
-		__( 'Welcome To Salt Theme', 'salt' ),
+		sprintf( __( 'Welcome To %s', 'salt' ), $theme->get( 'Name' )),
+		sprintf( __( 'Welcome To %s', 'salt' ), $theme->get( 'Name' )),
 		'read',
 		'salt-welcome-screen',
 		'salt_welcome_screen_content'
@@ -67,20 +72,21 @@ if ( !function_exists('salt_welcome_screen_content')) :
 * @since 1.5.0
 */
 function salt_welcome_screen_content() {
+	
+	global $theme;
 ?>
 	<div class="wrap about-wrap">
-		<h1><?php printf( __( 'Salt Theme v%s', 'salt' ), SALT_VERSION ); ?><span class="ct_logo"><a href="https://www.charitythemes.org" target="_blank"><img src="<?php echo get_template_directory_uri(); ?>/core/assets/img/logo_ct_2x_pink.png" alt="" style="margin-top: 10px;
+		<h1><?php printf( __( '%s Theme v%s', 'salt' ), $theme->get( 'Name' ), $theme->get( 'Version' ) ); ?><span class="ct_logo"><a href="https://www.charitythemes.org" target="_blank"><img src="<?php echo get_template_directory_uri(); ?>/core/assets/img/logo_ct_2x_pink.png" alt="" style="margin-top: 10px;
     margin-left: 10px;" /></a></span></h1>
 
-		<div class="about-text"><?php _e( 'Thank you for using Salt Theme!', 'salt' ); ?></div>
+		<div class="about-text"><?php printf( __( 'Thank you for using %s Theme!', 'salt' ), $theme->get( 'Name' )); ?></div>
 
 		<h2 class="nav-tab-wrapper">
-			<a href="?page=welcome-screen-about" class="nav-tab nav-tab-active"><?php _e( 'What&#8217;s New', 'salt' ); ?></a>
+			<a href="?page=welcome-screen-about" class="nav-tab nav-tab-active"><?php _e( 'Welcome', 'salt' ); ?></a>
 		</h2>
 
 		<div class="headline-feature feature-section one-col" style="text-align: center;">
-			<h2><?php _e( 'New Feature: Blog Posts Slider', 'salt' ); ?></h2>
-			<div class="media-container">
+			<div class="media-container" style="margin-top: 20px;">
 				<img src="<?php echo get_template_directory_uri(); ?>/screenshot.png" />
 			</div>
 		</div>
@@ -94,8 +100,8 @@ function salt_welcome_screen_content() {
 				</div>
 			</div>
 			<div class="col">
-				<h3><?php _e( 'Background Images', 'salt' ); ?></h3>
-				<p><?php _e( 'When you add or edit a blog post, you will see a new control panel (shown on left). This is used to add either a background image or color to this posts slide. Giving you full control to make each slide look unique!', 'salt' ); ?></p>
+				<h3><?php _e( 'Post Slider Images', 'salt' ); ?></h3>
+				<p><?php _e( 'When you add or edit a blog post, you will see a new control panel (shown on left). This is used to add either a slider image or color to this posts slide. Giving you full control to make each slide look unique!', 'salt' ); ?></p>
 			</div>
 		</div>
 
@@ -135,11 +141,11 @@ function salt_welcome_screen_content() {
 			<div class="feature-section under-the-hood three-col">
 				<div class="col">
 					<h4><?php _e( 'Suggest a feature!', 'salt' ); ?></h4>
-					<p><?php echo sprintf( __( 'Do you have an idea for a great feature on our next version of Salt Theme? Or perhaps there is something you don\'t like and want us to improve, <a href="%s" target="_blank">please let us know</a>, we\'d love to hear from you!', 'salt'), 'https://www.facebook.com/charitythemes.org/'); ?></p>
+					<p><?php echo sprintf( __( 'Do you have an idea for a great feature on our next version of this theme? Or perhaps there is something you don\'t like and want us to improve, <a href="%s" target="_blank">please let us know</a>, we\'d love to hear from you!', 'salt'), 'https://www.facebook.com/charitythemes.org/'); ?></p>
 				</div>
 				<div class="col">
-					<h4><?php _e( 'Like Salt Theme? Give us 5 stars!', 'salt' ); ?></h4>
-					<p><?php echo sprintf(__( 'We have over a 1000 active users of Salt Theme, which is pretty great! But no one has rated us yet, if you can spare a moment, please rate us on <a href="%s" target="_blank">wordpress.org</a>.', 'salt' ), 'https://wordpress.org/themes/salt/'); ?></p>
+					<h4><?php _e( 'Like Our Work? Give us 5 stars!', 'salt' ); ?></h4>
+					<p><?php echo sprintf(__( 'We have over a 1000 active users of our Themes, which is pretty great! If you can spare a moment, please rate us on <a href="%s" target="_blank">wordpress.org</a>.', 'salt' ), 'https://wordpress.org/themes/salt/'); ?></p>
 				</div>
 				<div class="col">
 					<h4><?php _e( 'Like us on Facebook', 'salt' ); ?></h4>

@@ -434,6 +434,20 @@ function salt_social_icons( $args=array() ) {
 }
 endif;
 
+function salt_social_icons_wrapper( $atts ) {
+	
+	$atts = shortcode_atts( array(
+		'type'  => 'black',		// BLACK: use the black icons
+		'shape' => 'circle',	// CIRCLE: use the cicular icons
+		'size'  => 'small', 	// SMALL: use small icons
+		'echo'  => false
+	), $atts, 'bartag' );
+	
+	return salt_social_icons($atts);
+}
+
+add_shortcode('salt_social_icons', 'salt_social_icons_wrapper');
+
 if (!function_exists('salt_post_background_image')) :
 /**
  * Salt Post Background Image
