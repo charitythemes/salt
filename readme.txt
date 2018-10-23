@@ -1,6 +1,6 @@
 === Salt ===
 Contributors: The charitythemes.org Team
-Tags: white, one-column, two-columns, three-columns, full-width-template, right-sidebar, left-sidebar, fixed-layout, responsive-layout, custom-menu, custom-header, editor-style, featured-page-images, featured-images, flexible-header, sticky-post, threaded-comments, translation-ready, fluid-layout
+Tags: one-column, two-columns, three-columns, full-width-template, right-sidebar, left-sidebar, fixed-layout, responsive-layout, custom-menu, custom-header, editor-style, featured-page-images, featured-images, flexible-header, sticky-post, threaded-comments, translation-ready, fluid-layout
 Requires at least: 4.1
 Tested up to: 4.1
 Stable tag: 4.1
