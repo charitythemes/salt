@@ -56,7 +56,7 @@ get_header(); ?>
 			<?php
 			// If no content, include the "No posts found" template.
 			else :
-				get_template_part( 'partials/content', 'none' );
+				get_template_part( 'partials/content/content', 'none' );
 	
 			endif;
 			?>
