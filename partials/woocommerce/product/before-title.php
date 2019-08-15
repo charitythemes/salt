@@ -1,0 +1,1 @@
+<div class="salt-product-title-wrapper">

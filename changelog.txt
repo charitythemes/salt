@@ -1,5 +1,8 @@
 == Salt Changelog ==
 
+2018.11.26 - v1.6.7
+- Adds Woocommerce support
+
 2018.10.26 - v1.6.6
 - Fix some styling issues on the menu and page headers
 

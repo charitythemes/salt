@@ -28,7 +28,7 @@
  */
 define( 'SALT_TEMPLATE_URI' , get_template_directory_uri() );
 define( 'SALT_TEMPLATE_DIR' , get_template_directory() );
-define( 'SALT_VERSION' , '1.6.6' );
+define( 'SALT_VERSION' , '1.6.7' );
 
 /**
  * If it is not set already, we should set the content width.
@@ -74,11 +74,12 @@ require_once get_template_directory() . '/core/admin/welcome.php';
  * Load Includes
  *
  * @since Salt 1.6.5
+ * 		Add Woocommerce support @since 1.6.7
  */
 require_once get_template_directory() . '/inc/hooks.php';
 require_once get_template_directory() . '/inc/template-hooks.php';
 require_once get_template_directory() . '/inc/template-parts.php';
-
+require_once get_template_directory() . '/inc/woocommerce.php';
 
 if (!function_exists('salt_theme_setup')) :
 /**
@@ -143,6 +144,28 @@ if (!function_exists('salt_theme_setup')) :
 	 */
 	add_image_size( 'slide-image', 1200, 450, false );
 	add_image_size ( 'home-posts', 700, 580, array( 'left', 'top' ) );	
+
+	/*
+	 * Add Woocommerce Support
+	 *
+	 * @link https://docs.woocommerce.com/document/woocommerce-theme-developer-handbook/
+	 * @since 1.6.7
+	 */	
+	add_theme_support( 'wc-product-gallery-slider' );
+	add_theme_support( 'wc-product-gallery-lightbox' );
+	add_theme_support( 'wc-product-gallery-zoom' );
+	add_theme_support( 'woocommerce', array(
+		'thumbnail_image_width' => 150,
+		'single_image_width'    => 300,
+        'product_grid' => array(
+            'default_rows'    => 3,
+            'min_rows'        => 2,
+            'max_rows'        => 8,
+            'default_columns' => 3,
+            'min_columns'     => 2,
+            'max_columns'     => 5,
+        ),
+	));
 }
 endif;
 add_action( 'after_setup_theme', 'salt_theme_setup');
@@ -162,7 +185,11 @@ function salt_register_styles() {
 	
 	if ( is_front_page() && get_theme_mod( 'salt_show_slider' ) == '1' ) {
 		wp_enqueue_style( 'bxslider' , get_template_directory_uri() . '/css/bxslider.min.css', false, '4.2.12');
-	}	
+	}
+	
+	if ( class_exists( 'woocommerce' ) ) {
+		wp_enqueue_style( 'salt-woocommerce', get_template_directory_uri() . '/css/woo.css', array( 'main' ), '1.0.0');		
+	}
 }
 endif;
 add_action( 'wp_enqueue_scripts', 'salt_register_styles' );
@@ -184,6 +211,10 @@ function salt_register_scripts() {
 
 	if ( is_singular() ) 
 		wp_enqueue_script( 'comment-reply' );		
+
+	if ( class_exists( 'woocommerce' ) ) {
+		wp_enqueue_script( 'salt_woo', get_template_directory_uri() . '/js/woo.js', array('jquery'), '1.0.0', true );
+	}
 }
 endif;
 add_action( 'wp_enqueue_scripts', 'salt_register_scripts' );
@@ -234,7 +265,23 @@ function salt_register_sidebars() {
 			));
 		}
 	}		
-	
+
+	/**
+	 * A special sidebar for Woocommerce stores
+	 *
+	 * @since Salt 1.6.7
+	 */
+	if ( class_exists( 'woocommerce' ) ) {
+		register_sidebar( array (
+			'name' => 'Store Sidebar',
+			'id' => 'store-widget-area',
+			'description' => __( 'The store sidebar', 'salt' ),
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget' => "</div>",
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
+		) );
+	}
 }
 endif;
 add_action( 'widgets_init', 'salt_register_sidebars' );
@@ -487,7 +534,11 @@ body {
 .nav-wrapper .menu li ul.children li a:hover,
 .nav-wrapper .menu li ul.sub-menu li a:hover, 
 .nav-wrapper .menu li ul.children li.current_page_item > a,
-.nav-wrapper .menu li ul.sub-menu li.current_page_item > a {
+.nav-wrapper .menu li ul.sub-menu li.current_page_item > a,
+.woocommerce-message::before,
+.woocommerce div.product p.price, 
+.woocommerce div.product span.price,
+.woocommerce ul.products li.product .price {
 	color: {$scheme['dark']};
 }
 
@@ -504,7 +555,8 @@ body {
 	
 /* Border Highlight Color */
 #footer-widgets,
-#footer-subscribe-wrapper {
+#footer-subscribe-wrapper,
+.woocommerce-message {
 	border-color: {$scheme['medium']};
 }
 
@@ -514,7 +566,8 @@ body {
 	background-color: {$scheme['lightest']};
 }
 
-.wide .entry-footer {
+.wide .entry-footer,
+.woocommerce span.onsale {
 	background-color: {$scheme['light']};
 }
 
@@ -524,7 +577,9 @@ input[type="button"],
 input[type="reset"], 
 input[type="submit"],
 .bx-wrapper .bx-pager .bx-pager-item a:hover, 
-.bx-wrapper .bx-pager .bx-pager-item a.active {
+.bx-wrapper .bx-pager .bx-pager-item a.active,
+.woocommerce .widget_price_filter .ui-slider .ui-slider-range,
+.woocommerce .widget_price_filter .ui-slider .ui-slider-handle {
 	background-color:{$scheme['darkest']};
 }
 
@@ -535,7 +590,15 @@ input[type="submit"]:hover,
 input[type="button"]:focus, 
 input[type="reset"]:focus, 
 input[type="submit"]:focus,
-.boxed .page-title-bar {
+.boxed .page-title-bar,
+.woocommerce #respond input#submit.alt, 
+.woocommerce a.button.alt, 
+.woocommerce button.button.alt, 
+.woocommerce input.button.alt,
+.woocommerce #respond input#submit.alt:hover, 
+.woocommerce a.button.alt:hover, 
+.woocommerce button.button.alt:hover, 
+.woocommerce input.button.alt:hover {
 	background-color:{$scheme['dark']};
 }
 
