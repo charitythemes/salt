@@ -70,6 +70,12 @@ if ( $slider_query->have_posts() ) :
 
 <script type="text/javascript">
 jQuery(document).ready(function() {
+	
+	var touchDevice = false;
+	if (navigator.userAgent.match(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/)) {
+		touchDevice = true;
+	}
+		
 	jQuery('.slider-wrapper .bxslider').bxSlider({
 		easing			: 'ease-in-out',
 		auto			: <?php echo ( get_theme_mod('salt_slider_auto_scroll', '1') == '1' ) ? 'true' : 'false'; ?>,
@@ -82,6 +88,7 @@ jQuery(document).ready(function() {
 		speed			: <?php echo ( $s = get_option('salt_slider_speed') ) ? $s : '500'; ?>,
 		adaptiveHeight	: 'true',
 		useCSS			: 'false',
+  		touchEnabled	: touchDevice,		
 		onSliderLoad: function() {
 			jQuery(".bxslider").css("visibility", "visible");
 		}
